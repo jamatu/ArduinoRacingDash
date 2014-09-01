@@ -1,8 +1,11 @@
 AC SLI ChangeLog
 --------------------																																																									
 
+v1.3:
+	Added boost pressure output to the dash
+
 v1.2:
-	Streamlined data processing, huge performance increase
+	Streamlined data processing, performance increase
 
 v1.1:
 	Added Config File

@@ -1,6 +1,6 @@
 #######################################################
 #
-#    AC SLI v1.2 - USB Interface for use with arduino    
+#    AC SLI v1.3 - USB Interface for use with arduino    
 #
 #    Author: Turnermator13
 #
@@ -24,7 +24,7 @@ import serial
 from libs.sim_info import SimInfo
 from libs.utils import Config
 
-Version = "1.2"
+Version = "1.3"
 
 sim_info = SimInfo()
 appPath = "apps/python/acSLI/"
@@ -78,7 +78,11 @@ def acUpdate(deltaT):
         if sim_info.physics.pitLimiterOn and not sim_info.graphics.isInPit:
             engine = 0x10 
 
-        key = bytes([255,ac_gear,ac_speed,((int(rpms) >> 8) & 0x00FF),(int(rpms) & 0x00FF),fuel,shift,engine,lapCount])
+        boost = round(ac.getCarState(0, acsys.CS.TurboBoost), 1)
+        b1 = math.floor(boost)
+        b2 = (boost - b1)*10
+            
+        key = bytes([255,ac_gear,ac_speed,((int(rpms) >> 8) & 0x00FF),(int(rpms) & 0x00FF),fuel,shift,engine,lapCount, int(b1), int(b2)])
         x = ser.write(key)
         
         ticker = 0
