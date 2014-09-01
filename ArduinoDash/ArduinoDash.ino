@@ -314,7 +314,7 @@ void loop() {
             }
         }  
         
-        // button 5 - toggle number of LEDs to use
+        // button 6 - toggle number of LEDs to use
         if (module.getButtons() == 0b00100000){
            if (ledNum == 8){
               ledNum = 16;
@@ -324,14 +324,14 @@ void loop() {
            delay(200);
         }
         
-        // button 6 - increase intensity
+        // button 7 - increase intensity
         if (intensity < 7 & module.getButtons() == 0b01000000){
            intensity++;
            module.setupDisplay(true, intensity);
            delay(200);
         }
         
-        // button 7 - decrease intensity
+        // button 8 - decrease intensity
         if (intensity > 0 & module.getButtons() == 0b10000000){
            intensity--;
            module.setupDisplay(true, intensity);
