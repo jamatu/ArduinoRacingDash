@@ -5,11 +5,12 @@
 #    Author: Turnermator13
 #
 #    Please find this on github at:
-#    --
+#    -https://github.com/Turnermator13/acSLI
 #
 #    Thanks to @Rombik for "SimInfo"
 #
 #    Uses pySerial 2.7 library
+#    -http://pyserial.sourceforge.net/
 #
 #######################################################
 
