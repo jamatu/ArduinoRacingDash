@@ -1,0 +1,12 @@
+AC SLI ChangeLog
+--------------------																																																									
+
+v1.2:
+	Streamlined data processing, huge performance increase
+
+v1.1:
+	Added Config File
+	Updated sim_info to fix max_rpm always giving '0'
+
+v1.0:
+	Initial Release
