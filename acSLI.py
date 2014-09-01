@@ -1,6 +1,6 @@
 #######################################################
 #
-#    AC SLI v1.3 - USB Interface for use with arduino    
+#    AC SLI - USB Interface for use with arduino    
 #
 #    Author: Turnermator13
 #
@@ -24,7 +24,7 @@ import serial
 from libs.sim_info import SimInfo
 from libs.utils import Config
 
-Version = "1.3"
+Version = "1.4"
 
 sim_info = SimInfo()
 appPath = "apps/python/acSLI/"

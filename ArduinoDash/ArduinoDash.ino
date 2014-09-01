@@ -68,16 +68,16 @@ void loop() {
                             case 1: // button 1 - gear, lap & speed
                                 module.setDisplayToString("L G  SPD", 0, 0);
                                 break;
-                            case 2: // button 2 - fuel & engine RPMs
+                            case 2: // button 2 - lap & gear & fuel
                                 module.setDisplayToString("L G FUEL", 0, 0);
                                 break;
-                            case 4: // button 2 - fuel & engine RPMs
+                            case 4: // button 2 - lap & gear & boost
                                 module.setDisplayToString("L G  BST", 0, 0);
                                 break;
-                            case 8: // button3 - fuel percentage
-                                module.setDisplayToString(" G   ENG", 0, 0);
+                            case 8: // button3 - boost & gear & speed
+                                module.setDisplayToString("BST G SP ", 0, 0);
                                 break;
-                            case 16: // button4 - fuel percentage
+                            case 16: // button4 - boost & rpm
                                 module.setDisplayToString("BST  ENG", 0, 0);
                                 break;
                             case 32:
@@ -170,7 +170,7 @@ void loop() {
                                 break;
                         }
 
-                        case 4:{ // button 2 - lap & gear & boost
+                        case 4:{ // button 3 - lap & gear & boost
         
                                 if (gear == 0) 
         			    module.setDisplayToString("R", 0, 3);
@@ -201,7 +201,36 @@ void loop() {
                                 break;
                         }
                         
-        		case 8:{ // button 2 - gear & engine RPMs  
+                                                
+        		case 8:{ // button4 - boost & gear & speed
+
+                                //boost
+                                module.setDisplayDigit(boost_h, 0, 1);
+                                module.setDisplayDigit(boost_l, 1, 0);
+                                  
+                                //gear  
+                                if (gear == 0) 
+          			  module.setDisplayToString("R", 0, 3);
+                                  else if (gear == 1)
+                                      module.setDisplayToString("N", 0, 3);
+                                  else
+                                      module.setDisplayToString(String(gear - 1, DEC), 0, 3);
+                                    
+                                //speed
+                                if (spd < 10) {
+                                    module.clearDisplayDigit(5, false);
+                                    module.clearDisplayDigit(6, false);
+                                    module.setDisplayToString(String(spd, DEC), 0, 7);
+                                }else if (spd < 100){
+                                    module.clearDisplayDigit(5, false); 
+                                    module.setDisplayToString(String(spd, DEC), 0, 6); 
+                                }else if (spd >= 100){ 
+        			    module.setDisplayToString(String(spd, DEC), 0, 5);
+                                }                                
+                                break; 
+                         } 
+                         
+        		case 16:{ // button 5 - gear & engine RPMs  
         
                                 //Gear
                                 if (gear == 0) 
@@ -235,40 +264,7 @@ void loop() {
                                 }
                                 
                                 break;  
-                        }
-                        
-        		case 16:{ // button3 - boost & engine RPMs
-
-                                //boost
-                                  module.setDisplayDigit(boost_h, 0, 1);
-                                  module.setDisplayDigit(boost_l, 1, 0);
-                             
-        
-                                //RPM
-                                if (rpm < 10){
-                                  module.clearDisplayDigit(6, false);
-                                  module.clearDisplayDigit(5, false);
-                                  module.clearDisplayDigit(4, false);
-                                  module.clearDisplayDigit(3, false);
-                                  module.setDisplayToString(String(rpm, DEC), 0, 7);
-                                }else if (rpm < 100){
-                                  module.clearDisplayDigit(5, false);
-                                  module.clearDisplayDigit(4, false);
-                                  module.clearDisplayDigit(3, false);
-                                  module.setDisplayToString(String(rpm, DEC), 0, 6);
-                                }else if (rpm < 1000){
-                                  module.clearDisplayDigit(4, false);
-                                  module.clearDisplayDigit(3, false);
-                                  module.setDisplayToString(String(rpm, DEC), 0, 5);
-                                }else if (rpm < 10000){
-                                  module.clearDisplayDigit(3, false);
-                                  module.setDisplayToString(String(rpm, DEC), 0, 4);
-                                }else{
-                                  module.setDisplayToString(String(rpm, DEC), 0, 3);
-                                }
-                                
-                                break; 
-                         }                       
+                        }                      
         	}
         } else {
             if ((millis() - milstart) > 2000) {
