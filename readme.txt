@@ -48,7 +48,7 @@ Install -- AC
 *Profit, no need to have the app on-screen, it can run in the background (hopefully)
 
 
-***App should detect which com port your arduino is on automatically, by pressing 'home' you can 
+***App should detect which com port your arduino is on automatically, by pressing 'home' whilst driving you can 
    see the log in the console to see which com port it has connected to. 
   *IF app doesn't connect to the correct com port you can override it in the config.ini file by 
    changing the 'port' option.
