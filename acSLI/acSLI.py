@@ -21,10 +21,11 @@ import ac
 import acsys
 import math
 import serial
+import serial.tools.list_ports
 from libs.sim_info import SimInfo
 from libs.utils import Config
 
-Version = "1.4.1"
+Version = "1.5"
 
 sim_info = SimInfo()
 appPath = "apps/python/acSLI/"
@@ -34,7 +35,7 @@ ticker = 0
 
 cfg = 0
 cfg_Path = "config.ini"
-cfg_Port = "COM1"
+cfg_Port = "AUTO"
 cfg_SpeedUnit = "MPH"
 
 max_rpm = 0
@@ -46,16 +47,26 @@ def acMain(ac_version):
     ac.setSize(appWindow,150,100)
     ac.drawBorder(appWindow,0)
     ac.setBackgroundOpacity(appWindow,0)
+    
     loadConfig()
+    
+    if cfg_Port == "AUTO":
+        for port, desc, hwid in sorted(serial.tools.list_ports.comports()):
+            if "Arduino" in desc:
+                ac.console("%s: %s [%s]" % (port, desc, hwid))
+                cfg_Port = port
+                break
+    
     ser = serial.Serial(cfg_Port, 9600)
-    ac.console("AC SLI v" + Version + " loaded")
+    
+    ac.console("AC SLI v" + Version + " loaded, using: " + cfg_Port)
     return "AC SLI"
 
     
 def acUpdate(deltaT):   
     global ticker, ser, max_rpm, max_fuel, sim_info, cfg_SpeedUnit
     
-    if ticker == 3:
+    if ticker == 2:
         ac_gear = ac.getCarState(0, acsys.CS.Gear)
         ac_speed = round(ac.getCarState(0, acsys.CS.SpeedMPH)) if cfg_SpeedUnit == "MPH" else round(ac.getCarState(0, acsys.CS.SpeedKMH))
         rpms = ac.getCarState(0, acsys.CS.RPM)

@@ -25,11 +25,13 @@ install this library into your arduino library folder: https://code.google.com/p
 Install -- AC
 -----------------
 
-*Load arduino program onto arduino, make a note of the COM port you use
+*Load arduino program onto arduino
 *Copy 'acSLI' folder to the apps/python folder in asseto corsa (Program Files (x86)\Steam\steamapps\common\assettocorsa\apps\python)
-*Modify config.ini with your arduino's COM port (eg. COM5 is the default here)
 *Run Asseto Corsa and enable app in the settings panel > general
 *Profit, no need to have the app on-screen, it can run in the background (hopefully)
+
+*App should detect which com port your arduino is on automatically, by pressing 'home' you can see the log in the console to see which com port it has connected to. 
+ IF app doesn't connect to the correct com port you can override it in the config.ini file by changing the 'port' option
 
 
 Install -- iRacing

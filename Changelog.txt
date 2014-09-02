@@ -1,6 +1,9 @@
 AC SLI ChangeLog
 --------------------																																																									
 
+v1.5:
+	Auto Com port detection in Asseto Corsa app
+
 v1.4.1:
 	Fixed error in name of a display page on arduino
 	
