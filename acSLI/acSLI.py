@@ -24,7 +24,7 @@ import serial
 from libs.sim_info import SimInfo
 from libs.utils import Config
 
-Version = "1.4"
+Version = "1.4.1"
 
 sim_info = SimInfo()
 appPath = "apps/python/acSLI/"

@@ -1,0 +1,17 @@
+H:\Fernando\Programacao\C#\iRacingSLI\iRacingSLI\bin\Debug\iRacingSLI.exe
+H:\Fernando\Programacao\C#\iRacingSLI\iRacingSLI\bin\Debug\iRacingSLI.pdb
+H:\Fernando\Programacao\C#\iRacingSLI\iRacingSLI\obj\x86\Debug\ResolveAssemblyReference.cache
+H:\Fernando\Programacao\C#\iRacingSLI\iRacingSLI\obj\x86\Debug\iRacingSLI.frmMain.resources
+H:\Fernando\Programacao\C#\iRacingSLI\iRacingSLI\obj\x86\Debug\iRacingSLI.Properties.Resources.resources
+H:\Fernando\Programacao\C#\iRacingSLI\iRacingSLI\obj\x86\Debug\GenerateResource.read.1.tlog
+H:\Fernando\Programacao\C#\iRacingSLI\iRacingSLI\obj\x86\Debug\GenerateResource.write.1.tlog
+H:\Fernando\Programacao\C#\iRacingSLI\iRacingSLI\obj\x86\Debug\iRacingSLI.exe
+H:\Fernando\Programacao\C#\iRacingSLI\iRacingSLI\obj\x86\Debug\iRacingSLI.pdb
+E:\Games\SLI Dash\iRacing C# Client\iRacingSLI\obj\x86\Debug\iRacingSLI.exe
+E:\Games\SLI Dash\iRacing C# Client\iRacingSLI\obj\x86\Debug\iRacingSLI.pdb
+E:\Games\SLI Dash\iRacing C# Client\iRacingSLI\obj\x86\Debug\iRacingSLI.frmMain.resources
+E:\Games\SLI Dash\iRacing C# Client\iRacingSLI\obj\x86\Debug\iRacingSLI.Properties.Resources.resources
+E:\Games\SLI Dash\iRacing C# Client\iRacingSLI\obj\x86\Debug\iRacingSLI.csproj.GenerateResource.Cache
+E:\Games\SLI Dash\iRacing C# Client\iRacingSLI\bin\Debug\iRacingSLI.exe
+E:\Games\SLI Dash\iRacing C# Client\iRacingSLI\bin\Debug\iRacingSLI.pdb
+E:\Games\SLI Dash\iRacing C# Client\iRacingSLI\obj\x86\Debug\iRacingSLI.csprojResolveAssemblyReference.cache

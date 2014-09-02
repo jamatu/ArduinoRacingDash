@@ -75,10 +75,10 @@ void loop() {
                                 module.setDisplayToString("L G  BST", 0, 0);
                                 break;
                             case 8: // button3 - boost & gear & speed
-                                module.setDisplayToString("BST G SP ", 0, 0);
+                                module.setDisplayToString("BST G SP", 0, 0);
                                 break;
                             case 16: // button4 - boost & rpm
-                                module.setDisplayToString("BST  ENG", 0, 0);
+                                module.setDisplayToString(" G   ENG", 0, 0);
                                 break;
                             case 32:
                                 page = oldpage;

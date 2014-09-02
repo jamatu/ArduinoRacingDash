@@ -1,0 +1,57 @@
+Dash SLI
+--------------
+Version: v1.4
+
+
+Setup - Arduino
+-----------------
+requires 1 TM1638.h module  --> get it here: http://www.dx.com/p/8x-digital-tube-8x-key-8x-double-color-led-module-81873
+
+Connections: --> see: http://tronixstuff.com/2012/03/11/arduino-and-tm1638-led-display-modules/  for pin locations on ribbon cable
+
+Arduino		Display
+VCC			VCC
+GND			GND
+Pin 7		CLK
+Pin 8		DIO	
+Pin 9		STB1
+
+
+IMPORTANT
+-------------------
+install this library into your arduino library folder: https://code.google.com/p/tm1638-library/
+
+
+Install -- AC
+-----------------
+
+*Load arduino program onto arduino, make a note of the COM port you use
+*Copy 'acSLI' folder to the apps/python folder in asseto corsa (Program Files (x86)\Steam\steamapps\common\assettocorsa\apps\python)
+*Modify config.ini with your arduino's COM port (eg. COM5 is the default here)
+*Run Asseto Corsa and enable app in the settings panel > general
+*Profit, no need to have the app on-screen, it can run in the background (hopefully)
+
+
+Install -- iRacing
+-------------------
+*Load arduino program onto arduino
+*Start iRacing session
+*Start SLI client AFTER load has completed!
+*Select your COM port from the drop down and press start
+*Profit
+
+
+iRacing - advanced
+------------------
+app can except args from a .bat file to allow for easy starting without using any of the apps buttons
+
+example:
+
+##
+cd SLI Dash\iRacing Client
+start iRacingSLI.exe COM5
+##
+
+
+author: Turnermator13
+Based on work by Fernando Birck - http://fergotech.net/diy-shift-lights-and-dashboard/
