@@ -3,7 +3,7 @@
 #    Author: Turnermator13
 #
 #    Please find this on github at:
-#    -https://github.com/Turnermator13/acSLI
+#    -https://github.com/Turnermator13/ArduinoRacingDash
 #
 #######################################################
 
