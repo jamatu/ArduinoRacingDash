@@ -6,8 +6,8 @@ Setup - Arduino
 -----------------
 requires 1 TM1638.h module  --> get it here: http://www.dx.com/p/8x-digital-tube-8x-key-8x-double-color-led-module-81873
 
-Connections: --> see: http://tronixstuff.com/2012/03/11/arduino-and-tm1638-led-display-modules/  for pin locations on 
-																								 ribbon cable
+Connections: --> see: http://tronixstuff.com/2012/03/11/arduino-and-tm1638-led-display-modules/  
+                 for pin locations on ribbon cable
 
 Arduino		Display
 VCC			VCC
@@ -37,7 +37,8 @@ Install -- AC
 
 ***App should detect which com port your arduino is on automatically, by pressing 'home' you can 
    see the log in the console to see which com port it has connected to. 
-  *IF app doesn't connect to the correct com port you can override it in the config.ini file by changing the 'port' option.
+  *IF app doesn't connect to the correct com port you can override it in the config.ini file by 
+   changing the 'port' option.
 
 
 Install -- iRacing
