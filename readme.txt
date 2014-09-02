@@ -1,6 +1,19 @@
 Arduino SLI Dash
 --------------
 
+USE
+--------------
+button 1 - lap counter, gear, speed
+button 2 - lap counter, gear, fuel percent left
+button 3 - lap counter, gear, boost pressure
+button 4 - boost pressure, gear, speed
+button 5 - gear, engine rpms
+button 6 - toggle 8/16 LEDS for shift lights
+button 7 - increase brightness
+button 8 - decrease brightness
+
+
+
 
 Setup - Arduino
 -----------------
