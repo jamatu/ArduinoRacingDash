@@ -9,11 +9,11 @@ requires 1 TM1638.h module  --> get it here: http://www.dx.com/p/8x-digital-tube
 Connections: --> see: http://tronixstuff.com/2012/03/11/arduino-and-tm1638-led-display-modules/  
                  for pin locations on ribbon cable
 
-Arduino		Display
+Arduino     Display
 VCC         VCC
 GND         GND
 Pin 7       CLK
-Pin 8       DIO	
+Pin 8       DIO 
 Pin 9       STB1
 
 
