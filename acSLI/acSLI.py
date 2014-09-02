@@ -25,7 +25,9 @@ import serial.tools.list_ports
 from libs.sim_info import SimInfo
 from libs.utils import Config
 
+#################
 Version = "1.5"
+#################
 
 sim_info = SimInfo()
 appPath = "apps/python/acSLI/"

@@ -1,6 +1,5 @@
-Dash SLI
+Arduino SLI Dash
 --------------
-Version: v1.4
 
 
 Setup - Arduino
