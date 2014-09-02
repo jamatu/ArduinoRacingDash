@@ -42,7 +42,7 @@ max_rpm = 0
 max_fuel = 0
 
 def acMain(ac_version):
-    global appWindow, ser, cfg_Port
+    global appWindow, ser, cfg_Port, ticker
     appWindow=ac.newApp("AC SLI")
     ac.setSize(appWindow,150,100)
     ac.drawBorder(appWindow,0)
@@ -50,16 +50,32 @@ def acMain(ac_version):
     
     loadConfig()
     
-    if cfg_Port == "AUTO":
-        for port, desc, hwid in sorted(serial.tools.list_ports.comports()):
+    portValid = False
+    for port, desc, hwid in sorted(serial.tools.list_ports.comports()):
+        if cfg_Port == "AUTO":
             if "Arduino" in desc:
                 ac.console("%s: %s [%s]" % (port, desc, hwid))
                 cfg_Port = port
-                break
-    
-    ser = serial.Serial(cfg_Port, 9600)
-    
-    ac.console("AC SLI v" + Version + " loaded, using: " + cfg_Port)
+                portValid = True
+        else:
+            if cfg_Port == port:
+                ac.console("%s: %s [%s]" % (port, desc, hwid))
+                portValid = True
+        
+        if portValid:
+            break
+        
+        
+    if portValid:
+        ser = serial.Serial(cfg_Port, 9600)
+        ac.console("AC SLI v" + Version + " loaded, using: " + cfg_Port)
+    else:
+        ticker = 3
+        if cfg_Port == "AUTO": 
+            ac.console("No Arduino Detected")
+        else:
+            ac.console("Invalid COM Port")
+        
     return "AC SLI"
 
     
@@ -98,7 +114,8 @@ def acUpdate(deltaT):
         
         ticker = 0
     else:
-        ticker = ticker + 1
+        if ticker < 3:
+            ticker = ticker + 1
     
        
 def acShutdown():
