@@ -34,6 +34,7 @@ appPath = "apps/python/acSLI/"
 appWindow = 0
 ser = 0
 ticker = 0
+port = 0
 
 cfg = 0
 cfg_Path = "config.ini"
@@ -43,41 +44,40 @@ cfg_SpeedUnit = "MPH"
 max_rpm = 0
 max_fuel = 0
 
+lbConnectedPort = 0
+btnSpeedUnits = 0
+btnReconnect = 0
+
 def acMain(ac_version):
-    global appWindow, ser, cfg_Port, ticker
+    global appWindow, ticker, cfg_SpeedUnit, btnSpeedUnits, btnReconnect, lbConnectedPort
     appWindow=ac.newApp("AC SLI")
-    ac.setSize(appWindow,150,100)
+    ac.setSize(appWindow,250,200)
     ac.drawBorder(appWindow,0)
-    ac.setBackgroundOpacity(appWindow,0)
+    ac.setBackgroundOpacity(appWindow,0) 
     
-    loadConfig()
+    loadConfig()  
+  
+        
+    lbConnectedPort = ac.addLabel(appWindow, "Connected COM Port: {}".format(cfg_Port))
+    ac.setPosition(lbConnectedPort,30,40)
+    ac.setSize(lbConnectedPort,220,20)
     
-    portValid = False
-    for port, desc, hwid in sorted(serial.tools.list_ports.comports()):
-        if cfg_Port == "AUTO":
-            if "Arduino" in desc:
-                ac.console("%s: %s [%s]" % (port, desc, hwid))
-                cfg_Port = port
-                portValid = True
-        else:
-            if cfg_Port == port:
-                ac.console("%s: %s [%s]" % (port, desc, hwid))
-                portValid = True
-        
-        if portValid:
-            break
-        
-        
-    if portValid:
-        ser = serial.Serial(cfg_Port, 9600)
-        ac.console("AC SLI v" + Version + " loaded, using: " + cfg_Port)
-    else:
-        ticker = 3
-        if cfg_Port == "AUTO": 
-            ac.console("No Arduino Detected")
-        else:
-            ac.console("Invalid COM Port")
-        
+    btnReconnect = ac.addButton(appWindow, "Reconnect COM Port")
+    ac.addOnClickedListener(btnReconnect, bFunc_ReconnectCOM)
+    ac.setPosition(btnReconnect,15,70)
+    ac.setSize(btnReconnect,220,20)
+       
+    #edit COM port setting in txt file
+    
+    btnSpeedUnits = ac.addButton(appWindow, "Speed Units: {}".format(cfg_SpeedUnit))
+    ac.addOnClickedListener(btnSpeedUnits, bFunc_SpeedUnits)
+    ac.setPosition(btnSpeedUnits,15,160)
+    ac.setSize(btnSpeedUnits,220,20)
+    
+    
+    connectCOM()
+    
+    ac.console("AC SLI v" + Version + " loaded")
     return "AC SLI"
 
     
@@ -131,8 +131,61 @@ def loadConfig():
     try:
         cfg = Config(appPath + cfg_Path)
         cfg_Port = cfg.getOption("SETTINGS", "port").upper()
-        cfg_SpeedUnit = cfg.getOption("SETTINGS", "speed_unit").upper()
+        cfg_SpeedUnit = cfg.getOption("SETTINGS", "unitSpeed").upper()
     
     except Exception as e:
         ac.console("acSLI: Error in loading Config File: %s" % e)
         ac.log("acSLI: Error in loading Config File: %s" % e)
+        
+
+def connectCOM():
+    global ser, port, cfg_Port, ticker
+    
+    portValid = False
+    for sPort, desc, hwid in sorted(serial.tools.list_ports.comports()):
+        if cfg_Port == "AUTO":
+            if "Arduino" in desc:
+                ac.console("%s: %s [%s]" % (sPort, desc, hwid))
+                port = sPort
+                portValid = True
+        else:
+            if cfg_Port == sPort:
+                ac.console("%s: %s [%s]" % (sPort, desc, hwid))
+                port = sPort
+                portValid = True
+        
+        if portValid:
+            break
+                
+    if portValid:
+        ser = serial.Serial(port, 9600)
+        ac.console("acSLI: connected to {}".format(port))
+    else:
+        ticker = 3
+        port = "----"
+        if cfg_Port == "AUTO": 
+            ac.console("acSLI: No Arduino Detected")
+        else:
+            ac.console("acSLI: Invalid COM Port")
+    
+    ac.setText(lbConnectedPort, "Connected COM Port: {}".format(port))
+    
+    
+def bFunc_ReconnectCOM(dummy, variables):
+    global ser
+    if not port == "----":
+        ser.close()
+    connectCOM()  
+            
+        
+def bFunc_SpeedUnits(dummy, variables):
+    global cfg, cfg_SpeedUnit, btnSpeedUnits
+
+    if cfg_SpeedUnit == "MPH":
+        cfg_SpeedUnit = "KMH"
+    elif cfg_SpeedUnit == "KMH":
+        cfg_SpeedUnit = "MPH"
+
+    ac.setText(btnSpeedUnits, "Speed Units: {}".format(cfg_SpeedUnit))
+    cfg.updateOption("SETTINGS", "unitSpeed", cfg_SpeedUnit)
+    ac.console("acSLI: speed units toggle to {}".format(cfg_SpeedUnit))
