@@ -49,9 +49,9 @@ Install -- AC
 
 
 ***App should detect which com port your arduino is on automatically, by pressing 'home' whilst driving you can 
-   see the log in the console to see which com port it has connected to. 
-  *IF app doesn't connect to the correct com port you can override it in the config.ini file by 
-   changing the 'port' option.
+   see the log in the console to see which com port it has connected to, OR looking on the gui (v1.6+)
+  *IF app doesn't connect to the correct com port you can override it in the gui by changing the text in the input 
+   box (remember to press enter, box is a bit weird if you don't)
 
 
 Install -- iRacing
@@ -72,10 +72,10 @@ iRacing - advanced
 ------------------
 app can except start args to allow for easy starting without using any of the apps buttons
 
-example using a .bat file to launch the client:
+example using a .bat file to launch the client, set COM port to COM5 and set speed units to KPH:
 ##
 cd SLI Dash\iRacing Client
-start iRacingSLI.exe COM5
+start iRacingSLI.exe --Port COM5 --Unit MPH
 ##
 
 

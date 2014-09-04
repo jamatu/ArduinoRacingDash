@@ -1,5 +1,5 @@
 ##Arduino Racing Dashboard
-**Latest Version:** v1.5 - Tested for Asseto Corsa v0.22.x
+**Latest Version:** v1.6 - Tested for Asseto Corsa v0.22.x
 
 
 **Included:**
