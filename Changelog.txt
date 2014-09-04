@@ -1,6 +1,10 @@
 AC SLI ChangeLog
 --------------------																																																									
 
+v1.6:
+	Added initial gui in sim to change/reconnect com ports, com port settings and units on the fly
+	Modified serial data transfer so speeds over 255xxx don't break the dash
+	
 v1.5:
 	Auto Com port detection in Asseto Corsa app
 

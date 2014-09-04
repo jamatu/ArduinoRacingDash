@@ -17,7 +17,7 @@ namespace iRacingSLI {
 
         int Gear, Lap, startPort;
         double Speed, RPM, Fuel, Shift;
-        short iRPM, iFuel, iShift;
+        short iRPM, iFuel, iShift, iSpeed;
         byte Engine;
         byte[] serialdata = new byte[11];
         byte[] shiftlights = new byte[16];
@@ -69,21 +69,22 @@ namespace iRacingSLI {
                 else
                     Engine = 0x00;
 
+                iSpeed = Convert.ToInt16(Speed);
                 iRPM = Convert.ToInt16(RPM);
                 iFuel = Convert.ToByte(Math.Round(Fuel));
                 iShift = Convert.ToByte(Math.Round((Shift * 16) / 100));
 
                 serialdata[0] = 255;
                 serialdata[1] = Convert.ToByte(Gear + 1);
-                serialdata[2] = Convert.ToByte(Speed);
-                serialdata[3] = Convert.ToByte((iRPM >> 8) & 0x00FF);
-                serialdata[4] = Convert.ToByte(iRPM & 0x00FF);
-                serialdata[5] = Convert.ToByte(iFuel);
-                serialdata[6] = Convert.ToByte(iShift);
-                serialdata[7] = Engine;
-                serialdata[8] = Convert.ToByte(Lap);
-                serialdata[9] = Convert.ToByte(Boost[0]);
-                serialdata[10] = Convert.ToByte(Boost[1]);
+                serialdata[2] = Convert.ToByte((iSpeed >> 8) & 0x00FF);
+                serialdata[3] = Convert.ToByte(iSpeed & 0x00FF);
+                serialdata[4] = Convert.ToByte((iRPM >> 8) & 0x00FF);
+                serialdata[5] = Convert.ToByte(iRPM & 0x00FF);
+                serialdata[6] = Convert.ToByte(iFuel);
+                serialdata[7] = Convert.ToByte(iShift);
+                serialdata[8] = Engine;
+                serialdata[9] = Convert.ToByte(Lap);
+                serialdata[10] = Convert.ToByte(Boost);
 
                 SP.Write(serialdata, 0, 11);
 
@@ -102,20 +103,21 @@ namespace iRacingSLI {
 
                     this.Text = Shift.ToString();
 
+                    iSpeed = Convert.ToInt16(Speed);
                     iRPM = Convert.ToInt16(RPM);
                     iFuel = Convert.ToByte(Math.Round(Fuel * 100));
                     iShift = Convert.ToByte(Math.Round((Shift * 100 * 16) / 100));
 
                     serialdata[0] = 255;
                     serialdata[1] = Convert.ToByte(Gear + 1);
-                    serialdata[2] = Convert.ToByte(Speed);
-                    serialdata[3] = Convert.ToByte((iRPM >> 8) & 0x00FF);
-                    serialdata[4] = Convert.ToByte(iRPM & 0x00FF);
-                    serialdata[5] = Convert.ToByte(iFuel);
-                    serialdata[6] = Convert.ToByte(iShift);
-                    serialdata[7] = Engine;
-                    serialdata[8] = Convert.ToByte(Lap);
-                    serialdata[9] = 0;
+                    serialdata[2] = Convert.ToByte((iSpeed >> 8) & 0x00FF);
+                    serialdata[3] = Convert.ToByte(iSpeed & 0x00FF);
+                    serialdata[4] = Convert.ToByte((iRPM >> 8) & 0x00FF);
+                    serialdata[5] = Convert.ToByte(iRPM & 0x00FF);
+                    serialdata[6] = Convert.ToByte(iFuel);
+                    serialdata[7] = Convert.ToByte(iShift);
+                    serialdata[8] = Engine;
+                    serialdata[9] = Convert.ToByte(Lap);
                     serialdata[10] = 0;
 
                     SP.Write(serialdata, 0, 11);

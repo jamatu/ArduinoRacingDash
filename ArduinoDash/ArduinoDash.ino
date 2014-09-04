@@ -8,8 +8,9 @@ word ledsShort [9] = {0, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160};
 
 byte buttons, oldbuttons, page, oldpage;
 int intensity, ledNum, pitLimiterColor;
-byte gear, spd, shift, rpm_h, rpm_l, engine, lap, boost_h, boost_l;
-int fuel;
+byte gear, spd_h, spd_l, shift, rpm_h, rpm_l, engine, lap;
+String boost;
+int fuel, spd;
 word rpm;
 boolean changed, blinkrpm, ledOff;
 unsigned long milstart, milstart2 = 0;
@@ -33,7 +34,8 @@ void loop() {
 		if (Serial.available() > 11) {
 			if (Serial.read() == 255) {
 				gear = Serial.read();
-				spd = Serial.read();
+				spd_h = Serial.read();
+                                spd_l = Serial.read();
 				rpm_h = Serial.read();
 				rpm_l = Serial.read();
 				fuel = Serial.read();
@@ -44,10 +46,9 @@ void loop() {
                                 }
 				engine = Serial.read();
                                 lap = Serial.read();
+                                boost = String(Serial.read());
                                 
-                                boost_h = Serial.read();
-                                boost_l = Serial.read();
-                                
+                                spd = (spd_h << 8) | spd_l;
 				rpm = (rpm_h << 8) | rpm_l;
                          }
 		}
@@ -195,9 +196,14 @@ void loop() {
                          
                                 //Boost
                                 module.setDisplayToString(String("P"), 0, 5);
-                                module.setDisplayDigit(boost_h, 6, 1);
-                                module.setDisplayDigit(boost_l, 7, 0);
-        			                                                                  
+                                if (boost.length() == 1) {
+                                  module.setDisplayDigit(boost.charAt(1), 6, 1);
+                                  module.setDisplayDigit(boost.charAt(0), 7, 0);
+                                } else {
+                                  module.setDisplayDigit(boost.charAt(0), 6, 1);
+                                  module.setDisplayDigit(boost.charAt(1), 7, 0);
+        			}
+        
                                 break;
                         }
                         
@@ -205,8 +211,13 @@ void loop() {
         		case 8:{ // button4 - boost & gear & speed
 
                                 //boost
-                                module.setDisplayDigit(boost_h, 0, 1);
-                                module.setDisplayDigit(boost_l, 1, 0);
+                                if (boost.length() == 1) {
+                                  module.setDisplayDigit(boost.charAt(1), 0, 1);
+                                  module.setDisplayDigit(boost.charAt(0), 1, 0);
+                                } else {
+                                  module.setDisplayDigit(boost.charAt(0), 0, 1);
+                                  module.setDisplayDigit(boost.charAt(1), 1, 0);
+                                }
                                   
                                 //gear  
                                 if (gear == 0) 

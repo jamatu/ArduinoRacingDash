@@ -115,16 +115,17 @@ def acUpdate(deltaT):
         fuel = int((current_fuel/max_fuel)*100)
         
         lapCount = sim_info.graphics.completedLaps
+        if lapCount > 255:
+            lapCount = 255
         
         engine = 0x00
         if sim_info.physics.pitLimiterOn and not sim_info.graphics.isInPit:
             engine = 0x10 
 
         boost = round(ac.getCarState(0, acsys.CS.TurboBoost), 1)
-        b1 = math.floor(boost)
-        b2 = (boost - b1)*10
+        b1 = round(boost*10)
             
-        key = bytes([255,ac_gear,ac_speed,((int(rpms) >> 8) & 0x00FF),(int(rpms) & 0x00FF),fuel,shift,engine,lapCount, int(b1), int(b2)])
+        key = bytes([255,ac_gear,((int(ac_speed) >> 8) & 0x00FF),(int(ac_speed) & 0x00FF),((int(rpms) >> 8) & 0x00FF),(int(rpms) & 0x00FF),fuel,shift,engine,lapCount, int(b1)])
         x = ser.write(key)
         
         ticker = 0
@@ -212,8 +213,8 @@ def bFunc_SpeedUnits(dummy, variables):
     global cfg, cfg_SpeedUnit, btnSpeedUnits
 
     if cfg_SpeedUnit == "MPH":
-        cfg_SpeedUnit = "KMH"
-    elif cfg_SpeedUnit == "KMH":
+        cfg_SpeedUnit = "KPH"
+    elif cfg_SpeedUnit == "KPH":
         cfg_SpeedUnit = "MPH"
 
     ac.setText(btnSpeedUnits, "Speed Units: {}".format(cfg_SpeedUnit))
