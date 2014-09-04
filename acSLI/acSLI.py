@@ -123,7 +123,7 @@ def acUpdate(deltaT):
             engine = 0x10 
 
         boost = round(ac.getCarState(0, acsys.CS.TurboBoost), 1)
-        b1 = round(boost*10)
+        b1 = boost*10
             
         key = bytes([255,ac_gear,((int(ac_speed) >> 8) & 0x00FF),(int(ac_speed) & 0x00FF),((int(rpms) >> 8) & 0x00FF),(int(rpms) & 0x00FF),fuel,shift,engine,lapCount, int(b1)])
         x = ser.write(key)
