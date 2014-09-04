@@ -4,6 +4,8 @@ AC SLI ChangeLog
 v1.6:
 	Added initial gui in sim to change/reconnect com ports, com port settings and units on the fly
 	Modified serial data transfer so speeds over 255xxx don't break the dash
+	New args system for iRacing Client, new syntax, arg position interchangable eg "--Port COM5 --Unit KPH"
+	iRacing client can now switch between MPH and KPH via args OR check box
 	
 v1.5:
 	Auto Com port detection in Asseto Corsa app

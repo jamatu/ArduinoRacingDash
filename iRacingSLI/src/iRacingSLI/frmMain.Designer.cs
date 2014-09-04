@@ -43,6 +43,7 @@
             this.trkGear = new System.Windows.Forms.TrackBar();
             this.trkShift = new System.Windows.Forms.TrackBar();
             this.chkDebug = new System.Windows.Forms.CheckBox();
+            this.chkSpeedUnits = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trkBoost)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkLap)).BeginInit();
@@ -236,11 +237,24 @@
             this.chkDebug.UseVisualStyleBackColor = true;
             this.chkDebug.CheckedChanged += new System.EventHandler(this.chkDebug_CheckedChanged);
             // 
+            // chkSpeedUnits
+            // 
+            this.chkSpeedUnits.AutoSize = true;
+            this.chkSpeedUnits.Enabled = false;
+            this.chkSpeedUnits.Location = new System.Drawing.Point(116, 140);
+            this.chkSpeedUnits.Name = "chkSpeedUnits";
+            this.chkSpeedUnits.Size = new System.Drawing.Size(93, 17);
+            this.chkSpeedUnits.TabIndex = 11;
+            this.chkSpeedUnits.Text = "Speed in KPH";
+            this.chkSpeedUnits.UseVisualStyleBackColor = true;
+            this.chkSpeedUnits.CheckedChanged += new System.EventHandler(this.chkSpeedUnits_CheckedChanged);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(215, 167);
+            this.Controls.Add(this.chkSpeedUnits);
             this.Controls.Add(this.chkDebug);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
@@ -286,6 +300,7 @@
         private System.Windows.Forms.TrackBar trkLap;
         private System.Windows.Forms.TrackBar trkBoost;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.CheckBox chkSpeedUnits;
     }
 }
 

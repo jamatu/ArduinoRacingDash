@@ -22,6 +22,7 @@ namespace iRacingSLI {
         byte[] serialdata = new byte[11];
         byte[] shiftlights = new byte[16];
         String Boost;
+        Boolean unitKPH;
 
         System.Random randnum = new System.Random();
 
@@ -30,22 +31,21 @@ namespace iRacingSLI {
             InitializeComponent();
 
             startPort = 0;
+            this.unitKPH = false;
+            chkSpeedUnits.Enabled = true;
 
-            if (args.Length > 0 && args[0] != null){
-                if (SerialPort.GetPortNames().Contains(args[0])){
-                    SP = new SerialPort(args[0], 9600, Parity.None, 8);
-                    SP.Open();
-                    tmr.Enabled = true;
-                    cmbSerial.Text = "Stop serial port";
-                    chkDebug.Enabled = true;
-
-                    for (int i = 0; i < SerialPort.GetPortNames().Length; i++){
-                        if (SerialPort.GetPortNames()[i].Equals(args[0])){
-                            startPort = i;
-                        }
+            for (int i = 0; i < 4; i = i + 2)
+                if (args.Length > i+1 && args[i] != null)
+                {
+                    if (args[i] == "--Port")
+                    {
+                        this.processPortArgs(args[i+1]);
+                    }
+                    if (args[i] == "--Unit")
+                    {
+                        this.processUnitArgs(args[i + 1]);
                     }
                 }
-            }
         }
 
         private void tmr_Tick(object sender, EventArgs e) {
@@ -93,8 +93,13 @@ namespace iRacingSLI {
                     lblConn.Text = "Connected to iRacing API";
                     lblColor.BackColor = Color.FromArgb(0, 200, 0);
 
+                    if (this.unitKPH) {
+                        Speed = Convert.ToDouble(sdk.GetData("Speed")) * (2.23693629 * 1.609344); //KPH
+                    } else {
+                        Speed = Convert.ToDouble(sdk.GetData("Speed")) * 2.23693629; //MPH
+                    }
+
                     Gear = Convert.ToInt32(sdk.GetData("Gear"));
-                    Speed = Convert.ToDouble(sdk.GetData("Speed")) * 2.23693629;
                     RPM = Convert.ToDouble(sdk.GetData("RPM"));
                     Fuel = Convert.ToDouble(sdk.GetData("FuelLevelPct"));
                     Shift = Convert.ToDouble(sdk.GetData("ShiftIndicatorPct"));
@@ -165,6 +170,59 @@ namespace iRacingSLI {
                 this.Height = 205;
             }
 
+        }
+
+        private void chkSpeedUnits_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkSpeedUnits.Checked == true)
+            {
+                this.unitKPH = true;
+            }
+            else
+            {
+                this.unitKPH = false;
+            }
+
+        }
+
+
+        private void processPortArgs(String port)
+        {
+            if (SerialPort.GetPortNames().Contains(port))
+            {
+                SP = new SerialPort(port, 9600, Parity.None, 8);
+                SP.Open();
+                tmr.Enabled = true;
+                cmbSerial.Text = "Stop serial port";
+                chkDebug.Enabled = true;
+
+                for (int i = 0; i < SerialPort.GetPortNames().Length; i++)
+                {
+                    if (SerialPort.GetPortNames()[i].Equals(port))
+                    {
+                        startPort = i;
+                    }
+                }
+            }
+        }
+
+        private void processUnitArgs(String unit)
+        {
+            if (unit == "MPH")
+            {
+                this.unitKPH = false;
+                this.chkSpeedUnits.Checked = false;
+            }
+            else if (unit == "KPH")
+            {
+                this.unitKPH = true;
+                this.chkSpeedUnits.Checked = true;
+            }
+            else if (unit == "KMH")
+            {
+                this.unitKPH = true;
+                this.chkSpeedUnits.Checked = true;
+            }
         }
     }
 }
