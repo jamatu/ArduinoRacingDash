@@ -57,3 +57,12 @@ E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\x86\Release\iRaci
 E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\x86\Release\iRacingSLI.frmMain.resources
 E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\x86\Release\iRacingSLI.Properties.Resources.resources
 E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\x86\Release\iRacingSLI.csproj.GenerateResource.Cache
+E:\Games\ArduinoDash\src\iRacingSLI\obj\x86\Release\iRacingSLI.exe
+E:\Games\ArduinoDash\src\iRacingSLI\obj\x86\Release\iRacingSLI.pdb
+E:\Games\ArduinoDash\src\iRacingSLI\bin\Release\iRacingSLI.exe
+E:\Games\ArduinoDash\src\iRacingSLI\bin\Release\iRacingSLI.pdb
+E:\Games\ArduinoDash\src\iRacingSLI\bin\Release\iRSDKSharp.dll
+E:\Games\ArduinoDash\src\iRacingSLI\obj\x86\Release\iRacingSLI.csprojResolveAssemblyReference.cache
+E:\Games\ArduinoDash\src\iRacingSLI\obj\x86\Release\iRacingSLI.frmMain.resources
+E:\Games\ArduinoDash\src\iRacingSLI\obj\x86\Release\iRacingSLI.Properties.Resources.resources
+E:\Games\ArduinoDash\src\iRacingSLI\obj\x86\Release\iRacingSLI.csproj.GenerateResource.Cache

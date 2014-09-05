@@ -152,7 +152,7 @@
             // trkLap
             // 
             this.trkLap.Location = new System.Drawing.Point(24, 199);
-            this.trkLap.Maximum = 150;
+            this.trkLap.Maximum = 200;
             this.trkLap.Name = "trkLap";
             this.trkLap.Size = new System.Drawing.Size(162, 45);
             this.trkLap.SmallChange = 3;
@@ -253,7 +253,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(215, 167);
+            this.ClientSize = new System.Drawing.Size(215, 162);
             this.Controls.Add(this.chkSpeedUnits);
             this.Controls.Add(this.chkDebug);
             this.Controls.Add(this.groupBox1);

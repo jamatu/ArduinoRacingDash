@@ -133,8 +133,8 @@ def acUpdate(deltaT):
         fuel = int((current_fuel/max_fuel)*100)
         
         lapCount = sim_info.graphics.completedLaps
-        if lapCount > 255:
-            lapCount = 255
+        if lapCount > 199:
+            lapCount = 199
         
         engine = 0x00
         if sim_info.physics.pitLimiterOn and not sim_info.graphics.isInPit:
@@ -143,7 +143,7 @@ def acUpdate(deltaT):
         boost = round(ac.getCarState(0, acsys.CS.TurboBoost), 1)
         b1 = boost*10
             
-        key = bytes([(255 - int(cfg_StartPage)),ac_gear,((int(ac_speed) >> 8) & 0x00FF),(int(ac_speed) & 0x00FF),((int(rpms) >> 8) & 0x00FF),(int(rpms) & 0x00FF),fuel,shift,engine,lapCount, int(b1)])
+        key = bytes([255, int(math.pow(2, int(cfg_StartPage)-1)),ac_gear,((int(ac_speed) >> 8) & 0x00FF),(int(ac_speed) & 0x00FF),((int(rpms) >> 8) & 0x00FF),(int(rpms) & 0x00FF),fuel,shift,engine,lapCount, int(b1)])
         x = ser.write(key)
      
     

@@ -6,7 +6,7 @@ TM1638 module(8, 7, 9, true, 0); // last digit is display intensity, 0 (low) - 7
 word ledsLong [17] = {0, 1, 3, 7, 15, 31, 63, 127, 255, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160};
 word ledsShort [9] = {0, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160};
 
-byte buttons, oldbuttons, page, oldpage;
+byte base, buttons, oldbuttons, page, oldpage;
 int intensity, ledNum, pitLimiterColor;
 byte gear, spd_h, spd_l, shift, rpm_h, rpm_l, engine, lap;
 String boost;
@@ -31,8 +31,14 @@ void setup() {
 
 void loop() {
 	if (Serial.available() > 0) {
-		if (Serial.available() > 11) {
+		if (Serial.available() > 12) {
 			if (Serial.read() == 255) {
+                                base = Serial.read();
+                                if (page == 0) {
+                                    page = base;
+                                    oldbuttons = page; 
+                                }  
+                                
 				gear = Serial.read();
 				spd_h = Serial.read();
                                 spd_l = Serial.read();

@@ -19,7 +19,7 @@ namespace iRacingSLI {
         double Speed, RPM, Fuel, Shift;
         short iRPM, iFuel, iShift, iSpeed;
         byte Engine;
-        byte[] serialdata = new byte[11];
+        byte[] serialdata = new byte[12];
         byte[] shiftlights = new byte[16];
         String Boost;
         Boolean unitKPH;
@@ -73,20 +73,22 @@ namespace iRacingSLI {
                 iRPM = Convert.ToInt16(RPM);
                 iFuel = Convert.ToByte(Math.Round(Fuel));
                 iShift = Convert.ToByte(Math.Round((Shift * 16) / 100));
+                if (Lap > 199) { Lap = 199; }
 
                 serialdata[0] = 255;
-                serialdata[1] = Convert.ToByte(Gear + 1);
-                serialdata[2] = Convert.ToByte((iSpeed >> 8) & 0x00FF);
-                serialdata[3] = Convert.ToByte(iSpeed & 0x00FF);
-                serialdata[4] = Convert.ToByte((iRPM >> 8) & 0x00FF);
-                serialdata[5] = Convert.ToByte(iRPM & 0x00FF);
-                serialdata[6] = Convert.ToByte(iFuel);
-                serialdata[7] = Convert.ToByte(iShift);
-                serialdata[8] = Engine;
-                serialdata[9] = Convert.ToByte(Lap);
-                serialdata[10] = Convert.ToByte(Boost);
+                serialdata[1] = 0;
+                serialdata[2] = Convert.ToByte(Gear + 1);
+                serialdata[3] = Convert.ToByte((iSpeed >> 8) & 0x00FF);
+                serialdata[4] = Convert.ToByte(iSpeed & 0x00FF);
+                serialdata[5] = Convert.ToByte((iRPM >> 8) & 0x00FF);
+                serialdata[6] = Convert.ToByte(iRPM & 0x00FF);
+                serialdata[7] = Convert.ToByte(iFuel);
+                serialdata[8] = Convert.ToByte(iShift);
+                serialdata[9] = Engine;
+                serialdata[10] = Convert.ToByte(Lap);
+                serialdata[11] = Convert.ToByte(Boost);
 
-                SP.Write(serialdata, 0, 11);
+                SP.Write(serialdata, 0, 12);
 
             } else {
                 if (sdk.IsConnected()) {
@@ -107,25 +109,26 @@ namespace iRacingSLI {
                     Lap = Convert.ToInt32(sdk.GetData("Lap"));
 
                     this.Text = Shift.ToString();
-
                     iSpeed = Convert.ToInt16(Speed);
                     iRPM = Convert.ToInt16(RPM);
                     iFuel = Convert.ToByte(Math.Round(Fuel * 100));
                     iShift = Convert.ToByte(Math.Round((Shift * 100 * 16) / 100));
+                    if (Lap > 199) { Lap = 199; }
 
                     serialdata[0] = 255;
-                    serialdata[1] = Convert.ToByte(Gear + 1);
-                    serialdata[2] = Convert.ToByte((iSpeed >> 8) & 0x00FF);
-                    serialdata[3] = Convert.ToByte(iSpeed & 0x00FF);
-                    serialdata[4] = Convert.ToByte((iRPM >> 8) & 0x00FF);
-                    serialdata[5] = Convert.ToByte(iRPM & 0x00FF);
-                    serialdata[6] = Convert.ToByte(iFuel);
-                    serialdata[7] = Convert.ToByte(iShift);
-                    serialdata[8] = Engine;
-                    serialdata[9] = Convert.ToByte(Lap);
-                    serialdata[10] = 0;
+                    serialdata[1] = 0;
+                    serialdata[2] = Convert.ToByte(Gear + 1);
+                    serialdata[3] = Convert.ToByte((iSpeed >> 8) & 0x00FF);
+                    serialdata[4] = Convert.ToByte(iSpeed & 0x00FF);
+                    serialdata[5] = Convert.ToByte((iRPM >> 8) & 0x00FF);
+                    serialdata[6] = Convert.ToByte(iRPM & 0x00FF);
+                    serialdata[7] = Convert.ToByte(iFuel);
+                    serialdata[8] = Convert.ToByte(iShift);
+                    serialdata[9] = Engine;
+                    serialdata[10] = Convert.ToByte(Lap);
+                    serialdata[11] = 0;
 
-                    SP.Write(serialdata, 0, 11);
+                    SP.Write(serialdata, 0, 12);
                 } else if (sdk.IsInitialized) {
                     lblConn.Text = "No connection with iRacing API";
                     lblColor.BackColor = Color.FromArgb(200, 0, 0);
@@ -167,7 +170,7 @@ namespace iRacingSLI {
             if (chkDebug.Checked == true) {
                 this.Height = 545;
             } else {
-                this.Height = 205;
+                this.Height = 200;
             }
 
         }

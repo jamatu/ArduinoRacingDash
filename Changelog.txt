@@ -1,6 +1,10 @@
 Arduino Racing Dash ChangeLog
 --------------------																																																									
 
+v1.6.2:
+	AC client now makes its own config.ini so user settings are not lost when updating unless you delete config.ini, it won't be overwritten
+	Added default start page feature to AC
+
 v1.6.1:
 	Fixed text input to be much more reliable
 	Prints all avalible COM Ports to console when connecting to make manually connecting easier 
