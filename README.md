@@ -7,7 +7,10 @@ Dashboard code for TM1638 module linked to an Arduino, support for Asseto Corsa 
 - Ardunio Code
 - Asseto Corsa in-game app
 - iRacing C# Client
-	
+
+
+Asseto Corsa [Forum Post](http://www.assettocorsa.net/forum/index.php?threads/arduino-dashboard-for-tm1638-module-v1-6-1.14172/)	
+
 	
 For install instructions please see readme.txt
 
