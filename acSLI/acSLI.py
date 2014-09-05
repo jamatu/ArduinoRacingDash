@@ -20,6 +20,7 @@ sys.path.insert(0, 'apps/python/acSLI/dll')
 import ac
 import acsys
 import math
+import string
 import serial
 import serial.tools.list_ports
 from libs.sim_info import SimInfo
@@ -34,8 +35,9 @@ appPath = "apps/python/acSLI/"
 appWindow = 0
 ser = 0
 ticker = 0
+run = 0
 port = 0
-updateCom = 0
+oldComPortText = 0
 
 cfg = 0
 cfg_Path = "config.ini"
@@ -52,39 +54,40 @@ btnReconnect = 0
 txtComPort = 0
 
 def acMain(ac_version):
-    global appWindow, ticker, cfg_SpeedUnit, cfg_Port, updateCom, btnSpeedUnits, btnReconnect, lbConnectedPort, lbComPortSetting, txtComPort
+    global appWindow, cfg_SpeedUnit, cfg_Port, oldComPortText, btnSpeedUnits, btnReconnect, lbConnectedPort, lbComPortSetting, txtComPort
     appWindow=ac.newApp("AC SLI")
-    ac.setSize(appWindow,250,200)
+    ac.setSize(appWindow,250,180)
     ac.drawBorder(appWindow,0)
     ac.setBackgroundOpacity(appWindow,0) 
     
     loadConfig()  
-    updateCom = 1
   
         
     lbConnectedPort = ac.addLabel(appWindow, "Connected COM Port: {}".format(cfg_Port))
-    ac.setPosition(lbConnectedPort,30,40)
+    ac.setPosition(lbConnectedPort,15,40)
     ac.setSize(lbConnectedPort,220,20)
+    ac.setFontAlignment(lbConnectedPort, "center")
     
-    btnReconnect = ac.addButton(appWindow, "Reconnect COM Port")
+    btnReconnect = ac.addButton(appWindow, "Reconnect/Re-Scan COM Port(s)")
     ac.addOnClickedListener(btnReconnect, bFunc_ReconnectCOM)
     ac.setPosition(btnReconnect,15,70)
     ac.setSize(btnReconnect,220,20)
        
        
     lbComPortSetting = ac.addLabel(appWindow, "COM Port Setting: ")
-    ac.setPosition(lbComPortSetting,30,130)
+    ac.setPosition(lbComPortSetting,30,100)
     ac.setSize(lbComPortSetting,220,20)
-    
+        
     txtComPort = ac.addTextInput(appWindow,"COMx")
-    ac.setPosition(txtComPort,157,131)
-    ac.setSize(txtComPort,50,20)
-    ac.addOnValidateListener(txtComPort,txtFunc_ComSetting)
+    ac.setPosition(txtComPort,157,101)
+    ac.setSize(txtComPort,51,20)
+    ac.setFontAlignment(txtComPort, "center")
     ac.setText(txtComPort, cfg_Port)
+    oldComPortText = cfg_Port
     
     btnSpeedUnits = ac.addButton(appWindow, "Speed Units: {}".format(cfg_SpeedUnit))
     ac.addOnClickedListener(btnSpeedUnits, bFunc_SpeedUnits)
-    ac.setPosition(btnSpeedUnits,15,160)
+    ac.setPosition(btnSpeedUnits,15,140)
     ac.setSize(btnSpeedUnits,220,20)
     
     
@@ -95,9 +98,9 @@ def acMain(ac_version):
 
     
 def acUpdate(deltaT):   
-    global ticker, ser, max_rpm, max_fuel, sim_info, cfg_SpeedUnit, cfg_Port, updateCom
+    global ticker, run, ser, max_rpm, max_fuel, sim_info, cfg_SpeedUnit, cfg_Port, oldComPortText
     
-    if ticker == 2:
+    if run == 1 and ticker % 3 == 0:
         ac_gear = ac.getCarState(0, acsys.CS.Gear)
         ac_speed = round(ac.getCarState(0, acsys.CS.SpeedMPH)) if cfg_SpeedUnit == "MPH" else round(ac.getCarState(0, acsys.CS.SpeedKMH))
         rpms = ac.getCarState(0, acsys.CS.RPM)
@@ -127,16 +130,21 @@ def acUpdate(deltaT):
             
         key = bytes([255,ac_gear,((int(ac_speed) >> 8) & 0x00FF),(int(ac_speed) & 0x00FF),((int(rpms) >> 8) & 0x00FF),(int(rpms) & 0x00FF),fuel,shift,engine,lapCount, int(b1)])
         x = ser.write(key)
-        
-        ticker = 0
-                
-    else:
-        if ticker < 3:
-            ticker = ticker + 1
+     
+    
+    if ticker == 30:
+        ticker = 0  
 
-    if updateCom == 2:
-        ac.setText(txtComPort, cfg_Port)
-        updateCom = 1           
+        text = ac.getText(txtComPort).upper()
+        if not text == oldComPortText:
+            cfg_Port = text
+            ac.setText(txtComPort, cfg_Port)
+            cfg.updateOption("SETTINGS", "port", cfg_Port)
+            ac.console("Update COM Port Setting To: {}".format(cfg_Port))
+            oldComPortText = text
+        
+    else:
+        ticker = ticker + 1          
     
     
     
@@ -159,18 +167,18 @@ def loadConfig():
         
 
 def connectCOM():
-    global ser, port, cfg_Port, ticker
+    global ser, port, cfg_Port, ticker, run, lstComPorts
     
     portValid = False
     for sPort, desc, hwid in sorted(serial.tools.list_ports.comports()):
+        ac.console("%s: %s [%s]" % (sPort, desc, hwid))
+        
         if cfg_Port == "AUTO":
             if "Arduino" in desc:
-                ac.console("%s: %s [%s]" % (sPort, desc, hwid))
                 port = sPort
                 portValid = True
         else:                                                                                                   
             if cfg_Port == sPort:
-                ac.console("%s: %s [%s]" % (sPort, desc, hwid))
                 port = sPort
                 portValid = True
         
@@ -178,11 +186,11 @@ def connectCOM():
             break
                 
     if portValid:
-        ticker = 0
+        run = 1
         ser = serial.Serial(port, 9600)
         ac.console("acSLI: connected to {}".format(port))
     else:
-        ticker = 3
+        run = 0
         port = "----"
         if cfg_Port == "AUTO": 
             ac.console("acSLI: No Arduino Detected")
@@ -190,16 +198,6 @@ def connectCOM():
             ac.console("acSLI: Invalid COM Port")
     
     ac.setText(lbConnectedPort, "Connected COM Port: {}".format(port))
-    
-
-def txtFunc_ComSetting(string):
-    global txtComPort, cfg_Port, updateCom
-    text = ac.getText(txtComPort).upper()
-    
-    cfg_Port = text
-    updateCom = 2
-    cfg.updateOption("SETTINGS", "port", cfg_Port)
-    ac.console("Update COM Port Setting To: {}".format(cfg_Port))
 
     
 def bFunc_ReconnectCOM(dummy, variables):
