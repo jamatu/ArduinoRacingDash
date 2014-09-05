@@ -140,7 +140,7 @@ def acUpdate(deltaT):
             cfg_Port = text
             ac.setText(txtComPort, cfg_Port)
             cfg.updateOption("SETTINGS", "port", cfg_Port)
-            ac.console("Update COM Port Setting To: {}".format(cfg_Port))
+            #ac.console("Update COM Port Setting To: {}".format(cfg_Port))
             oldComPortText = text
         
     else:
