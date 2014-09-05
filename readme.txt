@@ -51,7 +51,8 @@ Install -- AC
 ***App should detect which com port your arduino is on automatically, by pressing 'home' whilst driving you can 
    see the log in the console to see which com port it has connected to, OR looking on the gui (v1.6+)
   *IF app doesn't connect to the correct com port you can override it in the gui by changing the text in the input 
-   box (remember to press enter, box is a bit weird if you don't)
+   box (remember to press enter, box is a bit weird if you don't), you can find which COM port you need to connect 
+   to by looking in the console at the avalible ports, (if unsure trial and error).
 
 
 Install -- iRacing

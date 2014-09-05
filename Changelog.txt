@@ -1,5 +1,9 @@
-AC SLI ChangeLog
+Arduino Racing Dash ChangeLog
 --------------------																																																									
+
+v1.6.1:
+	Fixed text input to be much more reliable
+	Prints all avalible COM Ports to console when connecting to make manually connecting easier 
 
 v1.6:
 	Added initial gui in sim to change/reconnect com ports, com port settings and units on the fly
