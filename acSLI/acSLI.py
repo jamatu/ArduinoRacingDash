@@ -27,7 +27,7 @@ from libs.sim_info import SimInfo
 from libs.utils import Config
 
 #################
-Version = "1.6.1"
+Version = "1.6.2"
 #################
 
 sim_info = SimInfo()
@@ -38,25 +38,29 @@ ticker = 0
 run = 0
 port = 0
 oldComPortText = 0
+oldStartPageText = 0
 
 cfg = 0
 cfg_Path = "config.ini"
 cfg_Port = "AUTO"
 cfg_SpeedUnit = "MPH"
+cfg_StartPage = 0
 
 max_rpm = 0
 max_fuel = 0
 
 lbConnectedPort = 0
 lbComPortSetting = 0
+lbStartPageSetting = 0
 btnSpeedUnits = 0
 btnReconnect = 0
 txtComPort = 0
+txtStartPage = 0
 
 def acMain(ac_version):
-    global appWindow, cfg_SpeedUnit, cfg_Port, oldComPortText, btnSpeedUnits, btnReconnect, lbConnectedPort, lbComPortSetting, txtComPort
+    global appWindow, cfg_SpeedUnit, cfg_Port, oldComPortText, oldStartPageText, btnSpeedUnits, btnReconnect, lbConnectedPort, lbComPortSetting, lbStartPageSetting, txtComPort, txtStartPage
     appWindow=ac.newApp("AC SLI")
-    ac.setSize(appWindow,250,180)
+    ac.setSize(appWindow,250,210)
     ac.drawBorder(appWindow,0)
     ac.setBackgroundOpacity(appWindow,0) 
     
@@ -71,8 +75,7 @@ def acMain(ac_version):
     btnReconnect = ac.addButton(appWindow, "Reconnect/Re-Scan COM Port(s)")
     ac.addOnClickedListener(btnReconnect, bFunc_ReconnectCOM)
     ac.setPosition(btnReconnect,15,70)
-    ac.setSize(btnReconnect,220,20)
-       
+    ac.setSize(btnReconnect,220,20)     
        
     lbComPortSetting = ac.addLabel(appWindow, "COM Port Setting: ")
     ac.setPosition(lbComPortSetting,30,100)
@@ -85,10 +88,22 @@ def acMain(ac_version):
     ac.setText(txtComPort, cfg_Port)
     oldComPortText = cfg_Port
     
+    
     btnSpeedUnits = ac.addButton(appWindow, "Speed Units: {}".format(cfg_SpeedUnit))
     ac.addOnClickedListener(btnSpeedUnits, bFunc_SpeedUnits)
     ac.setPosition(btnSpeedUnits,15,140)
     ac.setSize(btnSpeedUnits,220,20)
+    
+    lbStartPageSetting = ac.addLabel(appWindow, "Default Dash Page: ")
+    ac.setPosition(lbStartPageSetting,30,170)
+    ac.setSize(lbStartPageSetting,220,20)
+        
+    txtStartPage = ac.addTextInput(appWindow,"Page")
+    ac.setPosition(txtStartPage,160,171)
+    ac.setSize(txtStartPage,21,20)
+    ac.setFontAlignment(txtStartPage, "center")
+    ac.setText(txtStartPage, cfg_StartPage)
+    oldStartPageText = cfg_StartPage
     
     
     connectCOM()
@@ -98,7 +113,7 @@ def acMain(ac_version):
 
     
 def acUpdate(deltaT):   
-    global ticker, run, ser, max_rpm, max_fuel, sim_info, cfg_SpeedUnit, cfg_Port, oldComPortText
+    global ticker, run, ser, max_rpm, max_fuel, sim_info, cfg_SpeedUnit, cfg_StartPage, cfg_Port, cfg_StartPage, oldComPortText, oldStartPageText
     
     if run == 1 and ticker % 3 == 0:
         ac_gear = ac.getCarState(0, acsys.CS.Gear)
@@ -128,7 +143,7 @@ def acUpdate(deltaT):
         boost = round(ac.getCarState(0, acsys.CS.TurboBoost), 1)
         b1 = boost*10
             
-        key = bytes([255,ac_gear,((int(ac_speed) >> 8) & 0x00FF),(int(ac_speed) & 0x00FF),((int(rpms) >> 8) & 0x00FF),(int(rpms) & 0x00FF),fuel,shift,engine,lapCount, int(b1)])
+        key = bytes([(255 - int(cfg_StartPage)),ac_gear,((int(ac_speed) >> 8) & 0x00FF),(int(ac_speed) & 0x00FF),((int(rpms) >> 8) & 0x00FF),(int(rpms) & 0x00FF),fuel,shift,engine,lapCount, int(b1)])
         x = ser.write(key)
      
     
@@ -139,9 +154,20 @@ def acUpdate(deltaT):
         if not text == oldComPortText:
             cfg_Port = text
             ac.setText(txtComPort, cfg_Port)
-            cfg.updateOption("SETTINGS", "port", cfg_Port)
-            #ac.console("Update COM Port Setting To: {}".format(cfg_Port))
+            cfg.updateOption("SETTINGS", "port", cfg_Port, True)
             oldComPortText = text
+            #ac.console("Update COM Port Setting To: {}".format(cfg_Port))
+            
+        num = ac.getText(txtStartPage)
+        if not num == oldStartPageText:
+            if num.isdigit() and int(num) > -1 and int(num) < 6:
+                cfg_StartPage = num
+                ac.setText(txtStartPage, cfg_StartPage)
+                cfg.updateOption("SETTINGS", "startupPage", cfg_StartPage, True)
+                oldStartPageText = num
+                ac.console("Update Default Page Setting To: {}".format(cfg_StartPage))
+            else:
+                ac.setText(txtStartPage, "")
         
     else:
         ticker = ticker + 1          
@@ -154,12 +180,16 @@ def acShutdown():
     
     
 def loadConfig():
-    global appPath, cfg, cfg_Path, cfg_Port, cfg_SpeedUnit
+    global appPath, cfg, cfg_Path, cfg_Port, cfg_SpeedUnit, cfg_StartPage
     
     try:
-        cfg = Config(appPath + cfg_Path)
-        cfg_Port = cfg.getOption("SETTINGS", "port").upper()
-        cfg_SpeedUnit = cfg.getOption("SETTINGS", "unitSpeed").upper()
+        cfg = Config(appPath + cfg_Path)              
+        cfg_Port = str(cfg.getOption("SETTINGS", "port")).upper() if str(cfg.getOption("SETTINGS", "port")).upper() != "-1" else cfg_Port
+        cfg_SpeedUnit = str(cfg.getOption("SETTINGS", "unitSpeed")).upper() if str(cfg.getOption("SETTINGS", "unitSpeed")).upper() != "-1" else cfg_SpeedUnit
+        cfg_StartPage = str(cfg.getOption("SETTINGS", "startupPage")) if str(cfg.getOption("SETTINGS", "startupPage")) != "-1" else cfg_StartPage
+        
+        if not(cfg_StartPage.isdigit() or int(num) > -1 or int(num) < 6):
+            cfg_StartPage = 0
     
     except Exception as e:
         ac.console("acSLI: Error in loading Config File: %s" % e)
@@ -216,5 +246,5 @@ def bFunc_SpeedUnits(dummy, variables):
         cfg_SpeedUnit = "MPH"
 
     ac.setText(btnSpeedUnits, "Speed Units: {}".format(cfg_SpeedUnit))
-    cfg.updateOption("SETTINGS", "unitSpeed", cfg_SpeedUnit)
+    cfg.updateOption("SETTINGS", "unitSpeed", cfg_SpeedUnit, True)
     ac.console("acSLI: speed units toggle to {}".format(cfg_SpeedUnit))

@@ -8,6 +8,7 @@
 #######################################################
 
 import ac
+import os.path
 import configparser
 
 class Config:
@@ -15,6 +16,9 @@ class Config:
     def __init__(self, filePath):
         self.file = filePath
         self.parser = 0
+        
+        if not os.path.isfile(self.file):
+            open(self.file, 'a').close()
         
         try:
             self.parser = configparser.RawConfigParser()
@@ -76,7 +80,7 @@ class Config:
             ac.console("Utils.Config.addOption -- Option '" + option + "' is blank or already exists in section '" + section + "'.")
     
     
-    def updateOption(self, section = None, option = None, value = None):
+    def updateOption(self, section = None, option = None, value = None, create = False):
         if self.hasOption(section, option):
             if value is not None:
                 self.parser.set(section, option, value)
@@ -84,7 +88,10 @@ class Config:
             else:
                 ac.console("Utils.Config.updateOption -- Value cannot be null")
         else:
-            ac.console("Utils.Config.updateOption -- Option '" + option + "' in section '" + section + "' doesn't exist.")
+            if create:
+                self.addOption(section, option, value)
+            else:
+                ac.console("Utils.Config.updateOption -- Option '" + option + "' in section '" + section + "' doesn't exist.")
         
     
     def getOption(self, section, option, type = ""):
