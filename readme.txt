@@ -73,10 +73,10 @@ iRacing - advanced
 ------------------
 app can except start args to allow for easy starting without using any of the apps buttons
 
-example using a .bat file to launch the client, set COM port to COM5 and set speed units to KPH:
+example using a .bat file to launch the client, set COM port to COM5, set speed units to KPH and set display intensity to 2:
 ##
 cd SLI Dash\iRacing Client
-start iRacingSLI.exe --Port COM5 --Unit MPH
+start iRacingSLI.exe --Port COM5 --Unit MPH --Intensity 2
 ##
 
 
