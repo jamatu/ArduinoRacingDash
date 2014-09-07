@@ -44,12 +44,15 @@
             this.trkShift = new System.Windows.Forms.TrackBar();
             this.chkDebug = new System.Windows.Forms.CheckBox();
             this.chkSpeedUnits = new System.Windows.Forms.CheckBox();
+            this.trkIntensity = new System.Windows.Forms.TrackBar();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trkBoost)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkLap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkFuel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkGear)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkShift)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trkIntensity)).BeginInit();
             this.SuspendLayout();
             // 
             // tmr
@@ -115,7 +118,7 @@
             this.groupBox1.Controls.Add(this.trkFuel);
             this.groupBox1.Controls.Add(this.trkGear);
             this.groupBox1.Controls.Add(this.trkShift);
-            this.groupBox1.Location = new System.Drawing.Point(11, 171);
+            this.groupBox1.Location = new System.Drawing.Point(11, 217);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(192, 325);
             this.groupBox1.TabIndex = 9;
@@ -229,7 +232,7 @@
             // 
             this.chkDebug.AutoSize = true;
             this.chkDebug.Enabled = false;
-            this.chkDebug.Location = new System.Drawing.Point(11, 140);
+            this.chkDebug.Location = new System.Drawing.Point(11, 191);
             this.chkDebug.Name = "chkDebug";
             this.chkDebug.Size = new System.Drawing.Size(87, 17);
             this.chkDebug.TabIndex = 10;
@@ -241,7 +244,7 @@
             // 
             this.chkSpeedUnits.AutoSize = true;
             this.chkSpeedUnits.Enabled = false;
-            this.chkSpeedUnits.Location = new System.Drawing.Point(116, 140);
+            this.chkSpeedUnits.Location = new System.Drawing.Point(116, 191);
             this.chkSpeedUnits.Name = "chkSpeedUnits";
             this.chkSpeedUnits.Size = new System.Drawing.Size(93, 17);
             this.chkSpeedUnits.TabIndex = 11;
@@ -249,13 +252,33 @@
             this.chkSpeedUnits.UseVisualStyleBackColor = true;
             this.chkSpeedUnits.CheckedChanged += new System.EventHandler(this.chkSpeedUnits_CheckedChanged);
             // 
+            // trkIntensity
+            // 
+            this.trkIntensity.LargeChange = 1;
+            this.trkIntensity.Location = new System.Drawing.Point(11, 155);
+            this.trkIntensity.Maximum = 7;
+            this.trkIntensity.Name = "trkIntensity";
+            this.trkIntensity.Size = new System.Drawing.Size(192, 45);
+            this.trkIntensity.TabIndex = 12;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(20, 139);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(46, 13);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "Intensity";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(215, 162);
+            this.ClientSize = new System.Drawing.Size(215, 212);
             this.Controls.Add(this.chkSpeedUnits);
             this.Controls.Add(this.chkDebug);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.trkIntensity);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblConn);
@@ -274,6 +297,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trkFuel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkGear)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkShift)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trkIntensity)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -301,6 +325,8 @@
         private System.Windows.Forms.TrackBar trkBoost;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.CheckBox chkSpeedUnits;
+        private System.Windows.Forms.TrackBar trkIntensity;
+        private System.Windows.Forms.Label label7;
     }
 }
 

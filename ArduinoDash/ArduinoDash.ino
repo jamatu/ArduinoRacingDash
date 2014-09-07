@@ -6,8 +6,8 @@ TM1638 module(8, 7, 9, true, 0); // last digit is display intensity, 0 (low) - 7
 word ledsLong [17] = {0, 1, 3, 7, 15, 31, 63, 127, 255, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160};
 word ledsShort [9] = {0, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160};
 
-byte base, buttons, oldbuttons, page, oldpage;
-int intensity, ledNum, pitLimiterColor;
+byte bsettings, base, buttons, oldbuttons, page, oldpage;
+int intensity, oldintensity, ledNum, pitLimiterColor;
 byte gear, spd_h, spd_l, shift, rpm_h, rpm_l, engine, lap;
 String boost;
 int fuel, spd;
@@ -25,6 +25,7 @@ void setup() {
         blinkrpm = false;
         ledOff = false;
         intensity = 0; // set this to match the intensity used on line 3
+        oldintensity = 0;
         ledNum = 16; // Default number of LEDs to use, 8 or 16
         pitLimiterColor = 0xFF00; // 0xFF00 = green, 0x00FF = red
 }
@@ -33,12 +34,7 @@ void loop() {
 	if (Serial.available() > 0) {
 		if (Serial.available() > 12) {
 			if (Serial.read() == 255) {
-                                base = Serial.read();
-                                if (page == 0) {
-                                    page = base;
-                                    oldbuttons = page; 
-                                }  
-                                
+                                bsettings = Serial.read();                                
 				gear = Serial.read();
 				spd_h = Serial.read();
                                 spd_l = Serial.read();
@@ -53,6 +49,17 @@ void loop() {
 				engine = Serial.read();
                                 lap = Serial.read();
                                 boost = String(Serial.read());
+                                
+                                base = bsettings & 15;
+                                intensity = (bsettings & 240) >> 4;
+                                if (intensity != oldintensity) {   
+                                  module.setupDisplay(true, intensity);  
+                                }
+                                
+                                if (page == 0) {
+                                    page = base;
+                                    oldbuttons = page; 
+                                } 
                                 
                                 spd = (spd_h << 8) | spd_l;
 				rpm = (rpm_h << 8) | rpm_l;

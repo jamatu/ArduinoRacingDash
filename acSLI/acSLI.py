@@ -27,7 +27,7 @@ from libs.sim_info import SimInfo
 from libs.utils import Config
 
 #################
-Version = "1.6.3"
+Version = "1.7 PRE"
 #################
 
 sim_info = SimInfo()
@@ -45,6 +45,7 @@ cfg_Path = "config.ini"
 cfg_Port = "AUTO"
 cfg_SpeedUnit = "MPH"
 cfg_StartPage = 0
+cfg_Intensity = 0
 
 max_rpm = 0
 max_fuel = 0
@@ -56,11 +57,12 @@ btnSpeedUnits = 0
 btnReconnect = 0
 txtComPort = 0
 txtStartPage = 0
+spnIntensity = 0
 
 def acMain(ac_version):
-    global appWindow, cfg_SpeedUnit, cfg_Port, oldComPortText, oldStartPageText, btnSpeedUnits, btnReconnect, lbConnectedPort, lbComPortSetting, lbStartPageSetting, txtComPort, txtStartPage
+    global appWindow, cfg_SpeedUnit, cfg_Port, oldComPortText, oldStartPageText, btnSpeedUnits, btnReconnect, lbConnectedPort, lbComPortSetting, lbStartPageSetting, txtComPort, txtStartPage, spnIntensity
     appWindow=ac.newApp("AC SLI")
-    ac.setSize(appWindow,250,210)
+    ac.setSize(appWindow,250,244)
     ac.drawBorder(appWindow,0)
     ac.setBackgroundOpacity(appWindow,0) 
     
@@ -74,15 +76,15 @@ def acMain(ac_version):
     
     btnReconnect = ac.addButton(appWindow, "Reconnect/Re-Scan COM Port(s)")
     ac.addOnClickedListener(btnReconnect, bFunc_ReconnectCOM)
-    ac.setPosition(btnReconnect,15,70)
+    ac.setPosition(btnReconnect,15,68)
     ac.setSize(btnReconnect,220,20)     
        
     lbComPortSetting = ac.addLabel(appWindow, "COM Port Setting: ")
-    ac.setPosition(lbComPortSetting,30,100)
+    ac.setPosition(lbComPortSetting,30,96)
     ac.setSize(lbComPortSetting,220,20)
         
     txtComPort = ac.addTextInput(appWindow,"COMx")
-    ac.setPosition(txtComPort,157,101)
+    ac.setPosition(txtComPort,157,97)
     ac.setSize(txtComPort,51,20)
     ac.setFontAlignment(txtComPort, "center")
     ac.setText(txtComPort, cfg_Port)
@@ -91,20 +93,26 @@ def acMain(ac_version):
     
     btnSpeedUnits = ac.addButton(appWindow, "Speed Units: {}".format(cfg_SpeedUnit))
     ac.addOnClickedListener(btnSpeedUnits, bFunc_SpeedUnits)
-    ac.setPosition(btnSpeedUnits,15,140)
+    ac.setPosition(btnSpeedUnits,15,138)
     ac.setSize(btnSpeedUnits,220,20)
     
     lbStartPageSetting = ac.addLabel(appWindow, "Default Dash Page: ")
-    ac.setPosition(lbStartPageSetting,30,170)
+    ac.setPosition(lbStartPageSetting,30,166)
     ac.setSize(lbStartPageSetting,220,20)
         
     txtStartPage = ac.addTextInput(appWindow,"Page")
-    ac.setPosition(txtStartPage,160,171)
+    ac.setPosition(txtStartPage,160,167)
     ac.setSize(txtStartPage,21,20)
     ac.setFontAlignment(txtStartPage, "center")
     ac.setText(txtStartPage, cfg_StartPage)
     oldStartPageText = cfg_StartPage
     
+    spnIntensity = ac.addSpinner(appWindow, "Display Intensity")
+    ac.setPosition(spnIntensity,15,212)
+    ac.setSize(spnIntensity,220,20)
+    ac.setRange(spnIntensity, 0,7)
+    ac.setValue(spnIntensity, cfg_Intensity)
+    ac.addOnValueChangeListener(spnIntensity, bFunc_ChangeIntensity)
     
     connectCOM()
     
@@ -142,8 +150,10 @@ def acUpdate(deltaT):
 
         boost = round(ac.getCarState(0, acsys.CS.TurboBoost), 1)
         b1 = boost*10
-            
-        key = bytes([255, int(math.pow(2, int(cfg_StartPage)-1)),ac_gear,((int(ac_speed) >> 8) & 0x00FF),(int(ac_speed) & 0x00FF),((int(rpms) >> 8) & 0x00FF),(int(rpms) & 0x00FF),fuel,shift,engine,lapCount, int(b1)])
+        
+        bSetting = int(int(ac.getValue(spnIntensity)) << 4) | int(math.pow(2, int(cfg_StartPage)-1))
+        
+        key = bytes([255, bSetting,ac_gear,((int(ac_speed) >> 8) & 0x00FF),(int(ac_speed) & 0x00FF),((int(rpms) >> 8) & 0x00FF),(int(rpms) & 0x00FF),fuel,shift,engine,lapCount, int(b1)])
         x = ser.write(key)
      
     
@@ -180,13 +190,14 @@ def acShutdown():
     
     
 def loadConfig():
-    global appPath, cfg, cfg_Path, cfg_Port, cfg_SpeedUnit, cfg_StartPage
+    global appPath, cfg, cfg_Path, cfg_Port, cfg_SpeedUnit, cfg_StartPage, cfg_Intensity
     
     try:
         cfg = Config(appPath + cfg_Path)              
         cfg_Port = str(cfg.getOption("SETTINGS", "port")).upper() if str(cfg.getOption("SETTINGS", "port")).upper() != "-1" else cfg_Port
         cfg_SpeedUnit = str(cfg.getOption("SETTINGS", "unitSpeed")).upper() if str(cfg.getOption("SETTINGS", "unitSpeed")).upper() != "-1" else cfg_SpeedUnit
         cfg_StartPage = str(cfg.getOption("SETTINGS", "startupPage")) if str(cfg.getOption("SETTINGS", "startupPage")) != "-1" else cfg_StartPage
+        cfg_Intensity = str(cfg.getOption("SETTINGS", "intensity")) if str(cfg.getOption("SETTINGS", "intensity")) != "-1" else cfg_Intensity
         
         if not(cfg_StartPage.isdigit() or int(num) > -1 or int(num) < 6):
             cfg_StartPage = 0
@@ -229,6 +240,14 @@ def connectCOM():
     
     ac.setText(lbConnectedPort, "Connected COM Port: {}".format(port))
 
+
+def bFunc_ChangeIntensity(dummy):
+    global cfg, spnIntensity
+    
+    intensity = int(ac.getValue(spnIntensity))
+    cfg.updateOption("SETTINGS", "intensity", intensity, True)
+    ac.console("acSLI: update intensity to to {}".format(intensity))
+    
     
 def bFunc_ReconnectCOM(dummy, variables):
     global ser

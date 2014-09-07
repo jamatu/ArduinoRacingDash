@@ -1,6 +1,9 @@
 Arduino Racing Dash ChangeLog
 --------------------																																																									
 
+v1.7:
+	Added remotely configurable intensity, use "--Intensity x" for iRacing startup args
+
 v1.6.3:
 	AC client now makes its own config.ini so user settings are not lost when updating unless you delete config.ini, it won't be overwritten
 	Added default start page feature to AC

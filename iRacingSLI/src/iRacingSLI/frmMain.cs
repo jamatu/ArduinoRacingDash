@@ -34,7 +34,7 @@ namespace iRacingSLI {
             this.unitKPH = false;
             chkSpeedUnits.Enabled = true;
 
-            for (int i = 0; i < 4; i = i + 2)
+            for (int i = 0; i < 6; i = i + 2)
                 if (args.Length > i+1 && args[i] != null)
                 {
                     if (args[i] == "--Port")
@@ -44,6 +44,10 @@ namespace iRacingSLI {
                     if (args[i] == "--Unit")
                     {
                         this.processUnitArgs(args[i + 1]);
+                    }
+                    if (args[i] == "--Intensity")
+                    {
+                        trkIntensity.Value = Convert.ToInt16(args[i + 1]);
                     }
                 }
         }
@@ -69,6 +73,7 @@ namespace iRacingSLI {
                 else
                     Engine = 0x00;
 
+                
                 iSpeed = Convert.ToInt16(Speed);
                 iRPM = Convert.ToInt16(RPM);
                 iFuel = Convert.ToByte(Math.Round(Fuel));
@@ -76,7 +81,7 @@ namespace iRacingSLI {
                 if (Lap > 199) { Lap = 199; }
 
                 serialdata[0] = 255;
-                serialdata[1] = 0;
+                serialdata[1] = Convert.ToByte((trkIntensity.Value << 4) | 0);
                 serialdata[2] = Convert.ToByte(Gear + 1);
                 serialdata[3] = Convert.ToByte((iSpeed >> 8) & 0x00FF);
                 serialdata[4] = Convert.ToByte(iSpeed & 0x00FF);
@@ -88,6 +93,7 @@ namespace iRacingSLI {
                 serialdata[10] = Convert.ToByte(Lap);
                 serialdata[11] = Convert.ToByte(Boost);
 
+                //lblConn.Text = "s1: " + serialdata[1] + " : " + (serialdata[1] >> 4);
                 SP.Write(serialdata, 0, 12);
 
             } else {
@@ -116,7 +122,7 @@ namespace iRacingSLI {
                     if (Lap > 199) { Lap = 199; }
 
                     serialdata[0] = 255;
-                    serialdata[1] = 0;
+                    serialdata[1] = Convert.ToByte((trkIntensity.Value << 4) | 0);
                     serialdata[2] = Convert.ToByte(Gear + 1);
                     serialdata[3] = Convert.ToByte((iSpeed >> 8) & 0x00FF);
                     serialdata[4] = Convert.ToByte(iSpeed & 0x00FF);
@@ -168,9 +174,9 @@ namespace iRacingSLI {
 
         private void chkDebug_CheckedChanged(object sender, EventArgs e) {
             if (chkDebug.Checked == true) {
-                this.Height = 545;
+                this.Height = 590;
             } else {
-                this.Height = 200;
+                this.Height = 245;
             }
 
         }
