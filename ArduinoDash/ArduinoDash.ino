@@ -7,8 +7,8 @@ word ledsLong [17] = {0, 1, 3, 7, 15, 31, 63, 127, 255, 256, 768, 1792, 3840, 79
 word ledsShort [9] = {0, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160};
 
 byte bsettings, base, buttons, oldbuttons, page, oldpage;
-int intensity, oldintensity, ledNum, pitLimiterColor;
-byte gear, spd_h, spd_l, shift, rpm_h, rpm_l, engine, lap;
+int intensity, oldintensity, ledNum, pitLimiterColor, deltaneg, delta;
+byte gear, spd_h, spd_l, shift, rpm_h, rpm_l, delta_h, delta_l, engine, lap;
 String boost;
 int fuel, spd;
 word rpm;
@@ -32,7 +32,7 @@ void setup() {
 
 void loop() {
 	if (Serial.available() > 0) {
-		if (Serial.available() > 12) {
+		if (Serial.available() > 14) {
 			if (Serial.read() == 255) {
                                 bsettings = Serial.read();                                
 				gear = Serial.read();
@@ -49,9 +49,12 @@ void loop() {
 				engine = Serial.read();
                                 lap = Serial.read();
                                 boost = String(Serial.read());
+                                delta_h = Serial.read();
+				delta_l = Serial.read();
                                 
                                 base = bsettings & 15;
-                                intensity = (bsettings & 240) >> 4;
+                                intensity = (bsettings & 112) >> 4;
+                                deltaneg = (bsettings & 128) >> 7;
                                 if (intensity != oldintensity) {   
                                   module.setupDisplay(true, intensity);  
                                 }
@@ -63,6 +66,7 @@ void loop() {
                                 
                                 spd = (spd_h << 8) | spd_l;
 				rpm = (rpm_h << 8) | rpm_l;
+                                delta = (delta_h << 8)| delta_l;
                          }
 		}
 	}
@@ -85,17 +89,17 @@ void loop() {
                             case 2: // button 2 - lap & gear & fuel
                                 module.setDisplayToString("L G FUEL", 0, 0);
                                 break;
-                            case 4: // button 2 - lap & gear & boost
+                            case 4: // button 3 - lap & gear & boost
                                 module.setDisplayToString("L G  BST", 0, 0);
                                 break;
-                            case 8: // button3 - boost & gear & speed
+                            case 8: // button 4 - boost & gear & speed
                                 module.setDisplayToString("BST G SP", 0, 0);
                                 break;
-                            case 16: // button4 - boost & rpm
+                            case 16: // button 5 - boost & rpm
                                 module.setDisplayToString(" G   ENG", 0, 0);
                                 break;
-                            case 32:
-                                page = oldpage;
+                            case 32: // button 6 - gear & lap delta
+                                module.setDisplayToString("  G DELTA", 0, 0);
                                 break;
                             case 64:
                                 page = oldpage;
@@ -286,7 +290,40 @@ void loop() {
                                 }
                                 
                                 break;  
-                        }                      
+                        } 
+   
+                        case 32:{ // gear & delta
+                                                                                       
+                                //Gear
+                                if (gear == 0) 
+        			    module.setDisplayToString("R", 0, 2);
+                                else if (gear == 1)
+                                    module.setDisplayToString("N", 0, 2);
+                                else
+                                    module.setDisplayToString(String(gear - 1, DEC), 0, 2);                               
+                                
+                                //Delta
+                                if (deltaneg == 1) {
+                                  module.setDisplayToString("-", 0, 4);
+                                } else {
+                                  module.clearDisplayDigit(4, false);
+                                }
+                                
+                                if (delta < 10){
+                                  module.setDisplayDigit(0, 5, 1);
+                                  module.setDisplayDigit(0, 6, 0);
+                                  module.setDisplayDigit(String(delta).charAt(0), 7, 0);
+                                } else if (delta < 100) {
+                                  module.setDisplayDigit(0, 5, 1);
+                                  module.setDisplayDigit(String(delta).charAt(0), 6, 0);
+                                  module.setDisplayDigit(String(delta).charAt(1), 7, 0);
+                                } else {
+                                  module.setDisplayDigit(String(delta).charAt(0), 5, 1);
+                                  module.setDisplayDigit(String(delta).charAt(1), 6, 0);
+                                  module.setDisplayDigit(String(delta).charAt(2), 7, 0);
+                                }
+                                break;
+                        }                     
         	}
         } else {
             if ((millis() - milstart) > 2000) {
