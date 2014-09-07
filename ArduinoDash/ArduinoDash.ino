@@ -96,11 +96,9 @@ void loop() {
                                 break;
                             case 32:
                                 page = oldpage;
-                                changed = false;
                                 break;
                             case 64:
                                 page = oldpage;
-                                changed = false;
                                 break;
                             case 128:
                                 page = oldpage;
@@ -334,28 +332,13 @@ void loop() {
             }
         }  
         
-        // button 6 - toggle number of LEDs to use
-        if (module.getButtons() == 0b00100000){
+        // button 8 - toggle number of LEDs to use
+        if (module.getButtons() == 0b10000000){
            if (ledNum == 8){
               ledNum = 16;
            }else{
               ledNum = 8;
            }
            delay(200);
-        }
-        
-        // button 7 - increase intensity
-        if (intensity < 7 & module.getButtons() == 0b01000000){
-           intensity++;
-           module.setupDisplay(true, intensity);
-           delay(200);
-        }
-        
-        // button 8 - decrease intensity
-        if (intensity > 0 & module.getButtons() == 0b10000000){
-           intensity--;
-           module.setupDisplay(true, intensity);
-           delay(200);
-        }                       
-        
+        }                              
 }
