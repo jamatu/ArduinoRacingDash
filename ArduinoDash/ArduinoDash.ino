@@ -59,8 +59,8 @@ void loop() {
                                   module.setupDisplay(true, intensity);  
                                 }
                                 
-                                if (page == 0) {
-                                    page = base;
+                                if (page == 0 && base > 0) {
+                                    page = 1 << (base-1);
                                     oldbuttons = page; 
                                 } 
                                 

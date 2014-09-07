@@ -157,7 +157,7 @@ def acUpdate(deltaT):
             deltaNeg = 1
         delta = abs(delta) * 100
         
-        bSetting = int(deltaNeg << 7) | int(int(ac.getValue(spnIntensity)) << 4) | int(math.pow(2, int(cfg_StartPage)-1))
+        bSetting = int(deltaNeg << 7) | int(int(ac.getValue(spnIntensity)) << 4) | int(cfg_StartPage)
         
         key = bytes([255, bSetting,ac_gear,((int(ac_speed) >> 8) & 0x00FF),(int(ac_speed) & 0x00FF),((int(rpms) >> 8) & 0x00FF),(int(rpms) & 0x00FF),fuel,shift,engine,lapCount, int(b1), ((int(delta) >> 8) & 0x00FF),(int(delta) & 0x00FF)])
         x = ser.write(key)
