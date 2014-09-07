@@ -73,7 +73,7 @@ namespace iRacingSLI {
                 else
                     Engine = 0x00;
 
-                if (Delta < 0)
+                if (Delta <= 0)
                 {
                     DeltaNeg = 1;
                     Delta = Delta * -1;
@@ -123,7 +123,7 @@ namespace iRacingSLI {
                     Lap = Convert.ToInt32(sdk.GetData("Lap"));
                     Delta = Convert.ToInt16(Math.Round(Convert.ToSingle(sdk.GetData("LapDeltaToBestLap")) * 100));
 
-                    if (Delta < 0)
+                    if (Delta <= 0)
                     {
                         DeltaNeg = 1;
                         Delta = Delta * -1;

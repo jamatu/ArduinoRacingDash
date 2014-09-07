@@ -99,10 +99,10 @@ void loop() {
                                 module.setDisplayToString(" G   ENG", 0, 0);
                                 break;
                             case 32: // button 6 - gear & lap delta
-                                module.setDisplayToString("  G DELTA", 0, 0);
+                                module.setDisplayToString(" G DELTA", 0, 0);
                                 break;
                             case 64:
-                                page = oldpage;
+                                module.setDisplayToString("SP G DLT", 0, 0);
                                 break;
                             case 128:
                                 page = oldpage;
@@ -323,7 +323,53 @@ void loop() {
                                   module.setDisplayDigit(String(delta).charAt(2), 7, 0);
                                 }
                                 break;
-                        }                     
+                        }   
+      
+                        case 64:{ // speed & gear & short delta
+                        
+                                //speed
+                                if (spd < 10) {
+                                    module.setDisplayToString(String(spd, DEC), 0, 0);
+                                    module.clearDisplayDigit(1, false);
+                                    module.clearDisplayDigit(2, false);
+                                }else if (spd < 100){
+                                    module.setDisplayToString(String(spd, DEC), 0, 0); 
+                                    module.clearDisplayDigit(2, false); 
+                                }else if (spd >= 100){ 
+        			    module.setDisplayToString(String(spd, DEC), 0, 0);
+                                }  
+                                
+                                //Gear
+                                if (gear == 0) 
+        			    module.setDisplayToString("R", 0, 4);
+                                else if (gear == 1)
+                                    module.setDisplayToString("N", 0, 4);
+                                else
+                                    module.setDisplayToString(String(gear - 1, DEC), 0, 4);                               
+                                
+                                //Delta
+                                if (deltaneg == 1) {
+                                  module.setDisplayToString("-", 0, 5);
+                                } else {
+                                  module.clearDisplayDigit(5, false);
+                                }
+                                
+                                
+                                if (String(delta).charAt(String(delta).length()-1) >= 53){
+                                   delta = delta + 5; 
+                                }
+                                if (delta < 10){
+                                  module.setDisplayDigit(0, 6, 1);
+                                  module.setDisplayDigit(0, 7, 0);
+                                } else if (delta < 100) {
+                                  module.setDisplayDigit(0, 6, 1);
+                                  module.setDisplayDigit(String(delta, DEC).charAt(0), 7, 0);
+                                } else {
+                                  module.setDisplayDigit(String(delta, DEC).charAt(0), 6, 1);
+                                  module.setDisplayDigit(String(delta, DEC).charAt(1), 7, 0);
+                                }
+                                break;
+                        }                  
         	}
         } else {
             if ((millis() - milstart) > 2000) {

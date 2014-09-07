@@ -121,7 +121,7 @@ def acMain(ac_version):
 
     
 def acUpdate(deltaT):   
-    global ticker, run, ser, max_rpm, max_fuel, sim_info, cfg_SpeedUnit, cfg_StartPage, cfg_Port, cfg_StartPage, oldComPortText, oldStartPageText
+    global ticker, run, ser, max_rpm, max_fuel, sim_info, cfg_SpeedUnit, cfg_StartPage, cfg_Port, cfg_StartPage, oldComPortText, oldStartPageText, lbStartPageSetting
     
     if run == 1 and ticker % 3 == 0:
         ac_gear = ac.getCarState(0, acsys.CS.Gear)
@@ -151,9 +151,15 @@ def acUpdate(deltaT):
         boost = round(ac.getCarState(0, acsys.CS.TurboBoost), 1)
         b1 = boost*10
         
-        bSetting = int(int(ac.getValue(spnIntensity)) << 4) | int(math.pow(2, int(cfg_StartPage)-1))
+        delta = ac.getCarState(0, acsys.CS.PerformanceMeter)
+        deltaNeg = 0
+        if delta <= 0:
+            deltaNeg = 1
+        delta = abs(delta) * 100
         
-        key = bytes([255, bSetting,ac_gear,((int(ac_speed) >> 8) & 0x00FF),(int(ac_speed) & 0x00FF),((int(rpms) >> 8) & 0x00FF),(int(rpms) & 0x00FF),fuel,shift,engine,lapCount, int(b1)])
+        bSetting = int(deltaNeg << 7) | int(int(ac.getValue(spnIntensity)) << 4) | int(math.pow(2, int(cfg_StartPage)-1))
+        
+        key = bytes([255, bSetting,ac_gear,((int(ac_speed) >> 8) & 0x00FF),(int(ac_speed) & 0x00FF),((int(rpms) >> 8) & 0x00FF),(int(rpms) & 0x00FF),fuel,shift,engine,lapCount, int(b1), ((int(delta) >> 8) & 0x00FF),(int(delta) & 0x00FF)])
         x = ser.write(key)
      
     
@@ -170,7 +176,7 @@ def acUpdate(deltaT):
             
         num = ac.getText(txtStartPage)
         if not num == oldStartPageText:
-            if num.isdigit() and int(num) > -1 and int(num) < 6:
+            if num.isdigit() and int(num) > -1 and int(num) < 8:
                 cfg_StartPage = num
                 ac.setText(txtStartPage, cfg_StartPage)
                 cfg.updateOption("SETTINGS", "startupPage", cfg_StartPage, True)
