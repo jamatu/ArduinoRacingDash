@@ -355,7 +355,7 @@ void loop() {
                                 }
                                 
                                 
-                                if (String(delta).charAt(String(delta).length()-1) >= 53){
+                                if (String(delta).charAt(String(delta).length()-1) >= 53 && delta < 994){
                                    delta = delta + 5; 
                                 }
                                 if (delta < 10){
