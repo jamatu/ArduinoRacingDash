@@ -3,6 +3,7 @@ Arduino Racing Dash ChangeLog
 
 v1.7:
 	Added remotely configurable intensity, use "--Intensity x" for iRacing startup args
+	Added best lap delta to display on new pages 6 and 7, button 8 now changes shift light settings, intensity can only be changed from clients now
 
 v1.6.3:
 	AC client now makes its own config.ini so user settings are not lost when updating unless you delete config.ini, it won't be overwritten
