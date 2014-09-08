@@ -155,9 +155,9 @@ def acUpdate(deltaT):
         deltaNeg = 0
         if delta <= 0:
             deltaNeg = 1
-        delta = abs(delta) * 100
-        if delta > 999:
-            delta = 999
+        delta = abs(delta) * 1000
+        if delta > 9999:
+            delta = 9999
         
         bSetting = int(deltaNeg << 7) | int(int(ac.getValue(spnIntensity)) << 4) | int(cfg_StartPage)
         

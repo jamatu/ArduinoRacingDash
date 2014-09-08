@@ -296,31 +296,39 @@ void loop() {
                                                                                        
                                 //Gear
                                 if (gear == 0) 
-        			    module.setDisplayToString("R", 0, 2);
+        			    module.setDisplayToString("R", 0, 1);
                                 else if (gear == 1)
-                                    module.setDisplayToString("N", 0, 2);
+                                    module.setDisplayToString("N", 0, 1);
                                 else
-                                    module.setDisplayToString(String(gear - 1, DEC), 0, 2);                               
+                                    module.setDisplayToString(String(gear - 1, DEC), 0, 1);                               
                                 
                                 //Delta
                                 if (deltaneg == 1) {
-                                  module.setDisplayToString("-", 0, 4);
+                                  module.setDisplayToString("-", 0, 3);
                                 } else {
-                                  module.clearDisplayDigit(4, false);
+                                  module.clearDisplayDigit(3, false);
                                 }
                                 
                                 if (delta < 10){
-                                  module.setDisplayDigit(0, 5, 1);
+                                  module.setDisplayDigit(0, 4, 1);
+                                  module.setDisplayDigit(0, 5, 0);
                                   module.setDisplayDigit(0, 6, 0);
                                   module.setDisplayDigit(String(delta).charAt(0), 7, 0);
                                 } else if (delta < 100) {
-                                  module.setDisplayDigit(0, 5, 1);
+                                  module.setDisplayDigit(0, 4, 1);
+                                  module.setDisplayDigit(0, 5, 0);
                                   module.setDisplayDigit(String(delta).charAt(0), 6, 0);
                                   module.setDisplayDigit(String(delta).charAt(1), 7, 0);
-                                } else {
-                                  module.setDisplayDigit(String(delta).charAt(0), 5, 1);
+                                } else if (delta < 1000) {
+                                  module.setDisplayDigit(0, 4, 1);
+                                  module.setDisplayDigit(String(delta).charAt(0), 5, 0);
                                   module.setDisplayDigit(String(delta).charAt(1), 6, 0);
                                   module.setDisplayDigit(String(delta).charAt(2), 7, 0);
+                                } else {
+                                  module.setDisplayDigit(String(delta).charAt(0), 4, 1);
+                                  module.setDisplayDigit(String(delta).charAt(1), 5, 0);
+                                  module.setDisplayDigit(String(delta).charAt(2), 6, 0);
+                                  module.setDisplayDigit(String(delta).charAt(3), 7, 0);
                                 }
                                 break;
                         }   
@@ -354,14 +362,15 @@ void loop() {
                                   module.clearDisplayDigit(5, false);
                                 }
                                 
-                                
-                                if (String(delta).charAt(String(delta).length()-1) >= 53 && delta < 994){
-                                   delta = delta + 5; 
+                                if (String(delta).length() == 1) { 
+                                  delta = 0;
+                                } else if (String(delta).charAt(String(delta).length()-2) >= 53 && delta < 9949){
+                                   delta = delta + 50; 
                                 }
-                                if (delta < 10){
+                                if (delta < 100){
                                   module.setDisplayDigit(0, 6, 1);
                                   module.setDisplayDigit(0, 7, 0);
-                                } else if (delta < 100) {
+                                } else if (delta < 1000) {
                                   module.setDisplayDigit(0, 6, 1);
                                   module.setDisplayDigit(String(delta, DEC).charAt(0), 7, 0);
                                 } else {

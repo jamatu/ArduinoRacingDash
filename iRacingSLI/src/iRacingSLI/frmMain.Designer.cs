@@ -36,6 +36,8 @@
             this.lblConn = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.trkDelta = new System.Windows.Forms.TrackBar();
             this.label6 = new System.Windows.Forms.Label();
             this.trkBoost = new System.Windows.Forms.TrackBar();
             this.label5 = new System.Windows.Forms.Label();
@@ -51,16 +53,14 @@
             this.chkSpeedUnits = new System.Windows.Forms.CheckBox();
             this.trkIntensity = new System.Windows.Forms.TrackBar();
             this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.trkDelta = new System.Windows.Forms.TrackBar();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trkDelta)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkBoost)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkLap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkFuel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkGear)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkShift)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkIntensity)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trkDelta)).BeginInit();
             this.SuspendLayout();
             // 
             // tmr
@@ -134,6 +134,26 @@
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Debug mode";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(12, 282);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(32, 13);
+            this.label8.TabIndex = 17;
+            this.label8.Text = "Delta";
+            // 
+            // trkDelta
+            // 
+            this.trkDelta.AllowDrop = true;
+            this.trkDelta.LargeChange = 100;
+            this.trkDelta.Location = new System.Drawing.Point(12, 301);
+            this.trkDelta.Maximum = 9999;
+            this.trkDelta.Minimum = -9999;
+            this.trkDelta.Name = "trkDelta";
+            this.trkDelta.Size = new System.Drawing.Size(162, 45);
+            this.trkDelta.TabIndex = 16;
             // 
             // label6
             // 
@@ -253,7 +273,6 @@
             // chkSpeedUnits
             // 
             this.chkSpeedUnits.AutoSize = true;
-            this.chkSpeedUnits.Enabled = true;
             this.chkSpeedUnits.Location = new System.Drawing.Point(116, 191);
             this.chkSpeedUnits.Name = "chkSpeedUnits";
             this.chkSpeedUnits.Size = new System.Drawing.Size(93, 17);
@@ -279,26 +298,6 @@
             this.label7.TabIndex = 14;
             this.label7.Text = "Intensity";
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(12, 282);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(32, 13);
-            this.label8.TabIndex = 17;
-            this.label8.Text = "Delta";
-            // 
-            // trkDelta
-            // 
-            this.trkDelta.AllowDrop = true;
-            this.trkDelta.LargeChange = 10;
-            this.trkDelta.Location = new System.Drawing.Point(12, 301);
-            this.trkDelta.Maximum = 999;
-            this.trkDelta.Minimum = -999;
-            this.trkDelta.Name = "trkDelta";
-            this.trkDelta.Size = new System.Drawing.Size(162, 45);
-            this.trkDelta.TabIndex = 16;
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -321,13 +320,13 @@
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trkDelta)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkBoost)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkLap)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkFuel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkGear)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkShift)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkIntensity)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trkDelta)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
