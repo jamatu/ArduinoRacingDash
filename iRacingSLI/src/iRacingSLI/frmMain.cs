@@ -9,8 +9,10 @@ using System.Windows.Forms;
 using System.IO.Ports;
 using iRSDKSharp;
 
-namespace iRacingSLI {
-    public partial class frmMain : Form {
+namespace iRacingSLI
+{
+    public partial class frmMain : Form
+    {
 
         static SerialPort SP;
         iRacingSDK sdk = new iRacingSDK();
@@ -33,11 +35,11 @@ namespace iRacingSLI {
             //chkSpeedUnits.Enabled = true;
 
             for (int i = 0; i < 6; i = i + 2)
-                if (args.Length > i+1 && args[i] != null)
+                if (args.Length > i + 1 && args[i] != null)
                 {
                     if (args[i] == "--Port")
                     {
-                        this.processPortArgs(args[i+1]);
+                        this.processPortArgs(args[i + 1]);
                     }
                     if (args[i] == "--Unit")
                     {
@@ -50,9 +52,11 @@ namespace iRacingSLI {
                 }
         }
 
-        private void tmr_Tick(object sender, EventArgs e) {
+        private void tmr_Tick(object sender, EventArgs e)
+        {
             DeltaNeg = 0;
-            if (chkDebug.Checked == true) {
+            if (chkDebug.Checked == true)
+            {
                 lblConn.Text = "Debug mode active!";
                 lblColor.BackColor = Color.FromArgb(255, 129, 0);
 
@@ -103,15 +107,20 @@ namespace iRacingSLI {
                 //lblConn.Text = "s1: " + serialdata[1] + " : " + (serialdata[1] >> 4);
                 SP.Write(serialdata, 0, 14);
 
-            } else {
-                if (sdk.IsConnected()) {
+            }
+            else
+            {
+                if (sdk.IsConnected())
+                {
                     lblConn.Text = "Connected to iRacing API";
                     lblColor.BackColor = Color.FromArgb(0, 200, 0);
 
                     if (chkSpeedUnits.Checked == true)
                     {
                         Speed = Convert.ToDouble(sdk.GetData("Speed")) * (2.23693629 * 1.609344); //KPH
-                    } else {
+                    }
+                    else
+                    {
                         Speed = Convert.ToDouble(sdk.GetData("Speed")) * 2.23693629; //MPH
                     }
 
@@ -155,12 +164,16 @@ namespace iRacingSLI {
                     serialdata[13] = Convert.ToByte(Delta & 0x00FF);
 
                     SP.Write(serialdata, 0, 14);
-                } else if (sdk.IsInitialized) {
+                }
+                else if (sdk.IsInitialized)
+                {
                     lblConn.Text = "No connection with iRacing API";
                     lblColor.BackColor = Color.FromArgb(200, 0, 0);
 
                     sdk.Shutdown();
-                } else {
+                }
+                else
+                {
                     lblConn.Text = "No connection with iRacing API";
                     lblColor.BackColor = Color.FromArgb(200, 0, 0);
 
@@ -169,7 +182,8 @@ namespace iRacingSLI {
             }
         }
 
-        private void frmMain_Load(object sender, EventArgs e) {
+        private void frmMain_Load(object sender, EventArgs e)
+        {
             String[] ports = SerialPort.GetPortNames();
             cboPorts.Items.AddRange(ports);
             cboPorts.SelectedIndex = startPort;
@@ -177,14 +191,18 @@ namespace iRacingSLI {
             lblConn.Text = "No connection with iRacing API";
         }
 
-        private void cmbSerial_Click(object sender, EventArgs e) {
-            if (cmbSerial.Text == "Start serial port") {
+        private void cmbSerial_Click(object sender, EventArgs e)
+        {
+            if (cmbSerial.Text == "Start serial port")
+            {
                 SP = new SerialPort(cboPorts.Text, 9600, Parity.None, 8);
                 SP.Open();
                 tmr.Enabled = true;
                 cmbSerial.Text = "Stop serial port";
                 chkDebug.Enabled = true;
-            } else {
+            }
+            else
+            {
                 SP.Close();
                 tmr.Enabled = false;
                 cmbSerial.Text = "Start serial port";
@@ -192,10 +210,14 @@ namespace iRacingSLI {
             }
         }
 
-        private void chkDebug_CheckedChanged(object sender, EventArgs e) {
-            if (chkDebug.Checked == true) {
+        private void chkDebug_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkDebug.Checked == true)
+            {
                 this.Height = 640;
-            } else {
+            }
+            else
+            {
                 this.Height = 245;
             }
 
