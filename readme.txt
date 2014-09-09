@@ -8,9 +8,9 @@ button 2 - lap counter, gear, fuel percent left
 button 3 - lap counter, gear, boost pressure
 button 4 - boost pressure, gear, speed
 button 5 - gear, engine rpms
-button 6 - toggle 8/16 LEDS for shift lights
-button 7 - increase brightness
-button 8 - decrease brightness
+button 6 - gear, delta (to thousandth)
+button 7 - speed, gear, delta (to tenth)
+button 8 - toggle 8/16 LEDS for shift lights
 
 
 
@@ -73,7 +73,7 @@ iRacing - advanced
 ------------------
 app can except start args to allow for easy starting without using any of the apps buttons
 
-example using a .bat file to launch the client, set COM port to COM5, set speed units to KPH and set display intensity to 2:
+example using a .bat file to launch the client, set COM port to COM5, set speed units to KPH and set display intensity(brightness) to 2:
 ##
 cd SLI Dash\iRacing Client
 start iRacingSLI.exe --Port COM5 --Unit MPH --Intensity 2
