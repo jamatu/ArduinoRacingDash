@@ -27,7 +27,7 @@ from libs.sim_info import SimInfo
 from libs.utils import Config
 
 #################
-Version = "1.7 PRE"
+Version = "1.7"
 #################
 
 sim_info = SimInfo()
@@ -61,7 +61,7 @@ spnIntensity = 0
 
 def acMain(ac_version):
     global appWindow, cfg_SpeedUnit, cfg_Port, oldComPortText, oldStartPageText, btnSpeedUnits, btnReconnect, lbConnectedPort, lbComPortSetting, lbStartPageSetting, txtComPort, txtStartPage, spnIntensity
-    appWindow=ac.newApp("AC SLI")
+    appWindow=ac.newApp("AC SLI " + Version)
     ac.setSize(appWindow,250,244)
     ac.drawBorder(appWindow,0)
     ac.setBackgroundOpacity(appWindow,0) 
