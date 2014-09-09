@@ -130,7 +130,15 @@ namespace iRacingSLI
                     Shift = Convert.ToDouble(sdk.GetData("ShiftIndicatorPct"));
                     Engine = Convert.ToByte(sdk.GetData("EngineWarnings"));
                     Lap = Convert.ToInt32(sdk.GetData("Lap"));
-                    Delta = Convert.ToInt16(Math.Round(Convert.ToSingle(sdk.GetData("LapDeltaToBestLap")) * 1000));
+                    try
+                    {
+                        Delta = (int)(Math.Round(Convert.ToSingle(sdk.GetData("LapDeltaToBestLap")) * 1000));
+                    }
+                    catch (InvalidCastException e2)
+                    {
+                        Delta = 9999;
+                    }
+
 
                     if (Delta <= 0)
                     {
