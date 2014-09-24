@@ -67,16 +67,16 @@ Install -- iRacing
 
 *Start SLI client AFTER load has completed!
 
-*Select your COM port from the drop down and press start
+*Your Arduino should be automatically selected and serial automatically opened, if not select your COM port from the dropdown 
 
 *Profit
 
 
 iRacing - advanced
 ------------------
-app can except start args to allow for easy starting without using any of the apps buttons
+app can except start args to allow for easy starting without using any of the apps buttons (args order is NOT relivent, nor do you have to include irellivent args!!)
 
-example using a .bat file to launch the client, set COM port to COM5, set speed units to KPH and set display intensity(brightness) to 2:
+example using a .bat file to launch the client, force a specific COM port (COM5), set speed units to KPH and set display intensity(brightness) to 2:
 ##
 cd SLI Dash\iRacing Client
 start iRacingSLI.exe --Port COM5 --Unit MPH --Intensity 2

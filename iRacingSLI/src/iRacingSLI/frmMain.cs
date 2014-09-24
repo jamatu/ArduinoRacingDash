@@ -33,6 +33,7 @@ namespace iRacingSLI
         {
             InitializeComponent();
             startPort = 0;
+            
 
             for (int i = 0; i < 6; i = i + 2)
                 if (args.Length > i + 1 && args[i] != null && args[i + 1] != null)

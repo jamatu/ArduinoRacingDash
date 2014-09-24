@@ -1,6 +1,9 @@
 Arduino Racing Dash ChangeLog
 --------------------																																																									
 
+v1.7.2:
+	Added automatic arduino detection and serial port opening to iRacing c# client / debug client
+
 v1.7.1:
 	Added variable to invert module easily
 
