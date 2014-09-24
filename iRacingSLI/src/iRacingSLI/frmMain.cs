@@ -33,7 +33,6 @@ namespace iRacingSLI
         {
             InitializeComponent();
             startPort = 0;
-            this.scanPorts();
 
             for (int i = 0; i < 6; i = i + 2)
                 if (args.Length > i + 1 && args[i] != null && args[i + 1] != null)
@@ -198,9 +197,10 @@ namespace iRacingSLI
             {
                 string[] portnames = SerialPort.GetPortNames();
                 var ports = searcher.Get().Cast<ManagementBaseObject>().ToList();
-                arrayPorts = (from n in portnames join p in ports on n equals p["DeviceID"].ToString() select /*n + " - " +*/ p["Caption"]).ToArray();
+                arrayPorts = (from n in portnames join p in ports on n equals p["DeviceID"].ToString() select p["Caption"]).ToArray();
             }
             cboPorts.Items.AddRange(arrayPorts);
+            this.scanPorts();
             cboPorts.SelectedIndex = startPort;
 
             lblConn.Text = "No connection with iRacing API";
@@ -244,7 +244,25 @@ namespace iRacingSLI
             {
                 if (cboPorts.Items[i].ToString().Contains("Arduino"))
                 {
+                    if (SP != null && SP.IsOpen)
+                        SP.Close();
 
+                    String port = Regex.Match(cboPorts.Items[i].ToString(), @"\(([^)]*)\)").Groups[1].Value;
+                    SP = new SerialPort(port, 9600, Parity.None, 8);
+                    SP.Open();
+                    tmr.Enabled = true;
+                    cmbSerial.Text = "Stop serial port";
+                    chkDebug.Enabled = true;
+
+                    for (int j = 0; j < SerialPort.GetPortNames().Length; j++)
+                    {
+                        if (SerialPort.GetPortNames()[j].Equals(port))
+                        {
+                            this.startPort = j;
+                        }
+                    }
+
+                    break;
                 }
             }
         }
@@ -266,7 +284,7 @@ namespace iRacingSLI
                 {
                     if (SerialPort.GetPortNames()[i].Equals(port))
                     {
-                        startPort = i;
+                        this.startPort = i;
                     }
                 }
             }
