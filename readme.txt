@@ -30,6 +30,9 @@ Pin 8       DIO
 Pin 9       STB1
 
 
+You can set the inversion of the module by changing the variable in line 1 of the arduino code between 0(LEDs below displays) and 1(LEDs above displays)
+
+
 IMPORTANT
 -------------------
 install this library into your arduino library folder: https://code.google.com/p/tm1638-library/

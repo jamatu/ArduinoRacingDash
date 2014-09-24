@@ -1,6 +1,11 @@
-#include <TM1638.h>
-
-TM1638 module(8, 7, 9, true, 0); // last digit is display intensity, 0 (low) - 7 (high)
+#define invert 0
+#if invert == 1
+  #include <InvertedTM1638.h>
+  InvertedTM1638 module(8, 7, 9, true, 0);
+#else
+  #include <TM1638.h>
+  TM1638 module(8, 7, 9, true, 0);
+#endif
 
 //word ledsLong [17] = {0, 256, 768, 1792, 3840, 7936, 16128, 32512, 65280, 1, 3, 7, 15, 31, 63, 127, 255};
 word ledsLong [17] = {0, 1, 3, 7, 15, 31, 63, 127, 255, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160};

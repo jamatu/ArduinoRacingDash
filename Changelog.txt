@@ -1,6 +1,9 @@
 Arduino Racing Dash ChangeLog
 --------------------																																																									
 
+v1.7.1:
+	Added variable to invert module easily
+
 v1.7:
 	Added remotely configurable intensity, use "--Intensity x" for iRacing startup args
 	Added best lap delta to display on new pages 6 and 7, button 8 now changes shift light settings, intensity can only be changed from clients now

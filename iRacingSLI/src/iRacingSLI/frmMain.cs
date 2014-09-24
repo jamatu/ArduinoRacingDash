@@ -35,7 +35,7 @@ namespace iRacingSLI
             //chkSpeedUnits.Enabled = true;
 
             for (int i = 0; i < 6; i = i + 2)
-                if (args.Length > i + 1 && args[i] != null)
+                if (args.Length > i + 1 && args[i] != null && args[i + 1] != null)
                 {
                     if (args[i] == "--Port")
                     {
