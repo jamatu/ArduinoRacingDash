@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Management;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.IO.Ports;
 using iRSDKSharp;
@@ -30,9 +32,8 @@ namespace iRacingSLI
         public frmMain(string[] args)
         {
             InitializeComponent();
-
             startPort = 0;
-            //chkSpeedUnits.Enabled = true;
+            this.scanPorts();
 
             for (int i = 0; i < 6; i = i + 2)
                 if (args.Length > i + 1 && args[i] != null && args[i + 1] != null)
@@ -192,8 +193,14 @@ namespace iRacingSLI
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            String[] ports = SerialPort.GetPortNames();
-            cboPorts.Items.AddRange(ports);
+            Object[] arrayPorts = null;
+            using (var searcher = new ManagementObjectSearcher("SELECT * FROM WIN32_SerialPort"))
+            {
+                string[] portnames = SerialPort.GetPortNames();
+                var ports = searcher.Get().Cast<ManagementBaseObject>().ToList();
+                arrayPorts = (from n in portnames join p in ports on n equals p["DeviceID"].ToString() select /*n + " - " +*/ p["Caption"]).ToArray();
+            }
+            cboPorts.Items.AddRange(arrayPorts);
             cboPorts.SelectedIndex = startPort;
 
             lblConn.Text = "No connection with iRacing API";
@@ -203,7 +210,7 @@ namespace iRacingSLI
         {
             if (cmbSerial.Text == "Start serial port")
             {
-                SP = new SerialPort(cboPorts.Text, 9600, Parity.None, 8);
+                SP = new SerialPort(Regex.Match(cboPorts.Text, @"\(([^)]*)\)").Groups[1].Value, 9600, Parity.None, 8);
                 SP.Open();
                 tmr.Enabled = true;
                 cmbSerial.Text = "Stop serial port";
@@ -231,10 +238,24 @@ namespace iRacingSLI
 
         }
 
+        private void scanPorts()
+        {
+            for (int i = 0; i < cboPorts.Items.Count; i++)
+            {
+                if (cboPorts.Items[i].ToString().Contains("Arduino"))
+                {
+
+                }
+            }
+        }
+
         private void processPortArgs(String port)
         {
             if (SerialPort.GetPortNames().Contains(port))
             {
+                if (SP != null && SP.IsOpen)
+                    SP.Close();   
+
                 SP = new SerialPort(port, 9600, Parity.None, 8);
                 SP.Open();
                 tmr.Enabled = true;
