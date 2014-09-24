@@ -27,7 +27,7 @@ from libs.sim_info import SimInfo
 from libs.utils import Config
 
 #################
-Version = "1.7.2"
+Version = "1.8"
 #################
 
 sim_info = SimInfo()

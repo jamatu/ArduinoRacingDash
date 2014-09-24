@@ -10,8 +10,11 @@ button 4 - boost pressure, gear, speed
 button 5 - gear, engine rpms
 button 6 - gear, delta (to thousandth)
 button 7 - speed, gear, delta (to tenth)
-button 8 - toggle 8/16 LEDS for shift lights
+button 8 - Shift Modifier
 
+button 8 + button 1 - change shift light mode (8/16 LED)
+button 8 + button 2 - toggle module inversion (flips screen, LEDs, buttons ect)
+(works best if you hold button 8 first then press the other button you want) 
 
 
 
@@ -30,7 +33,6 @@ Pin 8       DIO
 Pin 9       STB1
 
 
-You can set the inversion of the module by changing the variable in line 1 of the arduino code between 0(LEDs below displays) and 1(LEDs above displays)
 
 
 IMPORTANT
