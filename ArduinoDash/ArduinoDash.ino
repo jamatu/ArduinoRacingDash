@@ -35,7 +35,6 @@ void setup() {
         ledOff = false;
         intensity = 0; // set this to match the intensity used on line 3
         oldintensity = 0;
-        //ledNum = 16; // Default number of LEDs to use, 8 or 16
         pitLimiterColor = 0xFF00; // 0xFF00 = green, 0x00FF = red
 }
 
