@@ -30,7 +30,7 @@ VCC         VCC
 GND         GND
 Pin 7       CLK
 Pin 8       DIO 
-Pin 9       STB1
+Pin 9       STB1 (FIRST STB PIN, listed as STB0 in some diagrams!!!)
 
 
 

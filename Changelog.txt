@@ -1,6 +1,9 @@
 Arduino Racing Dash ChangeLog
 --------------------																																																									
 
+v1.8.1:
+	Added constants in the arduino code to make changing pins easier
+
 v1.8:
 	Changed how the module is inverted again, now done by holding button 8 and then pressing button 2 (think of button 8 as a shift key)
 	Changed how num of shift lights is changed, now done by holding button 8 and then pressing button 1 (think of button 8 as a shift key)
