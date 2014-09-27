@@ -2,8 +2,12 @@
 #include <TM1638.h>
 #include <InvertedTM1638.h>
 
-TM1638 module1(8, 7, 9);
-InvertedTM1638 module2(8, 7, 9);
+#define DIO 8
+#define CLK 7
+#define STB 9
+
+TM1638 module1(DIO, CLK, STB);
+InvertedTM1638 module2(DIO, CLK, STB);
 TM1638* modules[2] = {&module1,&module2};
 
 word ledsLong [17] = {0, 1, 3, 7, 15, 31, 63, 127, 255, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160};
