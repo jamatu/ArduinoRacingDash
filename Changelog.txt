@@ -1,6 +1,9 @@
 Arduino Racing Dash ChangeLog
 --------------------																																																									
 
+v1.8.2:
+	Fix EEPROM loading oversight
+
 v1.8.1:
 	Added constants in the arduino code to make changing pins easier
 

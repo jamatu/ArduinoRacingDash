@@ -6,6 +6,8 @@
 #define CLK 7
 #define STB 9
 
+#define VERSION 182
+
 TM1638 module1(DIO, CLK, STB);
 InvertedTM1638 module2(DIO, CLK, STB);
 TM1638* modules[2] = {&module1,&module2};
@@ -29,7 +31,21 @@ void setup() {
         modules[1]->setupDisplay(true, 0);
         
         invert = EEPROM.read(0);
+        if (invert > 1){
+          invert = 0;
+          EEPROM.write(0, invert);
+        }       
+        
         ledNum = EEPROM.read(1);
+        if (ledNum != 8 && ledNum != 16){
+          ledNum = 16;
+          EEPROM.write(1, ledNum);
+        }  
+
+        modules[invert]->setDisplayToString("EDT", 0, 0);
+        modules[invert]->setDisplayDigit(String(VERSION, DEC).charAt(0), 5, 1);
+        modules[invert]->setDisplayDigit(String(VERSION, DEC).charAt(1), 6, 1);
+        modules[invert]->setDisplayDigit(String(VERSION, DEC).charAt(2), 7, 0); 
 
 	oldbuttons = 0;
 	page = 0;
@@ -40,6 +56,9 @@ void setup() {
         intensity = 0; // set this to match the intensity used on line 3
         oldintensity = 0;
         pitLimiterColor = 0xFF00; // 0xFF00 = green, 0x00FF = red
+        
+        delay(3000);
+        modules[invert]->clearDisplay();
 }
 
 void update(TM1638* module) {
