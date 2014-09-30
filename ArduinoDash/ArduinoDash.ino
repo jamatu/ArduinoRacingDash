@@ -1,19 +1,23 @@
+#include <avr/pgmspace.h>
 #include <EEPROM.h>
 #include <TM1638.h>
 #include <InvertedTM1638.h>
+
+#define GREEN 0xFF00
+#define RED 0xFF00
 
 #define DIO 8
 #define CLK 7
 #define STB 9
 
-#define VERSION 182
+
+PROGMEM  prog_uchar VERSION[] = {1, 8, 2};
+PROGMEM  prog_uint16_t ledsLong[] = {0, 1, 3, 7, 15, 31, 63, 127, 255, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160};
+PROGMEM  prog_uint16_t ledsShort[] = {0, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160};
 
 TM1638 module1(DIO, CLK, STB);
 InvertedTM1638 module2(DIO, CLK, STB);
 TM1638* modules[2] = {&module1,&module2};
-
-word ledsLong [17] = {0, 1, 3, 7, 15, 31, 63, 127, 255, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160};
-word ledsShort [9] = {0, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160};
 
 byte bsettings, base, buttons, oldbuttons, page, oldpage;
 int intensity, oldintensity, ledNum, pitLimiterColor, deltaneg, delta;
@@ -43,9 +47,9 @@ void setup() {
         }  
 
         modules[invert]->setDisplayToString("EDT", 0, 0);
-        modules[invert]->setDisplayDigit(String(VERSION, DEC).charAt(0), 5, 1);
-        modules[invert]->setDisplayDigit(String(VERSION, DEC).charAt(1), 6, 1);
-        modules[invert]->setDisplayDigit(String(VERSION, DEC).charAt(2), 7, 0); 
+        modules[invert]->setDisplayDigit(pgm_read_byte_near(VERSION + 0), 5, 1);
+        modules[invert]->setDisplayDigit(pgm_read_byte_near(VERSION + 1), 6, 1);
+        modules[invert]->setDisplayDigit(pgm_read_byte_near(VERSION + 2), 7, 0); 
 
 	oldbuttons = 0;
 	page = 0;
@@ -53,9 +57,9 @@ void setup() {
         changed = false;
         blinkrpm = false;
         ledOff = false;
-        intensity = 0; // set this to match the intensity used on line 3
+        intensity = 0;
         oldintensity = 0;
-        pitLimiterColor = 0xFF00; // 0xFF00 = green, 0x00FF = red
+        pitLimiterColor = GREEN;
         
         delay(3000);
         modules[invert]->clearDisplay();
@@ -424,9 +428,9 @@ void update(TM1638* module) {
                         blinkrpm = true;
                     } else {
                         if (ledNum == 8){
-                          module->setLEDs(ledsShort[shift]); // Blink when hit limiter
+                          module->setLEDs(pgm_read_word_near(ledsShort + shift));
                         }else{
-                          module->setLEDs(ledsLong[shift]); // Blink when hit limiter
+                          module->setLEDs(pgm_read_word_near(ledsLong + shift));
                         }
                         blinkrpm = false;
                     }
@@ -434,9 +438,9 @@ void update(TM1638* module) {
                 }
             } else {
                 if (ledNum == 8){
-                  module->setLEDs(ledsShort[shift]); // Set LEDs to RPM
+                  module->setLEDs(pgm_read_word_near(ledsShort + shift));
                 }else{
-                  module->setLEDs(ledsLong[shift]); // Set LEDs to RPM
+                  module->setLEDs(pgm_read_word_near(ledsLong + shift));
                 }
             }
         } else {
