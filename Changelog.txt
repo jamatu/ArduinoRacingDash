@@ -3,6 +3,7 @@ Arduino Racing Dash ChangeLog
 
 v1.8.3:
 	Try reduce the RAM usage of arduino program
+	Edit config saver/loader in acSLI to fix small bug
 
 v1.8.2:
 	Fix EEPROM loading oversight
