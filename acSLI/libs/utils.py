@@ -62,8 +62,10 @@ class Config:
             if not self.hasSection(section):
                 self.parser.add_section(section)
                 self._write()
+                return True
             else:
                 ac.console("Utils.Config.addSection -- Section '" + section + "' already exists.")
+                return False
         
         
     def addOption(self, section = None, option = None, value = None):
@@ -74,10 +76,13 @@ class Config:
             if (value is not None):
                 self.parser.set(section, option, value)
                 self._write()
+                return True
             else:
                 ac.console("Utils.Config.addOption -- Value cannot be null")
+                return False
         else:
             ac.console("Utils.Config.addOption -- Option '" + option + "' is blank or already exists in section '" + section + "'.")
+            return False
     
     
     def updateOption(self, section = None, option = None, value = None, create = False):
@@ -85,45 +90,46 @@ class Config:
             if value is not None:
                 self.parser.set(section, option, value)
                 self._write()
+                return True
             else:
                 ac.console("Utils.Config.updateOption -- Value cannot be null")
+                return False
         else:
             if create:
-                self.addOption(section, option, value)
+                return self.addOption(section, option, value)
             else:
                 ac.console("Utils.Config.updateOption -- Option '" + option + "' in section '" + section + "' doesn't exist.")
+                return False
         
     
-    def getOption(self, section, option, type = ""):
+    def getOption(self, section, option, create = False, default = ""):
         if self.hasOption(section, option):
-
-            if type == "int":
-                return self.parser.getint(section, option)
-
-            elif type == "float":
-                return self.parser.getfloat(section, option)
-
-            elif type == "bool":
-                return self.parser.getboolean(section, option)
-
-            else:
-                return self.parser.get(section, option)
+            return self.parser.get(section, option)
         else:
-            ac.console("Utils.Config.getOption -- Option '" + option + "' in section '" + section + "' doesn't exist.")
-            return -1
+            if create:
+                ac.console("Utils.Config.getOption -- Option '" + option + "' in section '" + section + "' doesn't exist. Creating with default value...")
+                self.addOption(section, option, default)
+                return default
+            else:
+                ac.console("Utils.Config.getOption -- Option '" + option + "' in section '" + section + "' doesn't exist.")
+                return -1
         
         
     def removeSection(self, section):
         if self.hasSection(section):
             self.parser.remove_section(section)
             self._write()
+            return True
         else:
             ac.console("Utils.Config.remSection -- section not found.")
+            return False
         
         
     def removeOption(self, section, option):
         if self.hasOption(section,option):
             self.parser.remove_option(section, option)
             self._write()
+            return True
         else:
             ac.console("Utils.Config.Config.remOption -- option not found.")
+            return False 

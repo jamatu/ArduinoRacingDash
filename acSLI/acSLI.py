@@ -202,10 +202,10 @@ def loadConfig():
     
     try:
         cfg = Config(appPath + cfg_Path)              
-        cfg_Port = str(cfg.getOption("SETTINGS", "port")).upper() if str(cfg.getOption("SETTINGS", "port")).upper() != "-1" else cfg_Port
-        cfg_SpeedUnit = str(cfg.getOption("SETTINGS", "unitSpeed")).upper() if str(cfg.getOption("SETTINGS", "unitSpeed")).upper() != "-1" else cfg_SpeedUnit
-        cfg_StartPage = str(cfg.getOption("SETTINGS", "startupPage")) if str(cfg.getOption("SETTINGS", "startupPage")) != "-1" else cfg_StartPage
-        cfg_Intensity = str(cfg.getOption("SETTINGS", "intensity")) if str(cfg.getOption("SETTINGS", "intensity")) != "-1" else cfg_Intensity
+        cfg_Port = str(cfg.getOption("SETTINGS", "port", True, cfg_Port)).upper()
+        cfg_SpeedUnit = str(cfg.getOption("SETTINGS", "unitSpeed", True, cfg_SpeedUnit)).upper()
+        cfg_StartPage = str(cfg.getOption("SETTINGS", "startupPage", True, cfg_StartPage))
+        cfg_Intensity = str(cfg.getOption("SETTINGS", "intensity", True, cfg_Intensity))
         
         if not(cfg_StartPage.isdigit() or int(num) > -1 or int(num) < 6):
             cfg_StartPage = 0
