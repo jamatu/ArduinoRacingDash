@@ -125,11 +125,10 @@ def acUpdate(deltaT):
     
     if run == 1 and ticker % 3 == 0:
         ac_gear = ac.getCarState(0, acsys.CS.Gear)
-        ac_speed = round(ac.getCarState(0, acsys.CS.SpeedMPH)) if cfg_SpeedUnit == "MPH" else round(ac.getCarState(0, acsys.CS.SpeedKMH))
-        rpms = ac.getCarState(0, acsys.CS.RPM)
+        ac_speed = int(round(ac.getCarState(0, acsys.CS.SpeedMPH)) if cfg_SpeedUnit == "MPH" else round(ac.getCarState(0, acsys.CS.SpeedKMH)))
+        rpms = int(ac.getCarState(0, acsys.CS.RPM))
         max_rpm = sim_info.static.maxRpm if max_rpm == 0 else max_rpm
-        
-        
+              
         shift = 0
         if max_rpm > 0:
             thresh = max_rpm*0.65
@@ -149,19 +148,20 @@ def acUpdate(deltaT):
             engine = 0x10 
 
         boost = round(ac.getCarState(0, acsys.CS.TurboBoost), 1)
-        b1 = boost*10
+        b1 = int(boost*10)
         
         delta = ac.getCarState(0, acsys.CS.PerformanceMeter)
         deltaNeg = 0
         if delta <= 0:
             deltaNeg = 1
-        delta = abs(delta) * 1000
+        delta = int(abs(delta) * 1000)
         if delta > 9999:
             delta = 9999
         
-        bSetting = int(deltaNeg << 7) | int(int(ac.getValue(spnIntensity)) << 4) | int(cfg_StartPage)
+        bSetting = int(deltaNeg << 7) | int(int(ac.getValue(spnIntensity)) << 4) | int(cfg_StartPage)       
         
-        key = bytes([255, bSetting,ac_gear,((int(ac_speed) >> 8) & 0x00FF),(int(ac_speed) & 0x00FF),((int(rpms) >> 8) & 0x00FF),(int(rpms) & 0x00FF),fuel,shift,engine,lapCount, int(b1), ((int(delta) >> 8) & 0x00FF),(int(delta) & 0x00FF)])
+        
+        key = bytes([255,bSetting,ac_gear,((ac_speed) >> 8 & 0x00FF),(ac_speed & 0x00FF),((rpms >> 8) & 0x00FF),(rpms & 0x00FF),fuel,shift,engine,lapCount,b1,((delta >> 8) & 0x00FF),(delta & 0x00FF)])
         x = ser.write(key)
      
     
@@ -174,7 +174,7 @@ def acUpdate(deltaT):
             ac.setText(txtComPort, cfg_Port)
             cfg.updateOption("SETTINGS", "port", cfg_Port, True)
             oldComPortText = text
-            #ac.console("Update COM Port Setting To: {}".format(cfg_Port))
+            ac.console("Update COM Port Setting To: {}".format(cfg_Port))
             
         num = ac.getText(txtStartPage)
         if not num == oldStartPageText:
