@@ -26,6 +26,8 @@ namespace iRacingSLI
         byte[] serialdata = new byte[14];
         byte[] shiftlights = new byte[16];
         String Boost;
+        String[] startArgs;
+        Boolean hasInit, hasRun;
 
         System.Random randnum = new System.Random();
 
@@ -33,7 +35,9 @@ namespace iRacingSLI
         {
             InitializeComponent();
             startPort = 0;
-            
+            this.startArgs = args;
+            this.hasInit = false;
+            this.hasRun = false;
 
             for (int i = 0; i < 6; i = i + 2)
                 if (args.Length > i + 1 && args[i] != null && args[i + 1] != null)
@@ -116,6 +120,21 @@ namespace iRacingSLI
                     lblConn.Text = "Connected to iRacing API";
                     lblColor.BackColor = Color.FromArgb(0, 200, 0);
 
+                    if (!this.hasInit)
+                    {
+                        if (this.hasRun)
+                        {
+                            SP.Close();
+                            System.Diagnostics.Process.Start(Application.ExecutablePath, String.Join(" ", this.startArgs));
+                            this.Close();   
+                        }
+                        else
+                        {
+                            this.hasRun = true;
+                        }
+                        this.hasInit = true;
+                    }
+
                     if (chkSpeedUnits.Checked == true)
                     {
                         Speed = Convert.ToDouble(sdk.GetData("Speed")) * (2.23693629 * 1.609344); //KPH
@@ -179,6 +198,7 @@ namespace iRacingSLI
                     lblConn.Text = "No connection with iRacing API";
                     lblColor.BackColor = Color.FromArgb(200, 0, 0);
 
+                    this.hasInit = false;
                     sdk.Shutdown();
                 }
                 else

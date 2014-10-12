@@ -13,14 +13,12 @@
 #    -http://pyserial.sourceforge.net/
 #
 #######################################################
-
 import sys
 sys.path.insert(0, 'apps/python/acSLI/dll')
 
 import ac
 import acsys
-import math
-import string
+
 import serial
 import serial.tools.list_ports
 from libs.sim_info import SimInfo
@@ -59,6 +57,7 @@ txtComPort = 0
 txtStartPage = 0
 spnIntensity = 0
 
+
 def acMain(ac_version):
     global appWindow, cfg_SpeedUnit, cfg_Port, oldComPortText, oldStartPageText, btnSpeedUnits, btnReconnect, lbConnectedPort, lbComPortSetting, lbStartPageSetting, txtComPort, txtStartPage, spnIntensity
     appWindow=ac.newApp("AC SLI " + Version)
@@ -66,9 +65,9 @@ def acMain(ac_version):
     ac.drawBorder(appWindow,0)
     ac.setBackgroundOpacity(appWindow,0) 
     
-    loadConfig()  
-  
-        
+    loadConfig() 
+    checkVersion()
+    
     lbConnectedPort = ac.addLabel(appWindow, "Connected COM Port: {}".format(cfg_Port))
     ac.setPosition(lbConnectedPort,15,40)
     ac.setSize(lbConnectedPort,220,20)
@@ -119,37 +118,37 @@ def acMain(ac_version):
     ac.console("AC SLI v" + Version + " loaded")
     return "AC SLI"
 
-    
-def acUpdate(deltaT):   
+
+def acUpdate(deltaT):
     global ticker, run, ser, max_rpm, max_fuel, sim_info, cfg_SpeedUnit, cfg_StartPage, cfg_Port, cfg_StartPage, oldComPortText, oldStartPageText, lbStartPageSetting
-    
+
     if run == 1 and ticker % 3 == 0:
         ac_gear = ac.getCarState(0, acsys.CS.Gear)
         ac_speed = int(round(ac.getCarState(0, acsys.CS.SpeedMPH)) if cfg_SpeedUnit == "MPH" else round(ac.getCarState(0, acsys.CS.SpeedKMH)))
         rpms = int(ac.getCarState(0, acsys.CS.RPM))
         max_rpm = sim_info.static.maxRpm if max_rpm == 0 else max_rpm
-              
+
         shift = 0
         if max_rpm > 0:
             thresh = max_rpm*0.65
             if rpms >= thresh:
                 shift = round(((rpms-thresh)/(max_rpm-thresh))*16)
-        
+
         current_fuel = sim_info.physics.fuel
         max_fuel = sim_info.static.maxFuel if max_fuel == 0 else max_fuel
         fuel = int((current_fuel/max_fuel)*100)
-        
+
         lapCount = sim_info.graphics.completedLaps
         if lapCount > 199:
             lapCount = 199
-        
+
         engine = 0x00
         if sim_info.physics.pitLimiterOn and not sim_info.graphics.isInPit:
-            engine = 0x10 
+            engine = 0x10
 
         boost = round(ac.getCarState(0, acsys.CS.TurboBoost), 1)
         b1 = int(boost*10)
-        
+
         delta = ac.getCarState(0, acsys.CS.PerformanceMeter)
         deltaNeg = 0
         if delta <= 0:
@@ -157,16 +156,16 @@ def acUpdate(deltaT):
         delta = int(abs(delta) * 1000)
         if delta > 9999:
             delta = 9999
-        
-        bSetting = int(deltaNeg << 7) | int(int(ac.getValue(spnIntensity)) << 4) | int(cfg_StartPage)       
-        
-        
+
+        bSetting = int(deltaNeg << 7) | int(int(ac.getValue(spnIntensity)) << 4) | int(cfg_StartPage)
+
+
         key = bytes([255,bSetting,ac_gear,((ac_speed) >> 8 & 0x00FF),(ac_speed & 0x00FF),((rpms >> 8) & 0x00FF),(rpms & 0x00FF),fuel,shift,engine,lapCount,b1,((delta >> 8) & 0x00FF),(delta & 0x00FF)])
         x = ser.write(key)
-     
-    
+
+
     if ticker == 30:
-        ticker = 0  
+        ticker = 0
 
         text = ac.getText(txtComPort).upper()
         if not text == oldComPortText:
@@ -175,7 +174,7 @@ def acUpdate(deltaT):
             cfg.updateOption("SETTINGS", "port", cfg_Port, True)
             oldComPortText = text
             ac.console("Update COM Port Setting To: {}".format(cfg_Port))
-            
+
         num = ac.getText(txtStartPage)
         if not num == oldStartPageText:
             if num.isdigit() and int(num) > -1 and int(num) < 8:
@@ -186,9 +185,9 @@ def acUpdate(deltaT):
                 ac.console("Update Default Page Setting To: {}".format(cfg_StartPage))
             else:
                 ac.setText(txtStartPage, "")
-        
+
     else:
-        ticker = ticker + 1          
+        ticker += 1
     
     
     
@@ -207,7 +206,7 @@ def loadConfig():
         cfg_StartPage = str(cfg.getOption("SETTINGS", "startupPage", True, cfg_StartPage))
         cfg_Intensity = str(cfg.getOption("SETTINGS", "intensity", True, cfg_Intensity))
         
-        if not(cfg_StartPage.isdigit() or int(num) > -1 or int(num) < 6):
+        if not(cfg_StartPage.isdigit() or int(cfg_StartPage.isdigit()) > -1 or int(cfg_StartPage.isdigit()) < 6):
             cfg_StartPage = 0
     
     except Exception as e:
@@ -248,7 +247,13 @@ def connectCOM():
     
     ac.setText(lbConnectedPort, "Connected COM Port: {}".format(port))
 
-
+ 
+def checkVersion():
+    #versionFile = urllib.request.get('http://goo.gl/BmJaXS')
+    ac.console("version: ")#str(versionFile.read()))
+    #ac.log(str(dir()).strip('[]'))
+    
+    
 def bFunc_ChangeIntensity(dummy):
     global cfg, spnIntensity
     
