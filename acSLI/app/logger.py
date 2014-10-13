@@ -22,7 +22,6 @@ class Logger:
     def warning(self, msg):
         ac.console(self._ppMsg("WARNING", msg))
         ac.log(self._ppMsg("WARNING", msg))
-        traceback.print_exc(file=self.logFile)
         
     def error(self, msg):
         ac.console(self._ppMsg("ERROR", msg))

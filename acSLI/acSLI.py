@@ -1,14 +1,11 @@
 import sys
 sys.path.insert(0, 'apps/python/acSLI/dll')
 
-from app.app import App
 from app.logger import Logger
+import app.app as App
 import app.updater as Updater
-import app.loader as Config
+import app.loader as Loader
 
-#################
-Version = "1.8.3"
-#################
 
 Log = Logger()
 acSLI = 0
@@ -16,16 +13,17 @@ hasInit = False
 
 
 def acMain(acVerison):
-    global acSLI, Version, hasInit
+    global acSLI, hasInit
 
     try:
-        Config.ConfigLoader()
-        Updater.Updater(Version)
+        Log.info("Start Loading acSLI v" + App.Version)
+        Loader.ConfigLoader()
+        Updater.Updater(App.Version)
 
         if not Updater.instance.isOpen:
-            acSLI = App(Version)
-            acSLI.onStart()
             hasInit = True
+            acSLI = App.App()
+            acSLI.onStart()
 
         return "acSLI"
         
@@ -38,9 +36,9 @@ def acUpdate(deltaT):
 
     try:
         if not Updater.instance.isOpen and not hasInit:
-            acSLI = App(Version)
-            acSLI.onStart()
             hasInit = True
+            acSLI = App.App()
+            acSLI.onStart()
 
         if hasInit:
             acSLI.onUpdate()
