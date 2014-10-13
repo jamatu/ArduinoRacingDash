@@ -13,6 +13,21 @@ from app.logger import Logger
 
 Log = Logger()
 
+colours = {
+    "white": [255, 255, 255],
+    "yellow": [247, 183,  9],
+    "green": [151, 229, 68],
+    "red": [255, 15, 15]
+}
+
+
+def rgb(color, a=1):
+    r = color[0] / 255
+    g = color[1] / 255
+    b = color[2] / 255
+    return r, g, b, a
+
+
 class Config:
     
     def __init__(self, filePath):
@@ -28,28 +43,20 @@ class Config:
             Log.info("Utils.Config: Failed to initialize ConfigParser.")
             
         self._read()
-    
-    
-    
-    # Private 
+
     def _read(self):
         self.parser.read(self.file)
-    
-    
+
     def _write(self):
         with open(self.file, "w") as cfgFile:
             self.parser.write(cfgFile)
-            
-    
-    
-    # Public
+
     def hasSection(self, section = None):
         if section is not None:
             return self.parser.has_section(section)
         else:
             return False
-    
-    
+
     def hasOption(self, section = None, option = None):
         if self.hasSection(section):
             if option is not None:
@@ -68,8 +75,7 @@ class Config:
             else:
                 Log.info("Utils.Config.addSection -- Section '" + section + "' already exists.")
                 return False
-        
-        
+
     def addOption(self, section = None, option = None, value = None):
         if not self.hasSection(section):
             self.addSection(section)
@@ -85,8 +91,7 @@ class Config:
         else:
             Log.info("Utils.Config.addOption -- Option '" + option + "' is blank or already exists in section '" + section + "'.")
             return False
-    
-    
+
     def updateOption(self, section = None, option = None, value = None, create = False):
         if self.hasOption(section, option):
             if value is not None:
@@ -102,8 +107,7 @@ class Config:
             else:
                 Log.info("Utils.Config.updateOption -- Option '" + option + "' in section '" + section + "' doesn't exist.")
                 return False
-        
-    
+
     def getOption(self, section, option, create = False, default = ""):
         if self.hasOption(section, option):
             return self.parser.get(section, option)
@@ -115,8 +119,7 @@ class Config:
             else:
                 Log.info("Utils.Config.getOption -- Option '" + option + "' in section '" + section + "' doesn't exist.")
                 return -1
-        
-        
+
     def removeSection(self, section):
         if self.hasSection(section):
             self.parser.remove_section(section)
@@ -125,8 +128,7 @@ class Config:
         else:
             Log.info("Utils.Config.remSection -- section not found.")
             return False
-        
-        
+
     def removeOption(self, section, option):
         if self.hasOption(section,option):
             self.parser.remove_option(section, option)

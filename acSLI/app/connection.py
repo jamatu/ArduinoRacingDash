@@ -46,11 +46,13 @@ class Connection:
             if str(arduinoVer) == "b''":
                 Log.warning("No Response From Arduino")
             else:
-                if "".join(acSLI.App.ArduinoVersion.split(".")) > re.findall(r"\'(.+?)\'", str(arduinoVer))[0]:
+                aV = re.findall(r"\'(.+?)\'", str(arduinoVer))[0]
+                if "".join(acSLI.App.ArduinoVersion.split(".")) > aV:
                     Log.warning("Arduino Code Outdated, Please Update to a Compatible Version")
                 else:
                     self.handshake = True
-                    Log.info("Connected to Arduino running v" + acSLI.App.ArduinoVersion + " on port " + self.port)
+                    Log.info("Connected to Arduino running v"
+                             + aV[0] + '.' + aV[1] + '.' + aV[2] + " on port " + self.port)
         else:
             self.port = "----"
             if Config.instance.cfgPort == "AUTO":

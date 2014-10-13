@@ -1,4 +1,4 @@
-import ac
+from app.components import Window, Label, Button
 from app.logger import Logger
 from app.sim_info import SimInfo as Info
 import app.connection as Connection
@@ -20,11 +20,7 @@ class App:
         global Version
 
         self.simInfo = Info()
-        self.appWindow = ac.newApp("AC SLI " + Version)
-        
-        ac.setSize(self.appWindow, 250, 244)
-        ac.drawBorder(self.appWindow, 0)
-        ac.setBackgroundOpacity(self.appWindow, 0)
+        self.appWindow = Window("acSLI " + Version, 250, 244)
 
     def onStart(self):
         Connection.Connection()

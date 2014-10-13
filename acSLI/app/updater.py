@@ -3,6 +3,7 @@ import http.client
 import re
 from app.logger import Logger
 import app.loader as Config
+from app.components import Window, Label, Button
 
 
 Log = Logger()
@@ -32,46 +33,23 @@ class Updater:
             Log.warning("Couldn't get Version Information: %s" % e)
         instance = self
 
-        if (self.remoteVersion != 0) and (self.remoteVersion != Config.instance.cfgRemoteVersion) and ("".join(self.remoteVersion.split(".")) > "".join(currVersion.split("."))):
+        if (self.remoteVersion != 0) and (self.remoteVersion != Config.instance.cfgRemoteVersion) and \
+                ("".join(self.remoteVersion.split(".")) > "".join(currVersion.split("."))):
             self.isOpen = True
             Log.info("New acSLI Version Avalible: v" + self.remoteVersion)
-            self.appWindow = ac.newApp("acSLI Updater")
 
-            ac.setSize(self.appWindow, 400, 120)
-            ac.drawBorder(self.appWindow, 0)
-            ac.setBackgroundOpacity(self.appWindow, 0)
-            ac.setVisible(self.appWindow, 1)
-            ac.setPosition(self.appWindow, 760, 350)
-
-
-            self.lblVersionTxt = ac.addLabel(self.appWindow, "New acSLI Version Avalible: v" + self.remoteVersion + ".")
-            ac.setPosition(self.lblVersionTxt, 30, 50)
-            ac.setSize(self.lblVersionTxt, 360, 10)
-            ac.setFontAlignment(self.lblVersionTxt, "center")
-
-            self.btnYes = ac.addButton(self.appWindow, "Okay")
-            ac.addOnClickedListener(self.btnYes, bFunc_Yes)
-            ac.setPosition(self.btnYes, 30, 90)
-            ac.setSize(self.btnYes, 235, 20)
-            ac.setFontAlignment(self.btnYes, "center")
-
-            '''self.btnNo = ac.addButton(self.appWindow, "Not Now")
-            ac.addOnClickedListener(self.btnNo, bFunc_No)
-            ac.setPosition(self.btnNo, 155, 90)
-            ac.setSize(self.btnNo, 110, 20)
-            ac.setFontAlignment(self.btnNo, "center")'''
-
-            self.btnIgnore = ac.addButton(self.appWindow, "Ignore Version")
-            ac.addOnClickedListener(self.btnIgnore, bFunc_Ignore)
-            ac.setPosition(self.btnIgnore, 280, 90)
-            ac.setSize(self.btnIgnore, 110, 20)
-            ac.setFontAlignment(self.btnIgnore, "center")
+            self.appWindow = Window("acSLI Updater", 400, 120).setVisible(1).setPos(760, 350)
+            self.btnYes = Button(self.appWindow.app, bFunc_Yes, 235, 20, 30, 90, "Okay").setAlign("center")
+            #self.btnNo = Button(self.appWindow.app, bFunc_No, 110, 20, 155, 90, "Not Now").setAlign("center")
+            self.btnIgnore = Button(self.appWindow.app, bFunc_Ignore, 110, 20, 280, 90, "Ignore Version").setAlign("center")
+            self.lblVersionTxt = Label(self.appWindow.app, "New acSLI Version Avalible: v" + self.remoteVersion, 30, 30)\
+                .setSize(360, 10).setAlign("center").setFontSize(20)
 
 
 def bFunc_Yes(dummy, variables):
-    global instance, appWindow
+    global instance
     instance.isOpen = False
-    ac.setVisible(instance.appWindow, 0)
+    instance.appWindow.setVisible(0)
 
 
 def bFunc_No(dummy, variables):
@@ -79,7 +57,7 @@ def bFunc_No(dummy, variables):
 
 
 def bFunc_Ignore(dummy, variables):
-    global instance, appWindow
+    global instance
     Config.instance.config.updateOption("SETTINGS", "remoteVersion", instance.remoteVersion, True)
     instance.isOpen = False
-    ac.setVisible(instance.appWindow, 0)
+    instance.appWindow.setVisible(0)
