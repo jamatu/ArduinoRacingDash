@@ -31,6 +31,10 @@ unsigned long milstart, milstart2 = 0;
 
 void setup() {
         Serial.begin(9600);
+        Serial.print(pgm_read_byte_near(VERSION + 0));
+        Serial.print(pgm_read_byte_near(VERSION + 1));
+        Serial.print(pgm_read_byte_near(VERSION + 2));
+                  
         modules[0]->setupDisplay(true, 0);
         modules[1]->setupDisplay(true, 0);
         
@@ -67,7 +71,12 @@ void setup() {
 
 void update(TM1638* module) {
 	if (Serial.available() > 0) {
-		if (Serial.available() > 14) {
+                if (Serial.available() == 1 ) {
+                    bsettings = Serial.read();
+                    Serial.print(pgm_read_byte_near(VERSION + 0));
+                    Serial.print(pgm_read_byte_near(VERSION + 1));
+                    Serial.print(pgm_read_byte_near(VERSION + 2));
+                } else if (Serial.available() > 14) {
 			if (Serial.read() == 255) {
                                 bsettings = Serial.read();                                
 				gear = Serial.read();
@@ -100,7 +109,7 @@ void update(TM1638* module) {
 				rpm = (rpm_h << 8) | rpm_l;
                                 delta = (delta_h << 8)| delta_l;
                          }
-		}
+                }
 	}
 
 	buttons = module->getButtons();
