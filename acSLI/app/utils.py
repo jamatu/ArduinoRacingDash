@@ -7,9 +7,11 @@
 #
 #######################################################
 
-import ac
 import os.path
 import configparser
+from app.logger import Logger
+
+Log = Logger()
 
 class Config:
     
@@ -23,7 +25,7 @@ class Config:
         try:
             self.parser = configparser.RawConfigParser()
         except:
-            ac.console("Utils.Config: Failed to initialize ConfigParser.")
+            Log.info("Utils.Config: Failed to initialize ConfigParser.")
             
         self._read()
     
@@ -64,7 +66,7 @@ class Config:
                 self._write()
                 return True
             else:
-                ac.console("Utils.Config.addSection -- Section '" + section + "' already exists.")
+                Log.info("Utils.Config.addSection -- Section '" + section + "' already exists.")
                 return False
         
         
@@ -78,10 +80,10 @@ class Config:
                 self._write()
                 return True
             else:
-                ac.console("Utils.Config.addOption -- Value cannot be null")
+                Log.info("Utils.Config.addOption -- Value cannot be null")
                 return False
         else:
-            ac.console("Utils.Config.addOption -- Option '" + option + "' is blank or already exists in section '" + section + "'.")
+            Log.info("Utils.Config.addOption -- Option '" + option + "' is blank or already exists in section '" + section + "'.")
             return False
     
     
@@ -92,13 +94,13 @@ class Config:
                 self._write()
                 return True
             else:
-                ac.console("Utils.Config.updateOption -- Value cannot be null")
+                Log.info("Utils.Config.updateOption -- Value cannot be null")
                 return False
         else:
             if create:
                 return self.addOption(section, option, value)
             else:
-                ac.console("Utils.Config.updateOption -- Option '" + option + "' in section '" + section + "' doesn't exist.")
+                Log.info("Utils.Config.updateOption -- Option '" + option + "' in section '" + section + "' doesn't exist.")
                 return False
         
     
@@ -107,11 +109,11 @@ class Config:
             return self.parser.get(section, option)
         else:
             if create:
-                ac.console("Utils.Config.getOption -- Option '" + option + "' in section '" + section + "' doesn't exist. Creating with default value...")
+                Log.info("Utils.Config.getOption -- Option '" + option + "' in section '" + section + "' doesn't exist. Creating with default value...")
                 self.addOption(section, option, default)
                 return default
             else:
-                ac.console("Utils.Config.getOption -- Option '" + option + "' in section '" + section + "' doesn't exist.")
+                Log.info("Utils.Config.getOption -- Option '" + option + "' in section '" + section + "' doesn't exist.")
                 return -1
         
         
@@ -121,7 +123,7 @@ class Config:
             self._write()
             return True
         else:
-            ac.console("Utils.Config.remSection -- section not found.")
+            Log.info("Utils.Config.remSection -- section not found.")
             return False
         
         
@@ -131,5 +133,5 @@ class Config:
             self._write()
             return True
         else:
-            ac.console("Utils.Config.Config.remOption -- option not found.")
+            Log.info("Utils.Config.Config.remOption -- option not found.")
             return False 
