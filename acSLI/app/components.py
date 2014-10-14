@@ -17,6 +17,10 @@ class Window:
         ac.setVisible(self.app, visible)
         return self
 
+    def setBackgroundTexture(self, texture):
+        ac.setBackgroundTexture(self.app, texture)
+        return self
+
 
 class Label:
 

@@ -40,16 +40,16 @@ class App:
             Log.warning("Loaded with Errors")
         
     def onUpdate(self):
-        Log.info(self.ticker)
-        if (Connection.instance.handshake) and (self.ticker % 5 == 0):
+        if Connection.instance.handshake and self.ticker % 3 == 0:
             Connection.instance.send(self.compileDataPacket())
+
+        if self.ticker == 30:
+            self.ticker = 0
         else:
-            if self.ticker == 30:
-                self.ticker = 0
-            else:
-                self.ticker += 1
-        
-    def onClose(self):
+            self.ticker += 1
+
+    @staticmethod
+    def onClose():
         Connection.instance.close
 
     def compileDataPacket(self):

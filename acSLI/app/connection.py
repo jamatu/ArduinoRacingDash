@@ -4,6 +4,7 @@ import re
 import acSLI
 from app.logger import Logger
 import app.loader as Config
+import app.error as Error
 
 Log = Logger()
 instance = 0
@@ -19,10 +20,10 @@ class Connection:
         global instance
 
         self.handshake = False
-        self._findConnection()
+        self.findConnection()
         instance = self
 
-    def _findConnection(self):
+    def findConnection(self):
         portValid = False
         for sPort, desc, hwid in sorted(serial.tools.list_ports.comports()):
             Log.info("%s: %s [%s]" % (sPort, desc, hwid))
@@ -44,11 +45,18 @@ class Connection:
             arduinoVer = self.ser.read(3)
 
             if str(arduinoVer) == "b''":
+                self.port = "----"
                 Log.warning("No Response From Arduino")
+                Error.ErrorBox("No Response From Arduino. Please Ensure Arduino is running at least v" +
+                               acSLI.App.ArduinoVersion)
             else:
                 aV = re.findall(r"\'(.+?)\'", str(arduinoVer))[0]
                 if "".join(acSLI.App.ArduinoVersion.split(".")) > aV:
-                    Log.warning("Arduino Code Outdated, Please Update to a Compatible Version")
+                    self.port = "----"
+                    Log.warning("Arduino Code Outdated. Please Update Arduino to at least v" +
+                                   acSLI.App.ArduinoVersion)
+                    Error.ErrorBox("Arduino Code Outdated. Please Update Arduino to at least v" +
+                                   acSLI.App.ArduinoVersion + " and then Reconnect")
                 else:
                     self.handshake = True
                     Log.info("Connected to Arduino running v"
@@ -56,9 +64,9 @@ class Connection:
         else:
             self.port = "----"
             if Config.instance.cfgPort == "AUTO":
-                Log.info("No Arduino Detected")
+                Log.warning("No Arduino Detected")
             else:
-                Log.info("Invalid COM Port")
+                Log.warning("Invalid COM Port")
 
         #ac.setText(lbConnectedPort, "Connected COM Port: {}".format(port))
 

@@ -35,20 +35,21 @@ class Updater:
         if (self.remoteVersion != 0) and (self.remoteVersion != Config.instance.cfgRemoteVersion) and \
                 ("".join(self.remoteVersion.split(".")) > "".join(currVersion.split("."))):
             self.isOpen = True
-            Log.info("New acSLI Version Avalible: v" + self.remoteVersion)
+            Log.info("New acSLI Version Available: v" + self.remoteVersion)
 
-            self.appWindow = Window("acSLI Updater", 400, 120).setVisible(1).setPos(760, 350)
-            self.btnYes = Button(self.appWindow.app, bFunc_Yes, 235, 20, 30, 90, "Okay").setAlign("center")
-            #self.btnNo = Button(self.appWindow.app, bFunc_No, 110, 20, 155, 90, "Not Now").setAlign("center")
-            self.btnIgnore = Button(self.appWindow.app, bFunc_Ignore, 110, 20, 280, 90, "Ignore Version").setAlign("center")
-            self.lblVersionTxt = Label(self.appWindow.app, "New acSLI Version Avalible: v" + self.remoteVersion, 30, 30)\
+            self.appWindow = Window("acSLI Updater", 400, 120).setVisible(1).setPos(760, 350)\
+                .setBackgroundTexture("apps/python/acSLI/image/backUpdater.png")
+            self.btnYes = Button(self.appWindow.app, bFunc_Yes, 235, 20, 20, 90, "Okay").setAlign("center")
+            #self.btnNo = Button(self.appWindow.app, bFunc_No, 110, 20, 145, 90, "Not Now").setAlign("center")
+            self.btnIgnore = Button(self.appWindow.app, bFunc_Ignore, 110, 20, 270, 90, "Ignore Version").setAlign("center")
+            self.lblVersionTxt = Label(self.appWindow.app, "New acSLI Version Available: v" + self.remoteVersion, 30, 30)\
                 .setSize(360, 10).setAlign("center").setFontSize(20)
 
 
 def bFunc_Yes(dummy, variables):
     global instance
-    instance.isOpen = False
     instance.appWindow.setVisible(0)
+    instance.isOpen = False
 
 
 def bFunc_No(dummy, variables):
@@ -58,5 +59,5 @@ def bFunc_No(dummy, variables):
 def bFunc_Ignore(dummy, variables):
     global instance
     Config.instance.config.updateOption("SETTINGS", "remoteVersion", instance.remoteVersion, True)
-    instance.isOpen = False
     instance.appWindow.setVisible(0)
+    instance.isOpen = False

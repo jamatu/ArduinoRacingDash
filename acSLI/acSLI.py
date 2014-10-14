@@ -32,7 +32,7 @@ def acMain(acVerison):
  
 
 def acUpdate(deltaT):  
-    global acSLI, Version, hasInit
+    global acSLI, hasInit
 
     try:
         if not Updater.instance.isOpen and not hasInit:
