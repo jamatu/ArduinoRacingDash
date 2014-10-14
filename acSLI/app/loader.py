@@ -17,6 +17,7 @@ class ConfigLoader:
 
     def __init__(self):
         global instance, cfgPath
+        instance = self
 
         try:
             self.config = Config(cfgPath)
@@ -29,7 +30,11 @@ class ConfigLoader:
             if not(self.cfgStartPage.isdigit() or int(self.cfgStartPage.isdigit()) > -1 or int(self.cfgStartPage.isdigit()) < 6):
                 self.cfgStartPage = 0
 
-            instance = self
-
         except Exception as e:
             Log.error("Loading Config File: %s" % e)
+
+    def rewriteConfig(self):
+        self.config.updateOption("SETTINGS", "port", self.cfgPort, True)
+        self.config.updateOption("SETTINGS", "unitSpeed", self.cfgSpeedUnit, True)
+        self.config.updateOption("SETTINGS", "startupPage", self.cfgStartPage, True)
+        self.config.updateOption("SETTINGS", "intensity", self.cfgIntensity, True)

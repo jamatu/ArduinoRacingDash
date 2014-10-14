@@ -5,6 +5,7 @@ from app.logger import Logger
 import app.app as App
 import app.updater as Updater
 import app.loader as Loader
+import app.selector as Selector
 
 
 Log = Logger()
@@ -19,6 +20,7 @@ def acMain(acVerison):
         Log.info("Start Loading acSLI v" + App.Version)
         Loader.ConfigLoader()
         Updater.Updater(App.Version)
+        Selector.Selector()
 
         if not Updater.instance.isOpen:
             hasInit = True

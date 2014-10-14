@@ -44,7 +44,7 @@ class Label:
         ac.setFontSize(self.label, fontSize)
         return self
 
-    def setAlign(self, align = "left"):
+    def setAlign(self, align):
         ac.setFontAlignment(self.label, align)
         return self
 
@@ -61,6 +61,10 @@ class Button:
         self.setPos(x, y)
         ac.addOnClickedListener(self.button, clickFunc)
 
+    def setText(self, text):
+        ac.setText(self.button, text)
+        return self
+
     def setSize(self, width, height):
         ac.setSize(self.button, width, height)
         return self
@@ -69,6 +73,19 @@ class Button:
         ac.setPosition(self.button, x, y)
         return self
 
-    def setAlign(self, align = "left"):
+    def setAlign(self, align):
         ac.setFontAlignment(self.button, align)
+        return self
+
+    def hasCustomBackground(self):
+        ac.drawBorder(self.button, 0)
+        ac.setBackgroundOpacity(self.button, 0)
+        return self
+
+    def setBackgroundTexture(self, texture):
+        ac.setBackgroundTexture(self.button, texture)
+        return self
+
+    def setFontSize(self, fontSize):
+        ac.setFontSize(self.button, fontSize)
         return self

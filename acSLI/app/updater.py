@@ -23,6 +23,8 @@ class Updater:
 
     def __init__(self, currVersion):
         global instance
+        instance = self
+
         try:
             conn = http.client.HTTPSConnection("raw.githubusercontent.com", 443)
             conn.request("GET", "/Turnermator13/ArduinoRacingDash/master/version.txt")
@@ -30,7 +32,6 @@ class Updater:
             self.remoteVersion = re.findall(r"\'(.+?)\'", str(versionFile.read()))[0]
         except Exception as e:
             Log.warning("Couldn't get Version Information: %s" % e)
-        instance = self
 
         if (self.remoteVersion != 0) and (self.remoteVersion != Config.instance.cfgRemoteVersion) and \
                 ("".join(self.remoteVersion.split(".")) > "".join(currVersion.split("."))):

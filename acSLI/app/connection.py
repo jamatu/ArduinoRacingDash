@@ -5,25 +5,25 @@ import acSLI
 from app.logger import Logger
 import app.loader as Config
 import app.error as Error
+import app.selector as Selector
 
 Log = Logger()
 instance = 0
 
 
 class Connection:
-
     ser = 0
     port = 0
     handshake = False
 
     def __init__(self):
         global instance
-
-        self.handshake = False
-        self.findConnection()
         instance = self
 
-    def findConnection(self):
+        self.handshake = False
+        self.findConnection(True)
+
+    def findConnection(self, init):
         portValid = False
         for sPort, desc, hwid in sorted(serial.tools.list_ports.comports()):
             Log.info("%s: %s [%s]" % (sPort, desc, hwid))
@@ -46,15 +46,16 @@ class Connection:
 
             if str(arduinoVer) == "b''":
                 self.port = "----"
-                Log.warning("No Response From Arduino")
-                Error.ErrorBox("No Response From Arduino. Please Ensure Arduino is running at least v" +
-                               acSLI.App.ArduinoVersion)
+                Log.warning("No Response From Arduino. Please Ensure Arduino is running at least v" +
+                            acSLI.App.ArduinoVersion)
+                if init:
+                    Selector.instance.open(self, "No Response from Arduino")
             else:
                 aV = re.findall(r"\'(.+?)\'", str(arduinoVer))[0]
                 if "".join(acSLI.App.ArduinoVersion.split(".")) > aV:
                     self.port = "----"
                     Log.warning("Arduino Code Outdated. Please Update Arduino to at least v" +
-                                   acSLI.App.ArduinoVersion)
+                                acSLI.App.ArduinoVersion)
                     Error.ErrorBox("Arduino Code Outdated. Please Update Arduino to at least v" +
                                    acSLI.App.ArduinoVersion + " and then Reconnect")
                 else:
@@ -65,10 +66,15 @@ class Connection:
             self.port = "----"
             if Config.instance.cfgPort == "AUTO":
                 Log.warning("No Arduino Detected")
+                if init:
+                    Selector.instance.open(self, "No Arduino Detected")
             else:
-                Log.warning("Invalid COM Port")
+                Log.warning("Invalid COM Port Configured")
+                if init:
+                    Selector.instance.open(self, "Invalid COM Port Configured")
 
-        #ac.setText(lbConnectedPort, "Connected COM Port: {}".format(port))
+                # ac.setText(lbConnectedPort, "Connected COM Port: {}".format(port))
+        return self.handshake
 
     def send(self, msg):
         self.ser.write(msg)
