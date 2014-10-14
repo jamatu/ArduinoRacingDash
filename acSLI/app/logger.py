@@ -2,9 +2,10 @@ import ac
 from datetime import datetime
 import traceback
 
-logFile = 0
 
 class Logger:
+
+    logFile = 0
 
     def __init__(self):
         try:

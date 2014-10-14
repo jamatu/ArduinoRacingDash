@@ -9,18 +9,17 @@ from app.components import Window, Label, Button
 Log = Logger()
 instance = 0
 
-appWindow = 0
-remoteVersion = 0
-
-lblVersionTxt = 0
-btnYes = 0
-btnNo = 0
-btnIgnore = 0
-
 
 class Updater:
 
     isOpen = False
+    appWindow = 0
+    remoteVersion = 0
+
+    lblVersionTxt = 0
+    btnYes = 0
+    btnNo = 0
+    btnIgnore = 0
 
     def __init__(self, currVersion):
         global instance

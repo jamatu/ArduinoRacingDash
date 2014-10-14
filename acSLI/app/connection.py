@@ -7,13 +7,13 @@ import app.loader as Config
 
 Log = Logger()
 instance = 0
-_ser = 0
-
-port = 0
-handshake = False
 
 
 class Connection:
+
+    ser = 0
+    port = 0
+    handshake = False
 
     def __init__(self):
         global instance
@@ -61,3 +61,9 @@ class Connection:
                 Log.info("Invalid COM Port")
 
         #ac.setText(lbConnectedPort, "Connected COM Port: {}".format(port))
+
+    def send(self, msg):
+        self.ser.write(msg)
+
+    def close(self):
+        self.ser.close()
