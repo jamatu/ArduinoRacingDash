@@ -29,8 +29,8 @@ class Updater:
             conn = http.client.HTTPSConnection("raw.githubusercontent.com", 443)
             conn.request("GET", "/Turnermator13/ArduinoRacingDash/master/version.txt")
             versionFile = conn.getresponse()
-            conn.close()
             self.remoteVersion = re.findall(r"\'(.+?)\'", str(versionFile.read()))[0]
+            conn.close()
         except Exception as e:
             Log.warning("Couldn't get Version Information: %s" % e)
 
@@ -51,7 +51,7 @@ class Updater:
                 .setSize(360, 10).setAlign("center").setFontSize(20)
 
     def updateFiles(self):
-        self.lblVersionTxt.setText("Updating Files. Please Wait.")
+        Log.info("Updating Files. Please Wait.")
 
         conn = http.client.HTTPSConnection("raw.githubusercontent.com", 443)
         conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + self.remoteVersion + "/fileList.txt")
@@ -59,18 +59,24 @@ class Updater:
 
         for filename in Files:
             conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + self.remoteVersion + "/acSLI/" + filename)
-            try:
-                localfile = open(filename,'wb')
-                localfile.write(conn.getresponse().read())
-                localfile.close()
-            except FileNotFoundError as e:
-                os.makedirs(filename.split('/')[0])
-                localfile = open(filename,'wb')
-                localfile.write(conn.getresponse().read())
-                localfile.close()
+
+            if filename.split('/')[0] == "dll" and os.path.isfile("apps/python/acSLI/" + filename):
+                Log.info("DLL Exists, Skipping")
+            else:
+                try:
+                    localfile = open("apps/python/acSLI/" + filename,'wb')
+                    localfile.write(conn.getresponse().read())
+                    localfile.close()
+                except FileNotFoundError:
+                    os.makedirs(filename.split('/')[0])
+                    localfile = open("apps/python/acSLI/" + filename,'wb')
+                    localfile.write(conn.getresponse().read())
+                    localfile.close()
+                except Exception as e:
+                    Log.error("On Start: %s" % e)
 
         conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + self.remoteVersion + "/ArduinoDash/ArduinoDash.ino")
-        arduinoSketch = open("ArduinoDash.ino",'wb')
+        arduinoSketch = open("apps/python/acSLI/ArduinoDash.ino",'wb')
         arduinoSketch.write(conn.getresponse().read())
         arduinoSketch.close()
 

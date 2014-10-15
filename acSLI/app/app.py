@@ -8,7 +8,7 @@ import app.connection as Connection
 import app.selector as Selector
 
 #################
-Version = "1.9.1"
+Version = "1.9.2"
 ArduinoVersion = "2.0.0"
 #################
 
@@ -25,12 +25,12 @@ class App:
     maxFuel = 0
 
     def __init__(self):
-        global Version
-
         self.simInfo = Info()
-        self.appWindow = Window("acSLI " + Version, 250, 244)
+        self.appWindow = Window("acSLI", 250, 244)
 
     def onStart(self):
+        global Version
+        Log.info("Init acSLI v" + Version)
         Selector.Selector()
         Connection.Connection()
         Connection.findConnection().start()
@@ -39,7 +39,7 @@ class App:
         Log.info("Loaded Successfully")
         
     def onUpdate(self):
-        if self.ticker % 3 == 0:
+        if self.ticker % 6 == 0:
             if Connection.instance.handshake:
                 Connection.instance.send(self.compileDataPacket())
             else:
