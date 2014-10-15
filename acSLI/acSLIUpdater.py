@@ -90,7 +90,7 @@ class updateFiles(threading.Thread):
                 conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + instance.remoteVersion + "/acSLI/" + filename)
                 i += 1
                 Log.info("Downloading: " + filename)
-                progInstance.lblMsg.setText("Downloading[%s/%s][%s]: '%s'" % (str(i), str(lenFiles), str(round((i/lenFiles)*100, 2)) + "%", filename))
+                progInstance.lblMsg.setText("Downloading[%s/%s][%s]: '%s'" % (str(i), str(lenFiles), str(round((i/lenFiles)*100, 0)) + "%", filename))
                 if filename.split('/')[0] == "dll" and os.path.isfile("apps/python/acSLI/" + filename):
                     Log.info("DLL Exists, Skipping")
                     conn.getresponse().read()
@@ -118,7 +118,7 @@ class updateFiles(threading.Thread):
             Log.info("Successfully Updated to " + instance.remoteVersion + " , please restart AC Session")
             progInstance.lblMsg.setText("Update Successful. Please Restart Session")
             if instance.reqArduinoUpdate:
-               progInstance.lblMsg.setText("Update Successful. Please Update Arduino and Restart Session")
+               progInstance.lblMsg.setText("Success! Please Update Arduino (latest sketch in apps/python/acsli) and Restart Session")
             progInstance.dispButton()
         except Exception as e:
                     Log.error("On Update: %s" % e)
