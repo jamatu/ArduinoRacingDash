@@ -7,6 +7,7 @@ v2.0.0:
 	Popups for Messages ect
 	Automatic Updater
 	Improved Customisation
+	Option to change tick frequency if its too low(lower frame rate should have a lower tick rate)
 
 v1.8.3:
 	Try reduce the RAM usage of arduino program

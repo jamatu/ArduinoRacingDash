@@ -93,7 +93,7 @@ class updateFiles(threading.Thread):
                 conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + instance.remoteVersion + "/acSLI/" + filename)
                 i += 1
                 Log.info("Downloading: " + filename)
-                progInstance.lblMsg.setText("Downloading[%s/%s][%s]: '%s'" % (str(i), str(lenFiles), str(round((i/lenFiles)*100, 0)) + "%", filename))
+                progInstance.lblMsg.setText("Downloading[%s/%s][%s]: '%s'" % (str(i), str(lenFiles), str(round((i/lenFiles)*100)) + "%", filename))
                 if filename.split('/')[0] == "dll" and os.path.isfile("apps/python/acSLI/" + filename):
                     Log.info("DLL Exists, Skipping")
                     conn.getresponse().read()
