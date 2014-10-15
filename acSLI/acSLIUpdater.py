@@ -1,6 +1,7 @@
 import os
 import http.client
 import re
+import threading
 from app.logger import Logger
 import app.loader as Config
 from app.components import Window, Label, Button
@@ -13,6 +14,7 @@ instance = 0
 class Updater:
 
     isOpen = False
+    hasUpdated = False
     appWindow = 0
     remoteVersion = 0
 
@@ -50,45 +52,60 @@ class Updater:
             self.lblVersionTxt = Label(self.appWindow.app, "New acSLI Version Available: v" + self.remoteVersion, 30, 30)\
                 .setSize(360, 10).setAlign("center").setFontSize(20)
 
-    def updateFiles(self):
-        Log.info("Updating Files. Please Wait.")
 
-        conn = http.client.HTTPSConnection("raw.githubusercontent.com", 443)
-        conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + self.remoteVersion + "/fileList.txt")
-        Files = re.findall(r"\'(.+?)\'", str(conn.getresponse().read()))[0].split('\\n')
 
-        for filename in Files:
-            conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + self.remoteVersion + "/acSLI/" + filename)
+class updateFiles(threading.Thread):
 
-            if filename.split('/')[0] == "dll" and os.path.isfile("apps/python/acSLI/" + filename):
-                Log.info("DLL Exists, Skipping")
-            else:
-                try:
-                    localfile = open("apps/python/acSLI/" + filename,'wb')
-                    localfile.write(conn.getresponse().read())
-                    localfile.close()
-                except FileNotFoundError:
-                    os.makedirs(filename.split('/')[0])
-                    localfile = open("apps/python/acSLI/" + filename,'wb')
-                    localfile.write(conn.getresponse().read())
-                    localfile.close()
-                except Exception as e:
-                    Log.error("On Start: %s" % e)
+    def __init__(self):
+        threading.Thread.__init__(self)
 
-        conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + self.remoteVersion + "/ArduinoDash/ArduinoDash.ino")
-        arduinoSketch = open("apps/python/acSLI/ArduinoDash.ino",'wb')
-        arduinoSketch.write(conn.getresponse().read())
-        arduinoSketch.close()
+    def run(self):
+        global instance
 
-        conn.close()
+        try:
+            Log.info("Updating Files. Please Wait.")
+
+            conn = http.client.HTTPSConnection("raw.githubusercontent.com", 443)
+            conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + instance.remoteVersion + "/fileList.txt")
+            Files = re.findall(r"\'(.+?)\'", str(conn.getresponse().read()))[0].split('\\n')
+
+            for filename in Files:
+                conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + instance.remoteVersion + "/acSLI/" + filename)
+                Log.info("Downloading: " + filename)
+                if filename.split('/')[0] == "dll" and os.path.isfile("apps/python/acSLI/" + filename):
+                    Log.info("DLL Exists, Skipping")
+                    conn.getresponse().read()
+                else:
+                    try:
+                        localfile = open("apps/python/acSLI/" + filename,'wb')
+                        localfile.write(conn.getresponse().read())
+                        localfile.close()
+                    except FileNotFoundError:
+                        os.makedirs(filename.split('/')[0])
+                        localfile = open("apps/python/acSLI/" + filename,'wb')
+                        localfile.write(conn.getresponse().read())
+                        localfile.close()
+                    except Exception as e:
+                        Log.error("On Update: %s" % e)
+
+            conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + instance.remoteVersion + "/ArduinoDash/ArduinoDash.ino")
+            Log.info("Downloading: ArduinoDash.ino")
+            arduinoSketch = open("apps/python/acSLI/ArduinoDash.ino",'wb')
+            arduinoSketch.write(conn.getresponse().read())
+            arduinoSketch.close()
+
+            conn.close()
+            Log.info("Successfully Updated to " + instance.remoteVersion + " , please restart AC Session")
+            #Update Complete Window
+        except Exception as e:
+                    Log.error("On Update: %s" % e)
 
 
 
 def bFunc_Yes(dummy, variables):
     global instance
-    instance.updateFiles()
     instance.appWindow.setVisible(0)
-    instance.isOpen = False
+    updateFiles().start()
 
 
 def bFunc_No(dummy, variables):

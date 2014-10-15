@@ -13,7 +13,7 @@ hasInit = False
 
 
 def acMain(acVerison):
-    global acSLI, hasInit
+    global acSLI, hasInit, Log
 
     try:
         Log.info("Start Loading acSLI v" + App.Version)
