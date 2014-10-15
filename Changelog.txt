@@ -1,6 +1,9 @@
 Arduino Racing Dash ChangeLog
 --------------------																																																									
 
+v2.0.0:
+	Total source rewrite
+
 v1.8.3:
 	Try reduce the RAM usage of arduino program
 	Edit config saver/loader in acSLI to fix small bug
