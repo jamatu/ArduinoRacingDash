@@ -2,6 +2,7 @@ from app.logger import Logger
 from app.components import Window, Label, Button
 import serial.tools.list_ports
 import app.loader as Config
+import app.connection as Connection
 
 Log = Logger()
 instance = 0
@@ -10,7 +11,6 @@ instance = 0
 class Selector:
 
     appWindow = 0
-    ret = 0
     listPorts = []
     shift = 0
     maxShift = 0
@@ -21,6 +21,7 @@ class Selector:
     btnB1 = 0
     btnB2 = 0
     btnB3 = 0
+    btnAUTO = 0
     lblMsg = 0
     lblInst = 0
 
@@ -33,8 +34,9 @@ class Selector:
         self.btnUP = Button(self.appWindow.app, bFunc_UP, 80, 40, 285, 90, "").setAlign("center").hasCustomBackground()
         self.btnDN = Button(self.appWindow.app, bFunc_DN, 80, 40, 285, 310, "").setAlign("center").hasCustomBackground()
 
-        self.lblMsg = Label(self.appWindow.app, "", 30, 47).setSize(590, 10)\
-            .setAlign("center").setFontSize(18)
+        self.lblMsg = Label(self.appWindow.app, "", 30, 47).setSize(590, 10).setAlign("center").setFontSize(18)
+        self.btnAUTO = Button(self.appWindow.app, bFunc_AUTO, 160, 20, 440, 98, "Enable AUTO Mode").setAlign("center")\
+            .hasCustomBackground().setBackgroundTexture("apps/python/acSLI/image/backBtnAuto.png")
 
         self.btnB0 = Button(self.appWindow.app, bFunc_B0, 600, 20, 25, 150, "").setAlign("center")\
             .hasCustomBackground().setBackgroundTexture("apps/python/acSLI/image/backList.png")
@@ -45,9 +47,9 @@ class Selector:
         self.btnB3 = Button(self.appWindow.app, bFunc_B3, 600, 20, 25, 270, "").setAlign("center")\
             .hasCustomBackground().setBackgroundTexture("apps/python/acSLI/image/backList.png")
 
-    def open(self, callback, msg):
-        self.ret = callback
+    def open(self, msg):
 
+        self.listPorts = []
         for sPort, desc, hwid in sorted(serial.tools.list_ports.comports()):
             self.listPorts.append([sPort, desc, hwid])
 
@@ -92,41 +94,50 @@ def bFunc_DN(dummy, variables):
         instance.scrollLogic()
 
 
+def bFunc_AUTO(dummy, variables):
+    global instance
+
+    instance.appWindow.setVisible(0)
+    Config.instance.cfgPort = "AUTO"
+    Config.instance.rewriteConfig()
+    Connection.findConnection().start()
+
+
 def bFunc_B0(dummy, variables):
     global instance
 
     pos = 0 + instance.shift
+    instance.appWindow.setVisible(0)
     Config.instance.cfgPort = instance.listPorts[pos][0]
     Config.instance.rewriteConfig()
-    if instance.ret.findConnection(False):
-        instance.appWindow.setVisible(0)
+    Connection.findConnection().start()
 
 
 def bFunc_B1(dummy, variables):
     global instance
 
     pos = 1 + instance.shift
+    instance.appWindow.setVisible(0)
     Config.instance.cfgPort = instance.listPorts[pos][0]
     Config.instance.rewriteConfig()
-    if instance.ret.findConnection(False):
-        instance.appWindow.setVisible(0)
+    Connection.findConnection().start()
 
 
 def bFunc_B2(dummy, variables):
     global instance
 
     pos = 2 + instance.shift
+    instance.appWindow.setVisible(0)
     Config.instance.cfgPort = instance.listPorts[pos][0]
     Config.instance.rewriteConfig()
-    if instance.ret.findConnection(False):
-        instance.appWindow.setVisible(0)
+    Connection.findConnection().start()
 
 
 def bFunc_B3(dummy, variables):
     global instance
 
     pos = 3 + instance.shift
+    instance.appWindow.setVisible(0)
     Config.instance.cfgPort = instance.listPorts[pos][0]
     Config.instance.rewriteConfig()
-    if instance.ret.findConnection(False):
-        instance.appWindow.setVisible(0)
+    Connection.findConnection().start()

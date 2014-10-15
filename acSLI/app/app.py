@@ -5,7 +5,7 @@ from app.logger import Logger
 from app.sim_info import SimInfo as Info
 import app.loader as Config
 import app.connection as Connection
-
+import app.selector as Selector
 
 #################
 Version = "1.9.0"
@@ -31,17 +31,21 @@ class App:
         self.appWindow = Window("acSLI " + Version, 250, 244)
 
     def onStart(self):
+        Selector.Selector()
         Connection.Connection()
+        Connection.findConnection().start()
         self.ticker = 0
 
-        if Connection.instance.handshake:
-            Log.info("Loaded Successfully")
-        else:
-            Log.warning("Loaded with Errors")
+        Log.info("Loaded Successfully")
         
     def onUpdate(self):
-        if Connection.instance.handshake and self.ticker % 3 == 0:
-            Connection.instance.send(self.compileDataPacket())
+        if self.ticker % 3 == 0:
+            if Connection.instance.handshake:
+                Connection.instance.send(self.compileDataPacket())
+            else:
+                if Connection.instance.dispSelect:
+                    Selector.instance.open(Connection.instance.dispSelectMsg)
+                    Connection.instance.dispSelect = False
 
         if self.ticker == 30:
             self.ticker = 0
