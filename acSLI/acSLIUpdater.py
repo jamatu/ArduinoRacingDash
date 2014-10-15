@@ -44,12 +44,13 @@ class Updater:
         except Exception as e:
             Log.warning("Couldn't get Version Information: %s" % e)
 
-        if (self.remoteVersion != 0) and (self.remoteVersion != Config.instance.cfgRemoteVersion) and \
-                ("".join(self.remoteVersion.split(".")) > "".join(currVersion.split("."))):
+        if (self.remoteVersion != 0) and (Config.instance.cfgEnableUpdater == 1) and (self.remoteVersion != Config.instance.cfgRemoteVersion)\
+                and ("".join(self.remoteVersion.split(".")) > "".join(currVersion.split("."))):
             self.isOpen = True
-            Log.info("New acSLI Version Available: v" + self.remoteVersion)
             if self.reqArduinoUpdate:
-                Log.info("Requires Arduino Sketch Update")
+                Log.info("New acSLI Version Available: v" + self.remoteVersion + ". Requires Arduino Sketch Update")
+            else:
+                Log.info("New acSLI Version Available: v" + self.remoteVersion)
 
             self.appWindow = Window("acSLI Updater", 400, 120).setVisible(1).setPos(760, 350)\
                 .setBackgroundTexture("apps/python/acSLI/image/backUpdater.png")
@@ -64,6 +65,8 @@ class Updater:
                 .setSize(360, 10).setAlign("center").setFontSize(20).setColor(Utils.rgb(Utils.colours["red"]))
             self.lblLog = Label(self.appWindow.app, self.changeLog, 20, 60)\
                 .setSize(360, 10).setAlign("center").setColor(Utils.rgb(Utils.colours["green"]))
+        else:
+            Log.info("Running Latest Version")
 
 
 

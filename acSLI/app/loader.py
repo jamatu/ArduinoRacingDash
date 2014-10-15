@@ -15,6 +15,9 @@ class ConfigLoader:
     cfgStartPage = 0
     cfgIntensity = 0
 
+    cfgTickFreq = 6
+    cfgEnableUpdater = 1
+
     def __init__(self):
         global instance, cfgPath
         instance = self
@@ -27,6 +30,9 @@ class ConfigLoader:
             self.cfgStartPage = str(self.config.getOption("SETTINGS", "startupPage", True, self.cfgStartPage))
             self.cfgIntensity = str(self.config.getOption("SETTINGS", "intensity", True, self.cfgIntensity))
 
+            self.cfgTickFreq = int(self.config.getOption("ADVANCED", "tickFrequency", True, self.cfgTickFreq))
+            self.cfgEnableUpdater = int(self.config.getOption("ADVANCED", "enableUpdater", True, self.cfgEnableUpdater))
+
             if not(self.cfgStartPage.isdigit() or int(self.cfgStartPage.isdigit()) > -1 or int(self.cfgStartPage.isdigit()) < 6):
                 self.cfgStartPage = 0
 
@@ -38,3 +44,5 @@ class ConfigLoader:
         self.config.updateOption("SETTINGS", "unitSpeed", self.cfgSpeedUnit, True)
         self.config.updateOption("SETTINGS", "startupPage", self.cfgStartPage, True)
         self.config.updateOption("SETTINGS", "intensity", self.cfgIntensity, True)
+        self.config.updateOption("ADVANCED", "tickFrequency", self.cfgTickFreq, True)
+        self.config.updateOption("ADVANCED", "enableUpdater", self.cfgEnableUpdater, True)

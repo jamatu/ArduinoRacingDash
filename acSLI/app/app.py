@@ -38,7 +38,7 @@ class App:
         Log.info("Loaded Successfully")
         
     def onUpdate(self):
-        if self.ticker % 6 == 0:
+        if self.ticker % Config.instance.cfgTickFreq == 0:
             if Connection.instance.handshake:
                 Connection.instance.send(self.compileDataPacket())
             else:
