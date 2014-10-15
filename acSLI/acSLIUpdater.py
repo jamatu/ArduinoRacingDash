@@ -5,10 +5,12 @@ import threading
 from app.logger import Logger
 import app.loader as Config
 from app.components import Window, Label, Button
+import app.utils as utils
 
 
 Log = Logger()
 instance = 0
+progInstance = 0
 
 
 class Updater:
@@ -17,8 +19,11 @@ class Updater:
     hasUpdated = False
     appWindow = 0
     remoteVersion = 0
+    reqArduinoUpdate = 0
+    changeLog = 0
 
     lblVersionTxt = 0
+    lblLog = 0
     btnYes = 0
     btnNo = 0
     btnIgnore = 0
@@ -31,7 +36,10 @@ class Updater:
             conn = http.client.HTTPSConnection("raw.githubusercontent.com", 443)
             conn.request("GET", "/Turnermator13/ArduinoRacingDash/master/version.txt")
             versionFile = conn.getresponse()
-            self.remoteVersion = re.findall(r"\'(.+?)\'", str(versionFile.read()))[0]
+            versionStr = re.findall(r"\'(.+?)\'", str(versionFile.read()))[0]
+            self.remoteVersion = versionStr.split("|")[0]
+            self.reqArduinoUpdate = bool(versionStr.split("|")[1])
+            self.changeLog = versionStr.split("|")[2]
             conn.close()
         except Exception as e:
             Log.warning("Couldn't get Version Information: %s" % e)
@@ -40,6 +48,8 @@ class Updater:
                 ("".join(self.remoteVersion.split(".")) > "".join(currVersion.split("."))):
             self.isOpen = True
             Log.info("New acSLI Version Available: v" + self.remoteVersion)
+            if self.reqArduinoUpdate:
+                Log.info("Requires Arduino Sketch Update")
 
             self.appWindow = Window("acSLI Updater", 400, 120).setVisible(1).setPos(760, 350)\
                 .setBackgroundTexture("apps/python/acSLI/image/backUpdater.png")
@@ -49,8 +59,11 @@ class Updater:
                 .setAlign("center").hasCustomBackground().setBackgroundTexture("apps/python/acSLI/image/backBtnAuto.png")
             self.btnIgnore = Button(self.appWindow.app, bFunc_Ignore, 110, 20, 270, 90, "Ignore Version")\
                 .setAlign("center").hasCustomBackground().setBackgroundTexture("apps/python/acSLI/image/backBtnAuto.png")
-            self.lblVersionTxt = Label(self.appWindow.app, "New acSLI Version Available: v" + self.remoteVersion, 30, 30)\
-                .setSize(360, 10).setAlign("center").setFontSize(20)
+
+            self.lblVersionTxt = Label(self.appWindow.app, "New acSLI Version Available: v" + self.remoteVersion, 20, 30)\
+                .setSize(360, 10).setAlign("center").setFontSize(20).setColor(utils.rgb(utils.colours["red"]))
+            self.lblLog = Label(self.appWindow.app, self.changeLog, 20, 60)\
+                .setSize(360, 10).setAlign("center").setColor(utils.rgb(utils.colours["green"]))
 
 
 
@@ -60,18 +73,24 @@ class updateFiles(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        global instance
+        global instance, progInstance
 
         try:
             Log.info("Updating Files. Please Wait.")
 
+            updateProg()
+
             conn = http.client.HTTPSConnection("raw.githubusercontent.com", 443)
             conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + instance.remoteVersion + "/fileList.txt")
             Files = re.findall(r"\'(.+?)\'", str(conn.getresponse().read()))[0].split('\\n')
+            lenFiles = len(Files) + 1
+            i = 0
 
             for filename in Files:
                 conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + instance.remoteVersion + "/acSLI/" + filename)
+                i += 1
                 Log.info("Downloading: " + filename)
+                progInstance.lblMsg.setText("Downloading[%s/%s][%s]: '%s'" % (str(i), str(lenFiles), str(round((i/lenFiles)*100, 2)) + "%", filename))
                 if filename.split('/')[0] == "dll" and os.path.isfile("apps/python/acSLI/" + filename):
                     Log.info("DLL Exists, Skipping")
                     conn.getresponse().read()
@@ -90,16 +109,43 @@ class updateFiles(threading.Thread):
 
             conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + instance.remoteVersion + "/ArduinoDash/ArduinoDash.ino")
             Log.info("Downloading: ArduinoDash.ino")
+            progInstance.lblMsg.setText("Downloading[%s/%s][%s]: 'ArduinoDash.ino'" % (str(lenFiles), str(lenFiles), "100%"))
             arduinoSketch = open("apps/python/acSLI/ArduinoDash.ino",'wb')
             arduinoSketch.write(conn.getresponse().read())
             arduinoSketch.close()
 
             conn.close()
             Log.info("Successfully Updated to " + instance.remoteVersion + " , please restart AC Session")
-            #Update Complete Window
+            progInstance.lblMsg.setText("Update Successful. Please Restart Session")
+            if instance.reqArduinoUpdate:
+               progInstance.lblMsg.setText("Update Successful. Please Update Arduino and Restart Session")
+            progInstance.dispButton()
         except Exception as e:
                     Log.error("On Update: %s" % e)
 
+
+
+class updateProg:
+
+    appWindow = 0
+    lblMsg = 0
+    btnClose = 0
+
+    def __init__(self):
+        global progInstance
+        progInstance = self
+
+        self.appWindow = Window("acSLI Update Progress", 800, 100).setVisible(1).setPos(560, 350)\
+                .setBackgroundTexture("apps/python/acSLI/image/backError.png")
+        self.lblMsg = Label(self.appWindow.app, "Downloading[0/0][0%]: ", 20, 32)\
+                .setSize(760, 10).setAlign("center").setFontSize(20).setColor(utils.rgb(utils.colours["green"]))
+
+    def setMsg(self, msg):
+        self.lblMsg.setText(msg)
+
+    def dispButton(self):
+        self.btnClose = Button(self.appWindow.app, bFunc_Close, 110, 20, 345, 70, "Okay")\
+                .setAlign("center").hasCustomBackground().setBackgroundTexture("apps/python/acSLI/image/backBtnAuto.png")
 
 
 def bFunc_Yes(dummy, variables):
@@ -119,3 +165,8 @@ def bFunc_Ignore(dummy, variables):
     Config.instance.config.updateOption("SETTINGS", "remoteVersion", instance.remoteVersion, True)
     instance.appWindow.setVisible(0)
     instance.isOpen = False
+
+
+def bFunc_Close(dummy, variables):
+    global progInstance
+    progInstance.appWindow.setVisible(0)
