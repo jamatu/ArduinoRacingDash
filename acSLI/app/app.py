@@ -30,7 +30,6 @@ class App:
 
     def onStart(self):
         global Version
-        Log.info("Init acSLI v" + Version)
         Selector.Selector()
         Connection.Connection()
         Connection.findConnection().start()

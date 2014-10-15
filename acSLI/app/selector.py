@@ -3,6 +3,7 @@ from app.components import Window, Label, Button
 import serial.tools.list_ports
 import app.loader as Config
 import app.connection as Connection
+import app.utils as Utils
 
 Log = Logger()
 instance = 0
@@ -34,7 +35,8 @@ class Selector:
         self.btnUP = Button(self.appWindow.app, bFunc_UP, 80, 40, 285, 90, "").setAlign("center").hasCustomBackground()
         self.btnDN = Button(self.appWindow.app, bFunc_DN, 80, 40, 285, 310, "").setAlign("center").hasCustomBackground()
 
-        self.lblMsg = Label(self.appWindow.app, "", 30, 47).setSize(590, 10).setAlign("center").setFontSize(18)
+        self.lblMsg = Label(self.appWindow.app, "", 30, 47).setSize(590, 10).setAlign("center").setFontSize(18)\
+            .setColor(Utils.rgb(Utils.colours["red"]))
         self.btnAUTO = Button(self.appWindow.app, bFunc_AUTO, 160, 20, 440, 98, "Enable AUTO Mode").setAlign("center")\
             .hasCustomBackground().setBackgroundTexture("apps/python/acSLI/image/backBtnAuto.png")
 
