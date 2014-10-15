@@ -1,6 +1,7 @@
 import ac
 import acsys
-from app.components import Window, Label, Button
+import acSLI
+from app.components import Window, Label, Button, Spinner
 from app.logger import Logger
 from app.sim_info import SimInfo as Info
 import app.loader as Config
@@ -21,12 +22,29 @@ class App:
     simInfo = 0
     ticker = 0
 
+    lblPort = 0
+    btnUnits = 0
+    spnStartPage = 0
+    spnIntensity = 0
+
     maxRPM = 0
     maxFuel = 0
 
     def __init__(self):
         self.simInfo = Info()
         self.appWindow = Window("acSLI", 250, 244)
+
+        self.lblPort = Label(self.appWindow.app, "Connected COM Port: {}".format(Config.instance.cfgPort), 15, 40)\
+            .setSize(220, 10).setAlign("center")
+        self.btnUnits = Button(self.appWindow.app, bFunc_SpeedUnits, 160, 20, 45, 90, "Speed Units: {}".format(Config.instance.cfgSpeedUnit))\
+                .setAlign("center").hasCustomBackground().setBackgroundTexture("apps/python/acSLI/image/backBtnAuto.png")
+
+        self.spnStartPage = Spinner(self.appWindow.app, sFunc_StartPage, 220, 20, 15, 135, "Startup Page", 0, 7)\
+            .setValue(Config.instance.cfgStartPage)
+
+        #why ac :/
+        #self.spnIntensity = Spinner(self.appWindow.app, sFunc_Intensity, 220, 20, 15, 180, "Display Intensity", 0, 7)\
+            #.setValue(Config.instance.cfgIntensity)
 
     def onStart(self):
         global Version
@@ -41,10 +59,9 @@ class App:
         if self.ticker % Config.instance.cfgTickFreq == 0:
             if Connection.instance.handshake:
                 Connection.instance.send(self.compileDataPacket())
-            else:
-                if Connection.instance.dispSelect:
-                    Selector.instance.open(Connection.instance.dispSelectMsg)
-                    Connection.instance.dispSelect = False
+            elif Connection.instance.dispSelect:
+                Selector.instance.open(Connection.instance.dispSelectMsg)
+                Connection.instance.dispSelect = False
 
         if self.ticker == 30:
             self.ticker = 0
@@ -98,3 +115,23 @@ class App:
         key = bytes([255, bSetting, ac_gear, (ac_speed >> 8 & 0x00FF), (ac_speed & 0x00FF), ((rpms >> 8) & 0x00FF),
                      (rpms & 0x00FF), fuel, shift, engine, lapCount, b1, ((delta >> 8) & 0x00FF), (delta & 0x00FF)])
         return key
+
+
+def bFunc_SpeedUnits(dummy, variables):
+    if Config.instance.cfgSpeedUnit == "MPH":
+        Config.instance.cfgSpeedUnit = "KPH"
+    elif Config.instance.cfgSpeedUnit == "KPH":
+        Config.instance.cfgSpeedUnit = "MPH"
+
+    acSLI.acSLI.btnUnits.setText("Speed Units: {}".format(Config.instance.cfgSpeedUnit))
+    Config.instance.rewriteConfig()
+
+
+def sFunc_StartPage(dummy):
+    Config.instance.cfgStartPage = int(acSLI.acSLI.spnStartPage.getValue())
+    Config.instance.rewriteConfig()
+
+
+def sFunc_Intensity(dummy):
+    Config.instance.cfgIntensity = int(acSLI.acSLI.spnIntensity.getValue())
+    Config.instance.rewriteConfig()

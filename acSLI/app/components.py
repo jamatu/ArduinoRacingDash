@@ -89,3 +89,32 @@ class Button:
     def setFontSize(self, fontSize):
         ac.setFontSize(self.button, fontSize)
         return self
+
+
+class Spinner:
+
+    def __init__(self, window, changeFunc, width=120, height=20, x=0, y=0, title="spn", minVal=0, maxVal=1):
+        self.spinner = ac.addSpinner(window, title)
+        self.setSize(width, height)
+        self.setPos(x, y)
+        self.setRange(minVal, maxVal)
+        ac.addOnValueChangeListener(self.spinner, changeFunc)
+
+    def setSize(self, width, height):
+        ac.setSize(self.spinner, width, height)
+        return self
+
+    def setPos(self, x, y):
+        ac.setPosition(self.spinner, x, y)
+        return self
+
+    def setRange(self, minVal, maxVal):
+        ac.setRange(self.spinner, minVal, maxVal)
+        return self
+
+    def setValue(self, value):
+        ac.setValue(self.spinner, value)
+        return self
+
+    def getValue(self):
+        return ac.getValue(self.spinner)

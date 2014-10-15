@@ -83,7 +83,7 @@ def _findConnect():
             instance.dispSelect = True
             instance.dispSelectMsg = "Invalid COM Port Configured"
 
-    #ac.setText(lbConnectedPort, "Connected COM Port: {}".format(port))
+    acSLI.acSLI.lblPort.setText("Connected COM Port: {}".format(instance.port))
 
 
 class findConnection (threading.Thread):
