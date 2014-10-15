@@ -3,7 +3,7 @@ sys.path.insert(0, 'apps/python/acSLI/dll')
 
 from app.logger import Logger
 import app.app as App
-import updater as Updater
+import acSLIUpdater as Updater
 import app.loader as Loader
 
 

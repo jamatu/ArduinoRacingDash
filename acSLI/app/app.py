@@ -8,8 +8,8 @@ import app.connection as Connection
 import app.selector as Selector
 
 #################
-Version = "1.9.0"
-ArduinoVersion = "1.9.0"
+Version = "2.0.0"
+ArduinoVersion = "2.0.0"
 #################
 
 Log = Logger()
