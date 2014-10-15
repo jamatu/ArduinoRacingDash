@@ -1,4 +1,4 @@
-import serial
+import serial as serial
 import serial.tools.list_ports
 import re
 import acSLI
@@ -65,9 +65,9 @@ def _findConnect():
             if "".join(acSLI.App.ArduinoVersion.split(".")) > aV:
                 instance.port = "----"
                 Log.warning("Arduino Code Outdated. Please Update Arduino to at least v" +
-                            acSLI.App.ArduinoVersion)
+                            acSLI.App.ArduinoVersion + " and then Restart AC")
                 Error.ErrorBox("Arduino Code Outdated. Please Update Arduino to at least v" +
-                               acSLI.App.ArduinoVersion + " and then Reconnect")
+                               acSLI.App.ArduinoVersion + " and then Restart AC")
             else:
                 instance.handshake = True
                 Log.info("Connected to Arduino running v"
@@ -83,7 +83,7 @@ def _findConnect():
             instance.dispSelect = True
             instance.dispSelectMsg = "Invalid COM Port Configured"
 
-            # ac.setText(lbConnectedPort, "Connected COM Port: {}".format(port))
+    #ac.setText(lbConnectedPort, "Connected COM Port: {}".format(port))
 
 
 class findConnection (threading.Thread):
@@ -92,5 +92,4 @@ class findConnection (threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        #Log.info("Start Port Search")
         _findConnect()
