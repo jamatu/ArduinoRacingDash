@@ -1,1 +1,1 @@
-2.0.0|1|Total Rewrite, Added Adv Gui, Add Auto Updater
+2.0.1|0|Tweeks and Fixes

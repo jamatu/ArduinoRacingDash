@@ -1,3 +1,4 @@
+acSLI.py
 app/app.py
 app/components.py
 app/connection.py
@@ -6,6 +7,7 @@ app/loader.py
 app/logger.py
 app/selector.py
 app/sim_info.py
+app/updater.py
 app/utils.py
 dll/_ctypes.pyd
 dll/_socket.pyd

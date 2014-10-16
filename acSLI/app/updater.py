@@ -7,7 +7,6 @@ import app.loader as Config
 from app.components import Window, Label, Button
 import app.utils as Utils
 
-
 Log = Logger()
 instance = 0
 progInstance = 0
@@ -86,7 +85,8 @@ class updateFiles(threading.Thread):
             conn = http.client.HTTPSConnection("raw.githubusercontent.com", 443)
             conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + instance.remoteVersion + "/fileList.txt")
             Files = re.findall(r"\'(.+?)\'", str(conn.getresponse().read()))[0].split('\\n')
-            lenFiles = len(Files) + 1
+            Files.append("ArduinoDash.ino")
+            lenFiles = len(Files)
             i = 0
 
             for filename in Files:
@@ -110,14 +110,11 @@ class updateFiles(threading.Thread):
                     except Exception as e:
                         Log.error("On Update: %s" % e)
 
-            conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + instance.remoteVersion + "/ArduinoDash/ArduinoDash.ino")
-            Log.info("Downloading: ArduinoDash.ino")
-            progInstance.lblMsg.setText("Downloading[%s/%s][%s]: 'ArduinoDash.ino'" % (str(lenFiles), str(lenFiles), "100%"))
-            arduinoSketch = open("apps/python/acSLI/ArduinoDash.ino",'wb')
-            arduinoSketch.write(conn.getresponse().read())
-            arduinoSketch.close()
-
             conn.close()
+
+            if os.path.exists("apps/python/acSLI/acSLIUpdater.py"):
+                os.remove("apps/python/acSLI/acSLIUpdater.py")
+
             Log.info("Successfully Updated to " + instance.remoteVersion + " , please restart AC Session")
             progInstance.lblMsg.setText("Update Successful. Please Restart Session")
             if instance.reqArduinoUpdate:
