@@ -54,7 +54,7 @@ class Updater:
 
             self.appWindow = Window("acSLI Updater", 400, 120).setVisible(1).setPos(760, 350)\
                 .setBackgroundTexture("apps/python/acSLI/image/backUpdater.png")
-            self.btnYes = Button(self.appWindow.app, bFunc_Yes, 110, 20, 20, 90, "Okay")\
+            self.btnYes = Button(self.appWindow.app, bFunc_Yes, 110, 20, 20, 90, "Update")\
                 .setAlign("center").hasCustomBackground().setBackgroundTexture("apps/python/acSLI/image/backBtnUpdater.png")
             self.btnNo = Button(self.appWindow.app, bFunc_No, 110, 20, 145, 90, "Not Now")\
                 .setAlign("center").hasCustomBackground().setBackgroundTexture("apps/python/acSLI/image/backBtnUpdater.png")
