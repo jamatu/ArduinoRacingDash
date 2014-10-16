@@ -39,12 +39,11 @@ class App:
         self.btnUnits = Button(self.appWindow.app, bFunc_SpeedUnits, 160, 20, 45, 90, "Speed Units: {}".format(Config.instance.cfgSpeedUnit))\
                 .setAlign("center").hasCustomBackground().setBackgroundTexture("apps/python/acSLI/image/backBtnAuto.png")
 
-        self.spnStartPage = Spinner(self.appWindow.app, sFunc_StartPage, 220, 20, 15, 135, "Startup Page", 0, 7)\
-            .setValue(Config.instance.cfgStartPage)
+        #self.spnStartPage = Spinner(self.appWindow.app, sFunc_StartPage, 220, 20, 15, 135, "Startup Page", 0, 7)\
+            #.setValue(Config.instance.cfgStartPage)
 
-        #why ac :/
-        #self.spnIntensity = Spinner(self.appWindow.app, sFunc_Intensity, 220, 20, 15, 180, "Display Intensity", 0, 7)\
-            #.setValue(Config.instance.cfgIntensity)
+        self.spnIntensity = Spinner(self.appWindow.app, sFunc_Intensity, 220, 20, 15, 135, "Display Intensity", 0, 7)\
+            .setValue(Config.instance.cfgIntensity)
 
     def onStart(self):
         global Version
@@ -110,7 +109,7 @@ class App:
         if delta > 9999:
             delta = 9999
 
-        bSetting = int(deltaNeg << 7) | int(1 << 4) | int(Config.instance.cfgStartPage)
+        bSetting = int(deltaNeg << 7) | int(Config.instance.cfgIntensity << 4) | int(Config.instance.cfgStartPage)
 
         key = bytes([255, bSetting, ac_gear, (ac_speed >> 8 & 0x00FF), (ac_speed & 0x00FF), ((rpms >> 8) & 0x00FF),
                      (rpms & 0x00FF), fuel, shift, engine, lapCount, b1, ((delta >> 8) & 0x00FF), (delta & 0x00FF)])
