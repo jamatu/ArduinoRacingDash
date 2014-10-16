@@ -34,3 +34,6 @@ class Logger:
         
     def msg(self, msg):
         ac.console(self._ppMsg("MSG", msg))
+
+    def blank(self, msg):
+        self._ppMsg("MSG", msg)

@@ -101,7 +101,7 @@ class Spinner:
         self.setPos(x, y)
         self.setRange(minVal, maxVal)
         ac.addOnValueChangeListener(self.spinner, changeFunc)
-        Log.log(ac.setValue(self.spinner, startVal))   # logging it fixes really weird bug
+        Log.blank(ac.setValue(self.spinner, startVal))   # logging it fixes really weird bug
 
     def setSize(self, width, height):
         ac.setSize(self.spinner, width, height)
