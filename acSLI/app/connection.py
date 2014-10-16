@@ -6,6 +6,7 @@ import threading
 from app.logger import Logger
 import app.loader as Config
 import app.error as Error
+import app.utils as Utils
 
 Log = Logger()
 instance = 0
@@ -83,7 +84,10 @@ def _findConnect():
             instance.dispSelect = True
             instance.dispSelectMsg = "Invalid COM Port Configured"
 
-    acSLI.acSLI.lblPort.setText("Connected COM Port: {}".format(instance.port))
+    if instance.port != "----":
+        acSLI.acSLI.lblPort.setText("Connected COM Port: {}".format(instance.port)).setColor(Utils.rgb(Utils.colours["green"]))
+    else:
+        acSLI.acSLI.lblPort.setText("Connected COM Port: {}".format(instance.port)).setColor(Utils.rgb(Utils.colours["red"]))
 
 
 class findConnection (threading.Thread):

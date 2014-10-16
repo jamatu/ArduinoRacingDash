@@ -7,9 +7,10 @@ from app.sim_info import SimInfo as Info
 import app.loader as Config
 import app.connection as Connection
 import app.selector as Selector
+import app.utils as Utils
 
 #################
-Version = "1.9.2"
+Version = "2.0.0"
 ArduinoVersion = "2.0.0"
 #################
 
@@ -32,10 +33,10 @@ class App:
 
     def __init__(self):
         self.simInfo = Info()
-        self.appWindow = Window("acSLI", 250, 230)
+        self.appWindow = Window("acSLI", 250, 230).setBackgroundTexture("apps/python/acSLI/image/backMain.png")
 
         self.lblPort = Label(self.appWindow.app, "Connected COM Port: {}".format(Config.instance.cfgPort), 15, 40)\
-            .setSize(220, 10).setAlign("center")
+            .setSize(220, 10).setAlign("center").setColor(Utils.rgb(Utils.colours["red"]))
         self.btnUnits = Button(self.appWindow.app, bFunc_SpeedUnits, 160, 20, 45, 90, "Speed Units: {}".format(Config.instance.cfgSpeedUnit))\
                 .setAlign("center").hasCustomBackground().setBackgroundTexture("apps/python/acSLI/image/backBtnAuto.png")
 

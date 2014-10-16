@@ -14,6 +14,7 @@ image/backBtnAuto.png
 image/backBtnUpdater.png
 image/backError.png
 image/backList.png
+image/backMain.png
 image/backSelector.png
 image/backUpdater.png
 image/btnDN0.png
