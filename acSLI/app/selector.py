@@ -30,8 +30,9 @@ class Selector:
         global instance
         instance = self
 
-        self.appWindow = Window("acSLI Com Selector", 650, 360).setVisible(1).setPos(635, 240)\
-            .setBackgroundTexture("apps/python/acSLI/image/backSelector.png").setVisible(0)
+        self.appWindow = Window("acSLI Com Selector", 650, 360).setPos(635, 240)\
+            .setBackgroundTexture("apps/python/acSLI/image/backSelector.png")
+
         self.btnUP = Button(self.appWindow.app, bFunc_UP, 80, 40, 285, 90, "").setAlign("center").hasCustomBackground()
         self.btnDN = Button(self.appWindow.app, bFunc_DN, 80, 40, 285, 310, "").setAlign("center").hasCustomBackground()
 
@@ -48,6 +49,8 @@ class Selector:
             .hasCustomBackground().setBackgroundTexture("apps/python/acSLI/image/backList.png")
         self.btnB3 = Button(self.appWindow.app, bFunc_B3, 600, 20, 25, 270, "").setAlign("center")\
             .hasCustomBackground().setBackgroundTexture("apps/python/acSLI/image/backList.png")
+
+        self.appWindow.setVisible(0)
 
     def open(self, msg):
 

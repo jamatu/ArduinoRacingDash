@@ -32,18 +32,16 @@ class App:
 
     def __init__(self):
         self.simInfo = Info()
-        self.appWindow = Window("acSLI", 250, 244)
+        self.appWindow = Window("acSLI", 250, 230)
 
         self.lblPort = Label(self.appWindow.app, "Connected COM Port: {}".format(Config.instance.cfgPort), 15, 40)\
             .setSize(220, 10).setAlign("center")
         self.btnUnits = Button(self.appWindow.app, bFunc_SpeedUnits, 160, 20, 45, 90, "Speed Units: {}".format(Config.instance.cfgSpeedUnit))\
                 .setAlign("center").hasCustomBackground().setBackgroundTexture("apps/python/acSLI/image/backBtnAuto.png")
 
-        #self.spnStartPage = Spinner(self.appWindow.app, sFunc_StartPage, 220, 20, 15, 135, "Startup Page", 0, 7)\
-            #.setValue(Config.instance.cfgStartPage)
+        self.spnStartPage = Spinner(self.appWindow.app, sFunc_StartPage, 220, 20, 15, 135, "Startup Page", 0, 7, Config.instance.cfgStartPage)
+        self.spnIntensity = Spinner(self.appWindow.app, sFunc_Intensity, 220, 20, 15, 185, "Display Intensity", 0, 7, Config.instance.cfgIntensity)
 
-        self.spnIntensity = Spinner(self.appWindow.app, sFunc_Intensity, 220, 20, 15, 135, "Display Intensity", 0, 7)\
-            .setValue(Config.instance.cfgIntensity)
 
     def onStart(self):
         global Version

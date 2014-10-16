@@ -1,4 +1,6 @@
 import ac
+from app.logger import Logger
+Log = Logger()
 
 
 class Window:
@@ -93,12 +95,13 @@ class Button:
 
 class Spinner:
 
-    def __init__(self, window, changeFunc, width=120, height=20, x=0, y=0, title="spn", minVal=0, maxVal=1):
+    def __init__(self, window, changeFunc, width=120, height=20, x=0, y=0, title="spn", minVal=0, maxVal=1, startVal=0):
         self.spinner = ac.addSpinner(window, title)
         self.setSize(width, height)
         self.setPos(x, y)
         self.setRange(minVal, maxVal)
         ac.addOnValueChangeListener(self.spinner, changeFunc)
+        Log.log(ac.setValue(self.spinner, startVal))   # logging it fixes really weird bug
 
     def setSize(self, width, height):
         ac.setSize(self.spinner, width, height)
@@ -110,10 +113,6 @@ class Spinner:
 
     def setRange(self, minVal, maxVal):
         ac.setRange(self.spinner, minVal, maxVal)
-        return self
-
-    def setValue(self, value):
-        ac.setValue(self.spinner, value)
         return self
 
     def getValue(self):
