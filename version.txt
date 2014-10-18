@@ -1,1 +1,1 @@
-2.0.3|0|Fix Updater Bugs
+2.0.4|0|Fix Updater Bugs

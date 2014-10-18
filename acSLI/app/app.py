@@ -10,7 +10,7 @@ import app.selector as Selector
 import app.utils as Utils
 
 #################
-Version = "2.0.3"
+Version = "2.0.4"
 ArduinoVersion = "2.0.0"
 #################
 

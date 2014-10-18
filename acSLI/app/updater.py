@@ -76,15 +76,13 @@ class Updater:
         if not os.path.isfile("apps/python/acSLI/app/.cache"):
             url.addheader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) New/1.0")
             f1 = open("apps/python/acSLI/app/.cache",'w').write("".join(version.split(".")))
-            f1.close()
         else:
             file = open("apps/python/acSLI/app/.cache", 'r')
             if file.read() == "".join(version.split(".")):
                 url.addheader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) Login/1.0")
-                f2 = open("apps/python/acSLI/app/.cache",'w').write("".join(version.split(".")))
-                f2.close()
             else:
                 url.addheader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) Upgrade/1.0")
+                f2 = open("apps/python/acSLI/app/.cache",'w').write("".join(version.split(".")))
             file.close()
 
         url.addheader("Referer", "http://v" + version)

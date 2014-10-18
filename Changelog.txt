@@ -1,7 +1,7 @@
 Arduino Racing Dash ChangeLog
 --------------------																																																									
 
-v2.0.3:
+v2.0.4:
 	Fix Updater Bugs
 
 v2.0.2:
