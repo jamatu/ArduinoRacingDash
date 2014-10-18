@@ -1,5 +1,6 @@
 import os
 import http.client
+import urllib.request
 import re
 import threading
 from app.logger import Logger
@@ -32,16 +33,17 @@ class Updater:
         instance = self
 
         try:
-            conn = http.client.HTTPSConnection("raw.githubusercontent.com", 443)
-            conn.request("GET", "/Turnermator13/ArduinoRacingDash/master/version.txt")
-            versionFile = conn.getresponse()
+            #Connect to https://raw.githubusercontent.com/Turnermator13/ArduinoRacingDash/master/version.txt
+            #Uses goo.gl to log version stats - change to above address if you don't want your stats logged (no personal information is logged)
+            #See function below self.buildRequest for logging details
+            versionFile = self.buildRequest(currVersion).open("http://goo.gl/Q0hICb")
             versionStr = re.findall(r"\'(.+?)\'", str(versionFile.read()))[0]
+            versionFile.close()
             self.remoteVersion = versionStr.split("|")[0]
             self.reqArduinoUpdate = bool(versionStr.split("|")[1])
             self.changeLog = versionStr.split("|")[2]
-            conn.close()
         except Exception as e:
-            Log.warning("Couldn't get Version Information: %s" % e)
+            Log.error("Couldn't get Version Information: %s" % e)
 
         if (self.remoteVersion != 0) and (Config.instance.cfgEnableUpdater == 1) and (self.remoteVersion != Config.instance.cfgRemoteVersion)\
                 and ("".join(self.remoteVersion.split(".")) > "".join(currVersion.split("."))):
@@ -66,6 +68,23 @@ class Updater:
                 .setSize(360, 10).setAlign("center").setColor(Utils.rgb(Utils.colours["green"]))
         else:
             Log.info("Running Latest Version")
+
+    #Log Versions Stats
+    def buildRequest(self, version):
+        url = urllib.request.FancyURLopener()
+        if not os.path.isfile("apps/python/acSLI/app/.cache"):
+            url.addheader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) New/1.0")
+            open("apps/python/acSLI/app/.cache",'w').write("".join(version.split(".")))
+        else:
+            file = open("apps/python/acSLI/app/.cache", 'r')
+            if file.read() == "".join(version.split(".")):
+                url.addheader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) Login/1.0")
+                open("apps/python/acSLI/app/.cache",'w').write("".join(version.split(".")))
+            else:
+                url.addheader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) Upgrade/1.0")
+
+        url.addheader("Referer", "http://v" + version)
+        return url
 
 
 

@@ -1,6 +1,9 @@
 Arduino Racing Dash ChangeLog
 --------------------																																																									
 
+v2.0.2:
+	Updater Tweeks
+
 v2.0.0:
 	Total source rewrite
 	Gui for Com Port selection
