@@ -1,4 +1,5 @@
 import os
+import shutil
 import http.client
 import urllib.request
 import re
@@ -40,7 +41,7 @@ class Updater:
             versionStr = re.findall(r"\'(.+?)\'", str(versionFile.read()))[0]
             versionFile.close()
             self.remoteVersion = versionStr.split("|")[0]
-            self.reqArduinoUpdate = bool(versionStr.split("|")[1])
+            self.reqArduinoUpdate = versionStr.split("|")[1]
             self.changeLog = versionStr.split("|")[2]
         except Exception as e:
             Log.error("Couldn't get Version Information: %s" % e)
@@ -48,7 +49,7 @@ class Updater:
         if (self.remoteVersion != 0) and (Config.instance.cfgEnableUpdater == 1) and (self.remoteVersion != Config.instance.cfgRemoteVersion)\
                 and ("".join(self.remoteVersion.split(".")) > "".join(currVersion.split("."))):
             self.isOpen = True
-            if self.reqArduinoUpdate:
+            if self.reqArduinoUpdate == "1":
                 Log.info("New acSLI Version Available: v" + self.remoteVersion + ". Requires Arduino Sketch Update")
             else:
                 Log.info("New acSLI Version Available: v" + self.remoteVersion)
@@ -74,14 +75,17 @@ class Updater:
         url = urllib.request.FancyURLopener()
         if not os.path.isfile("apps/python/acSLI/app/.cache"):
             url.addheader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) New/1.0")
-            open("apps/python/acSLI/app/.cache",'w').write("".join(version.split(".")))
+            f1 = open("apps/python/acSLI/app/.cache",'w').write("".join(version.split(".")))
+            f1.close()
         else:
             file = open("apps/python/acSLI/app/.cache", 'r')
             if file.read() == "".join(version.split(".")):
                 url.addheader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) Login/1.0")
-                open("apps/python/acSLI/app/.cache",'w').write("".join(version.split(".")))
+                f2 = open("apps/python/acSLI/app/.cache",'w').write("".join(version.split(".")))
+                f2.close()
             else:
                 url.addheader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) Upgrade/1.0")
+            file.close()
 
         url.addheader("Referer", "http://v" + version)
         return url
@@ -105,11 +109,14 @@ class updateFiles(threading.Thread):
             conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + instance.remoteVersion + "/fileList.txt")
             Files = re.findall(r"\'(.+?)\'", str(conn.getresponse().read()))[0].split('\\n')
             Files.append("ArduinoDash.ino")
-            lenFiles = len(Files)
+            lenFiles = len(Files) + 1
             i = 0
 
             for filename in Files:
-                conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + instance.remoteVersion + "/acSLI/" + filename)
+                if filename == "ArduinoDash.ino":
+                    conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + instance.remoteVersion + "/ArduinoDash/" + filename)
+                else:
+                    conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + instance.remoteVersion + "/acSLI/" + filename)
                 i += 1
                 Log.info("Downloading: " + filename)
                 progInstance.lblMsg.setText("Downloading[%s/%s][%s]: '%s'" % (str(i), str(lenFiles), str(round((i/lenFiles)*100)) + "%", filename))
@@ -133,10 +140,12 @@ class updateFiles(threading.Thread):
 
             if os.path.exists("apps/python/acSLI/acSLIUpdater.py"):
                 os.remove("apps/python/acSLI/acSLIUpdater.py")
+            if os.path.exists("apps/python/acSLI/ArduinoDash/"):
+                shutil.rmtree("apps/python/acSLI/ArduinoDash")
 
             Log.info("Successfully Updated to " + instance.remoteVersion + " , please restart AC Session")
             progInstance.lblMsg.setText("Update Successful. Please Restart Session")
-            if instance.reqArduinoUpdate:
+            if instance.reqArduinoUpdate == "1":
                progInstance.lblMsg.setText("Success! Please Update Arduino (latest sketch in apps/python/acsli) and Restart Session")
             progInstance.dispButton()
         except Exception as e:
