@@ -1,6 +1,8 @@
 import os
 import shutil
 import http.client
+import encodings.ascii
+import encodings.idna
 import re
 import threading
 from acSLIApp.logger import Logger
@@ -77,7 +79,7 @@ class Updater:
             if self.updaterError:
                 Log.info("Updater Encounter an Error. Version Check Incomplete")
             elif Config.instance.cfgEnableUpdater == 1:
-                Log.info("Running Latest Version")
+                Log.info("Running Latest Version (v%s)" % (self.remoteVersion))
 
     #Logs basic version stats to goo.gl analytics, no personal information saved and no information downloaded
     def logStats(self, version):
@@ -95,7 +97,8 @@ class Updater:
                     file.close()
 
                 stats = http.client.HTTPConnection("goo.gl")
-                stats.request("GET", self.statsURL, headers={"User-Agent": h1, "Referer": "http://v" + version})
+                Log.info(h1.__subclasshook__())
+                stats.request("GET", self.statsURL, headers={str("User-Agent"): str(h1), str("Referer"): str("http://v%s" % version)})
                 stats.getresponse()
                 stats.close()
             except Exception as e:
