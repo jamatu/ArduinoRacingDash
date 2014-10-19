@@ -3,10 +3,10 @@ import serial.tools.list_ports
 import re
 import acSLI
 import threading
-from app.logger import Logger
-import app.loader as Config
-import app.error as Error
-import app.utils as Utils
+from acSLIApp.logger import Logger
+import acSLIApp.loader as Config
+import acSLIApp.error as Error
+import acSLIApp.utils as Utils
 
 Log = Logger()
 instance = 0

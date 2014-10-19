@@ -1,5 +1,5 @@
-from app.logger import Logger
-from app.utils import Config
+from acSLIApp.logger import Logger
+from acSLIApp.utils import Config
 
 Log = Logger()
 instance = 0

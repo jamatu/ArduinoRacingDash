@@ -1,13 +1,13 @@
 import ac
 import acsys
 import acSLI
-from app.components import Window, Label, Button, Spinner
-from app.logger import Logger
-from app.sim_info import SimInfo as Info
-import app.loader as Config
-import app.connection as Connection
-import app.selector as Selector
-import app.utils as Utils
+from acSLIApp.components import Window, Label, Button, Spinner
+from acSLIApp.logger import Logger
+from acSLIApp.sim_info import SimInfo as Info
+import acSLIApp.loader as Config
+import acSLIApp.connection as Connection
+import acSLIApp.selector as Selector
+import acSLIApp.utils as Utils
 
 #################
 Version = "2.0.4"

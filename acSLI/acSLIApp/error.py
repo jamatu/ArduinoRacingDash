@@ -1,5 +1,5 @@
-from app.logger import Logger
-from app.components import Window, Label, Button
+from acSLIApp.logger import Logger
+from acSLIApp.components import Window, Label, Button
 
 Log = Logger()
 instance = 0

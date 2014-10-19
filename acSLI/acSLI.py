@@ -1,10 +1,10 @@
 import sys
 sys.path.insert(0, 'apps/python/acSLI/dll')
 
-from app.logger import Logger
-import app.app as App
-import app.updater as Updater
-import app.loader as Loader
+from acSLIApp.logger import Logger
+import acSLIApp.app as App
+import acSLIApp.updater as Updater
+import acSLIApp.loader as Loader
 
 
 Log = Logger()

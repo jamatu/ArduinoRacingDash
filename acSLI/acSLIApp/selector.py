@@ -1,9 +1,9 @@
-from app.logger import Logger
-from app.components import Window, Label, Button
+from acSLIApp.logger import Logger
+from acSLIApp.components import Window, Label, Button
 import serial.tools.list_ports
-import app.loader as Config
-import app.connection as Connection
-import app.utils as Utils
+import acSLIApp.loader as Config
+import acSLIApp.connection as Connection
+import acSLIApp.utils as Utils
 
 Log = Logger()
 instance = 0

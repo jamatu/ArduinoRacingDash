@@ -1,5 +1,5 @@
 import ac
-from app.logger import Logger
+from acSLIApp.logger import Logger
 Log = Logger()
 
 

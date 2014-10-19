@@ -4,10 +4,10 @@ import http.client
 import urllib.request
 import re
 import threading
-from app.logger import Logger
-import app.loader as Config
-from app.components import Window, Label, Button
-import app.utils as Utils
+from acSLIApp.logger import Logger
+import acSLIApp.loader as Config
+from acSLIApp.components import Window, Label, Button
+import acSLIApp.utils as Utils
 
 Log = Logger()
 instance = 0
@@ -17,6 +17,7 @@ progInstance = 0
 class Updater:
 
     isOpen = False
+    updaterError = False
     hasUpdated = False
     appWindow = 0
     remoteVersion = 0
@@ -45,6 +46,7 @@ class Updater:
             self.changeLog = versionStr.split("|")[2]
         except Exception as e:
             Log.error("Couldn't get Version Information: %s" % e)
+            self.updaterError = True
 
         if (self.remoteVersion != 0) and (Config.instance.cfgEnableUpdater == 1) and (self.remoteVersion != Config.instance.cfgRemoteVersion)\
                 and ("".join(self.remoteVersion.split(".")) > "".join(currVersion.split("."))):
@@ -67,22 +69,24 @@ class Updater:
                 .setSize(360, 10).setAlign("center").setFontSize(20).setColor(Utils.rgb(Utils.colours["red"]))
             self.lblLog = Label(self.appWindow.app, self.changeLog, 20, 60)\
                 .setSize(360, 10).setAlign("center").setColor(Utils.rgb(Utils.colours["green"]))
+        elif self.updaterError:
+            Log.info("Updater Encounter an Error. Version Check Incomplete")
         else:
             Log.info("Running Latest Version")
 
     #Log Versions Stats
     def buildRequest(self, version):
         url = urllib.request.FancyURLopener()
-        if not os.path.isfile("apps/python/acSLI/app/.cache"):
+        if not os.path.isfile("apps/python/acSLI/acSLIApp/.cache"):
             url.addheader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) New/1.0")
-            f1 = open("apps/python/acSLI/app/.cache",'w').write("".join(version.split(".")))
+            f1 = open("apps/python/acSLI/acSLIApp/.cache",'w').write("".join(version.split(".")))
         else:
-            file = open("apps/python/acSLI/app/.cache", 'r')
+            file = open("apps/python/acSLI/acSLIApp/.cache", 'r')
             if file.read() == "".join(version.split(".")):
                 url.addheader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) Login/1.0")
             else:
                 url.addheader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) Upgrade/1.0")
-                f2 = open("apps/python/acSLI/app/.cache",'w').write("".join(version.split(".")))
+                f2 = open("apps/python/acSLI/acSLIApp/.cache",'w').write("".join(version.split(".")))
             file.close()
 
         url.addheader("Referer", "http://v" + version)

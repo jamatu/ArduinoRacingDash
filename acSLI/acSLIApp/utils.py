@@ -9,7 +9,7 @@
 
 import os.path
 import configparser
-from app.logger import Logger
+from acSLIApp.logger import Logger
 
 Log = Logger()
 
