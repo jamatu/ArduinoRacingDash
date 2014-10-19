@@ -97,8 +97,7 @@ class Updater:
                     file.close()
 
                 stats = http.client.HTTPConnection("goo.gl")
-                Log.info(h1.__subclasshook__())
-                stats.request("GET", self.statsURL, headers={str("User-Agent"): str(h1), str("Referer"): str("http://v%s" % version)})
+                stats.request("GET", str(self.statsURL), headers={str("User-Agent"): str(h1), str("Referer"): str("http://v%s" % version)})
                 stats.getresponse()
                 stats.close()
             except Exception as e:
