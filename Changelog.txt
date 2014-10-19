@@ -1,6 +1,10 @@
 Arduino Racing Dash ChangeLog
 --------------------																																																									
 
+v2.0.5:
+	Fix conflicts with some apps (ov1 for exmaple)
+	Fix more updater bugs
+
 v2.0.4:
 	Fix Updater Bugs
 

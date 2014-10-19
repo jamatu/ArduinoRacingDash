@@ -10,7 +10,7 @@ import acSLIApp.selector as Selector
 import acSLIApp.utils as Utils
 
 #################
-Version = "2.0.4"
+Version = "2.0.5"
 ArduinoVersion = "2.0.0"
 #################
 

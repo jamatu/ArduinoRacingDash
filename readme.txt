@@ -52,6 +52,8 @@ Install -- AC
 
 *Profit, no need to have the app on-screen, it can run in the background (hopefully)
 
+*See forum post for detailed instructions: http://www.assettocorsa.net/forum/index.php?threads/arduino-dashboard-for-tm1638-module-v2-0-4-for-ac-v1-0-rc-rewrite-auto-updater-new-guis.14172/
+
 
 Install -- iRacing
 -------------------
