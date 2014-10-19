@@ -1,9 +1,6 @@
 import os
 import shutil
 import http.client
-import urllib.request
-import encodings.ascii
-import encodings.idna
 import re
 import threading
 from acSLIApp.logger import Logger
@@ -25,6 +22,7 @@ class Updater:
     remoteVersion = 0
     reqArduinoUpdate = 0
     changeLog = 0
+    statsURL = 0
 
     lblVersionTxt = 0
     lblLog = 0
@@ -37,20 +35,21 @@ class Updater:
         instance = self
 
         try:
-            #Connect to https://raw.githubusercontent.com/Turnermator13/ArduinoRacingDash/master/version.txt
-            #Uses goo.gl to log version stats - change to above address if you don't want your stats logged (no personal information is logged)
-            #See function below self.buildRequest for logging details
-            versionFile = self.buildRequest(currVersion).open("http://goo.gl/Q0hICb")
-            versionStr = re.findall(r"\'(.+?)\'", str(versionFile.read()))[0]
-            versionFile.close()
-            self.remoteVersion = versionStr.split("|")[0]
-            self.reqArduinoUpdate = versionStr.split("|")[1]
-            self.changeLog = versionStr.split("|")[2]
+            if Config.instance.cfgEnableUpdater == 1:
+                conn = http.client.HTTPSConnection("raw.githubusercontent.com", 443)
+                conn.request("GET", "/Turnermator13/ArduinoRacingDash/master/version.txt")
+                versionFile = conn.getresponse()
+                versionStr = re.findall(r"\'(.+?)\'", str(versionFile.read()))[0]
+                self.remoteVersion = versionStr.split("|")[0]
+                self.reqArduinoUpdate = bool(versionStr.split("|")[1])
+                self.changeLog = versionStr.split("|")[2]
+                self.statsURL = "/Q0hICb"
+                conn.close()
         except Exception as e:
             Log.error("Couldn't get Version Information: %s" % e)
             self.updaterError = True
 
-        if (self.remoteVersion != 0) and (Config.instance.cfgEnableUpdater == 1) and (self.remoteVersion != Config.instance.cfgRemoteVersion)\
+        if (self.remoteVersion != 0) and (self.remoteVersion != Config.instance.cfgRemoteVersion)\
                 and ("".join(self.remoteVersion.split(".")) > "".join(currVersion.split("."))):
             self.isOpen = True
             if self.reqArduinoUpdate == "1":
@@ -71,29 +70,35 @@ class Updater:
                 .setSize(360, 10).setAlign("center").setFontSize(20).setColor(Utils.rgb(Utils.colours["red"]))
             self.lblLog = Label(self.appWindow.app, self.changeLog, 20, 60)\
                 .setSize(360, 10).setAlign("center").setColor(Utils.rgb(Utils.colours["green"]))
-        elif self.updaterError:
-            Log.info("Updater Encounter an Error. Version Check Incomplete")
+            self.logStats(currVersion)
         else:
-            Log.info("Running Latest Version")
+            self.logStats(currVersion)
+            if self.updaterError:
+                Log.info("Updater Encounter an Error. Version Check Incomplete")
+            elif Config.instance.cfgEnableUpdater == 1:
+                Log.info("Running Latest Version")
 
-    #Log Versions Stats
-    def buildRequest(self, version):
-        url = urllib.request.FancyURLopener()
-        if not os.path.isfile("apps/python/acSLI/acSLIApp/.cache"):
-            url.addheader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) New/1.0")
-            f1 = open("apps/python/acSLI/acSLIApp/.cache", 'w').write("".join(version.split(".")))
-        else:
-            file = open("apps/python/acSLI/acSLIApp/.cache", 'r')
-            if file.read() == "".join(version.split(".")):
-                url.addheader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) Login/1.0")
-            else:
-                url.addheader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) Upgrade/1.0")
-                f2 = open("apps/python/acSLI/acSLIApp/.cache", 'w').write("".join(version.split(".")))
-            file.close()
+    #Logs basic version stats to goo.gl analytics, no personal information saved and no information downloaded
+    def logStats(self, version):
+        if Config.instance.cfgSendStats == 1:
+            try:
+                h1 = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) Login/1.0"
+                if not os.path.isfile("apps/python/acSLI/acSLIApp/.cache"):
+                    h1 = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) New/1.0"
+                    open("apps/python/acSLI/acSLIApp/.cache", 'w').write("".join(version.split(".")))
+                else:
+                    file = open("apps/python/acSLI/acSLIApp/.cache", 'r')
+                    if file.read() != "".join(version.split(".")):
+                        h1 = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) Update/1.0"
+                        open("apps/python/acSLI/acSLIApp/.cache", 'w').write("".join(version.split(".")))
+                    file.close()
 
-        url.addheader("Referer", "http://v" + version)
-        return url
-
+                stats = http.client.HTTPConnection("goo.gl")
+                stats.request("GET", self.statsURL, headers={"User-Agent": h1, "Referer": "http://v" + version})
+                stats.getresponse()
+                stats.close()
+            except Exception as e:
+                Log.error("Couldn't Log Stats: %s" % e)
 
 
 class updateFiles(threading.Thread):
