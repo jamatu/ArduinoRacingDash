@@ -112,9 +112,7 @@ class updateFiles(threading.Thread):
 
         try:
             Log.info("Updating Files. Please Wait.")
-
             updateProg()
-            instance.remoteVersion = "2.0.5"
 
             conn = http.client.HTTPSConnection("raw.githubusercontent.com", 443)
             conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + instance.remoteVersion + "/fileList.txt")
