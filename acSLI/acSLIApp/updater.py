@@ -42,8 +42,7 @@ class Updater:
                 versionStr = re.findall(r"\'(.+?)\'", str(versionFile.read()))[0]
                 self.remoteVersion = versionStr.split("|")[0]
                 self.reqArduinoUpdate = bool(versionStr.split("|")[1])
-                #self.statsURL = versionStr.split("|")[2]
-                self.changeLog = versionStr.split("|")[3]
+                self.changeLog = versionStr.split("|")[2]
                 self.statsURL = "/Q0hICb"
                 conn.close()
         except Exception as e:
