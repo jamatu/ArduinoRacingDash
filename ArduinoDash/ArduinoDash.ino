@@ -12,12 +12,12 @@
 
 
 PROGMEM  prog_uchar VERSION[] = {2, 0, 5};
-PROGMEM  prog_uint16_t ledsLongRG[] = {0, 1, 3, 7, 15, 31, 63, 127, 255, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160};
-PROGMEM  prog_uint16_t ledsShortRG[] = {0, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160};
-PROGMEM  prog_uint16_t ledsLongGR[] = {0, 1, 3, 7, 15, 31, 63, 127, 255, 1, 3, 7, 15, 31, 8223, 24607, 57375};
-PROGMEM  prog_uint16_t ledsShortGR[] = {0, 1, 3, 7, 15, 31, 8223, 24607, 57375};
-prog_uint16_t ledsLong[2] = {&ledsLongRG, &ledsLongGR};
-prog_uint16_t ledsShort[2] = {&ledsShortRG, &ledsShortGR};
+PROGMEM  prog_uint16_t ledsLong[2][17] = {{0, 1, 3, 7, 15, 31, 63, 127, 255, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160}, {0, 1, 3, 7, 15, 31, 63, 127, 255, 1, 3, 7, 15, 31, 8223, 24607, 57375}};
+PROGMEM  prog_uint16_t ledsShort[2][9] = {{0, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160}, {0, 1, 3, 7, 15, 31, 8223, 24607, 57375}};
+//PROGMEM  prog_uint16_t ledsLongGR[] = {0, 1, 3, 7, 15, 31, 63, 127, 255, 1, 3, 7, 15, 31, 8223, 24607, 57375};
+//PROGMEM  prog_uint16_t ledsShortGR[] = {0, 1, 3, 7, 15, 31, 8223, 24607, 57375};
+//prog_uint16_t ledsLong[2] = {&ledsLongRG, &ledsLongGR};
+//prog_uint16_t ledsShort[2] = {&ledsShortRG, &ledsShortGR};
 
 TM1638 module1(DIO, CLK, STB);
 InvertedTM1638 module2(DIO, CLK, STB);
