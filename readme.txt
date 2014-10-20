@@ -13,8 +13,12 @@ button 7 - speed, gear, delta (to tenth)
 button 8 - Shift Modifier
 
 button 8 + button 1 - change shift light mode (8/16 LED)
-button 8 + button 2 - toggle module inversion (flips screen, LEDs, buttons ect)
+button 8 + button 2 - change shift light colours (red-->green/green-->red)
+button 8 + button 3 - toggle module inversion (flips screen, LEDs, buttons ect)
 (works best if you hold button 8 first then press the other button you want) 
+
+button 8 + button 6 - decrement blinkVal (min 4)
+button 8 + button 7 - increment blinkVal (max 16)
 
 
 

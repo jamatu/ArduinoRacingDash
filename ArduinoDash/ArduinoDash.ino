@@ -11,7 +11,7 @@
 #define STB 9
 
 
-PROGMEM  prog_uchar VERSION[] = {2, 0, 5};
+PROGMEM  prog_uchar VERSION[] = {2, 0, 7};
 PROGMEM  prog_uint16_t ledsLong[2][17] = {{0, 1, 3, 7, 15, 31, 63, 127, 255, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160}, {0, 1, 3, 7, 15, 31, 63, 127, 255, 1, 3, 7, 15, 31, 8223, 24607, 57375}};
 PROGMEM  prog_uint16_t ledsShort[2][9] = {{0, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160}, {0, 1, 3, 7, 15, 31, 8223, 24607, 57375}};
 
@@ -53,8 +53,14 @@ void setup() {
 	ledCRL = EEPROM.read(2);
         if (ledCRL > 1){
           ledCRL = 0;
-          EEPROM.write(0, ledCRL);
-        }   
+          EEPROM.write(2, ledCRL);
+        }  
+       
+       blinkVal = EEPROM.read(3);
+        if (blinkVal > 16){
+          blinkVal = 16;
+          EEPROM.write(3, blinkVal);
+        } 
 
         modules[invert]->setDisplayToString("EDT", 0, 0);
         modules[invert]->setDisplayDigit(pgm_read_byte_near(VERSION + 0), 5, 1);
@@ -66,7 +72,6 @@ void setup() {
         oldpage = 0;
         changed = false;
         blinkrpm = false;
-        blinkVal = 15;
         ledOff = false;
         intensity = 0;
         oldintensity = 0;
@@ -490,7 +495,7 @@ void update(TM1638* module) {
             } else {
               ledCRL = 1;
             }
-            EEPROM.write(0, ledCRL); 
+            EEPROM.write(2, ledCRL); 
             delay(200);  
         }
 
@@ -504,6 +509,28 @@ void update(TM1638* module) {
             EEPROM.write(0, invert); 
             delay(200);  
         }   
+        
+        // button 8 + button 6 - dec blink val
+        if (module->getButtons() == 0b10100000){
+            if (blinkVal > 4){ 
+              blinkVal -= 1;
+            }
+            EEPROM.write(3, blinkVal); 
+            module->setDisplayToString("Blink " + String(blinkVal, DEC), 0, 0);
+            delay(1200);  
+            module->clearDisplay();
+        }
+        
+        // button 8 + button 7 - inc blink val
+        if (module->getButtons() == 0b11000000){
+            if (blinkVal < 16){ 
+              blinkVal += 1;
+            }
+            EEPROM.write(3, blinkVal); 
+            module->setDisplayToString("Blink " + String(blinkVal, DEC), 0, 0);
+            delay(1200); 
+            module->clearDisplay(); 
+        }
 }
 
 void loop() {
