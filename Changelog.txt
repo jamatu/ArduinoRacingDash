@@ -1,7 +1,7 @@
 Arduino Racing Dash ChangeLog
 --------------------																																																									
 
-v2.0.5:
+v2.0.6:
 	Add changable colours for dash(red to green and green to red) (btn8 + btn2)
 	Tweekable Blink Starting Value by editing in .ini file, more work to come with this in the future :P
 	Fix conflicts with some apps (ov1 for exmaple)

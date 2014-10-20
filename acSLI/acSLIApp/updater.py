@@ -51,7 +51,7 @@ class Updater:
         if (self.remoteVersion != 0) and (self.remoteVersion != Config.instance.cfgRemoteVersion)\
                 and ("".join(self.remoteVersion.split(".")) > "".join(currVersion.split("."))):
             self.isOpen = True
-            if self.reqArduinoUpdate == "1":
+            if self.reqArduinoUpdate:
                 Log.info("New acSLI Version Available: v" + self.remoteVersion + ". Requires Arduino Sketch Update")
             else:
                 Log.info("New acSLI Version Available: v" + self.remoteVersion)
@@ -75,7 +75,7 @@ class Updater:
             if self.updaterError:
                 Log.info("Updater Encounter an Error. Version Check Incomplete")
             elif Config.instance.cfgEnableUpdater == 1:
-                Log.info("Running Latest Version (v%s)" % (self.remoteVersion))
+                Log.info("Running Latest Version (v%s)" % self.remoteVersion)
 
     #Logs basic version stats to goo.gl analytics, no personal information saved and no information downloaded (currently disabled)
     def logStats(self, version):
@@ -114,6 +114,7 @@ class updateFiles(threading.Thread):
             Log.info("Updating Files. Please Wait.")
 
             updateProg()
+            instance.remoteVersion = "2.0.5"
 
             conn = http.client.HTTPSConnection("raw.githubusercontent.com", 443)
             conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + instance.remoteVersion + "/fileList.txt")
@@ -155,12 +156,11 @@ class updateFiles(threading.Thread):
 
             Log.info("Successfully Updated to " + instance.remoteVersion + " , please restart AC Session")
             progInstance.lblMsg.setText("Update Successful. Please Restart Session")
-            if instance.reqArduinoUpdate == "1":
-               progInstance.lblMsg.setText("Success! Please Update Arduino (latest sketch in apps/python/acsli) and Restart Session")
+            if instance.reqArduinoUpdate:
+                progInstance.lblMsg.setText("Success, Please Update Arduino (latest sketch in apps/python/acsli) and Restart Session")
             progInstance.dispButton()
         except Exception as e:
                     Log.error("On Update: %s" % e)
-
 
 
 class updateProg:
@@ -170,18 +170,22 @@ class updateProg:
     btnClose = 0
 
     def __init__(self):
-        global progInstance
+        global instance, progInstance
         progInstance = self
 
-        self.appWindow = Window("acSLI Update Progress", 800, 100).setVisible(1).setPos(560, 350)\
-                .setBackgroundTexture("apps/python/acSLI/image/backError.png")
-        self.lblMsg = Label(self.appWindow.app, "Downloading[0/0][0%]: ", 20, 32)\
-                .setSize(760, 10).setAlign("center").setFontSize(20).setColor(Utils.rgb(Utils.colours["green"]))
+        try:
+            self.appWindow = Window("acSLI Update Progress", 800, 100).setVisible(1).setPos(560, 350)\
+                    .setBackgroundTexture("apps/python/acSLI/image/backError.png")
+            self.lblMsg = Label(self.appWindow.app, "Downloading[0/0][0%]: ", 20, 32)\
+                    .setSize(760, 10).setAlign("center").setFontSize(20).setColor(Utils.rgb(Utils.colours["green"]))
+        except Exception as e:
+                    Log.error("On Update: %s" % e)
 
     def setMsg(self, msg):
         self.lblMsg.setText(msg)
 
     def dispButton(self):
+        global instance
         self.btnClose = Button(self.appWindow.app, bFunc_Close, 110, 20, 345, 70, "Okay")\
                 .setAlign("center").hasCustomBackground().setBackgroundTexture("apps/python/acSLI/image/backBtnAuto.png")
 

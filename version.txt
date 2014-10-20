@@ -1,1 +1,1 @@
-2.0.4|1|Changable Colours on dash (b8 + b2), Fixes
+2.0.6|1|Changable Colours on dash (b8 + b2), Fixes

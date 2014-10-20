@@ -9,10 +9,14 @@ class Window:
         self.app = ac.newApp(name)
         ac.drawBorder(self.app, 0)
         ac.setBackgroundOpacity(self.app, 0)
-        ac.setSize(self.app, width, height)
+        self.setSize(width, height)
 
     def setPos(self, x, y):
         ac.setPosition(self.app, x, y)
+        return self
+
+    def setSize(self, w, h):
+        ac.setSize(self.app, w, h)
         return self
 
     def setVisible(self, visible):
