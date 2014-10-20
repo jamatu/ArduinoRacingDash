@@ -11,9 +11,13 @@
 #define STB 9
 
 
-PROGMEM  prog_uchar VERSION[] = {2, 0, 0};
-PROGMEM  prog_uint16_t ledsLong[] = {0, 1, 3, 7, 15, 31, 63, 127, 255, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160};
-PROGMEM  prog_uint16_t ledsShort[] = {0, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160};
+PROGMEM  prog_uchar VERSION[] = {2, 0, 5};
+PROGMEM  prog_uint16_t ledsLongRG[] = {0, 1, 3, 7, 15, 31, 63, 127, 255, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160};
+PROGMEM  prog_uint16_t ledsShortRG[] = {0, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160};
+PROGMEM  prog_uint16_t ledsLongGR[] = {0, 1, 3, 7, 15, 31, 63, 127, 255, 1, 3, 7, 15, 31, 8223, 24607, 57375};
+PROGMEM  prog_uint16_t ledsShortGR[] = {0, 1, 3, 7, 15, 31, 8223, 24607, 57375};
+prog_uint16_t ledsLong[2] = {&ledsLongRG, &ledsLongGR};
+prog_uint16_t ledsShort[2] = {&ledsShortRG, &ledsShortGR};
 
 TM1638 module1(DIO, CLK, STB);
 InvertedTM1638 module2(DIO, CLK, STB);
@@ -21,7 +25,7 @@ TM1638* modules[2] = {&module1,&module2};
 
 byte bsettings, base, buttons, oldbuttons, page, oldpage;
 int intensity, oldintensity, ledNum, pitLimiterColor, deltaneg, delta;
-byte gear, spd_h, spd_l, shift, rpm_h, rpm_l, delta_h, delta_l, engine, lap, invert;
+byte gear, spd_h, spd_l, shift, rpm_h, rpm_l, delta_h, delta_l, engine, lap, invert, ledCRL;
 String boost;
 int fuel, spd;
 word rpm;
@@ -49,6 +53,12 @@ void setup() {
           ledNum = 16;
           EEPROM.write(1, ledNum);
         }  
+
+	ledCRL = EEPROM.read(2);
+        if (ledCRL > 1){
+          ledCRL = 0;
+          EEPROM.write(0, ledCRL);
+        }   
 
         modules[invert]->setDisplayToString("EDT", 0, 0);
         modules[invert]->setDisplayDigit(pgm_read_byte_near(VERSION + 0), 5, 1);
@@ -437,9 +447,9 @@ void update(TM1638* module) {
                         blinkrpm = true;
                     } else {
                         if (ledNum == 8){
-                          module->setLEDs(pgm_read_word_near(ledsShort + shift));
+                          module->setLEDs(pgm_read_word_near(ledsShort[ledCRL] + shift));
                         }else{
-                          module->setLEDs(pgm_read_word_near(ledsLong + shift));
+                          module->setLEDs(pgm_read_word_near(ledsLong[ledCRL] + shift));
                         }
                         blinkrpm = false;
                     }
@@ -447,9 +457,9 @@ void update(TM1638* module) {
                 }
             } else {
                 if (ledNum == 8){
-                  module->setLEDs(pgm_read_word_near(ledsShort + shift));
+                  module->setLEDs(pgm_read_word_near(ledsShort[ledCRL] + shift));
                 }else{
-                  module->setLEDs(pgm_read_word_near(ledsLong + shift));
+                  module->setLEDs(pgm_read_word_near(ledsLong[ledCRL] + shift));
                 }
             }
         } else {
@@ -476,8 +486,19 @@ void update(TM1638* module) {
             delay(200);
         } 
 
-        // button 8 + button 2 - toggle number of LEDs to use
+        // button 8 + button 2 - toggle led colours
         if (module->getButtons() == 0b10000010){
+            if (ledCRL == 1){ 
+              ledCRL = 0;
+            } else {
+              ledCRL = 1;
+            }
+            EEPROM.write(0, ledCRL); 
+            delay(200);  
+        }
+
+        // button 8 + button 3 - toggle module inversion
+        if (module->getButtons() == 0b10000100){
             if (invert == 1){ 
               invert = 0;
             } else {
