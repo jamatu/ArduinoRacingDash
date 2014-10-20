@@ -1,8 +1,6 @@
 import os
 import shutil
 import http.client
-import encodings.ascii
-import encodings.idna
 import re
 import threading
 from acSLIApp.logger import Logger
@@ -73,9 +71,9 @@ class Updater:
                 .setSize(360, 10).setAlign("center").setFontSize(20).setColor(Utils.rgb(Utils.colours["red"]))
             self.lblLog = Label(self.appWindow.app, self.changeLog, 20, 60)\
                 .setSize(360, 10).setAlign("center").setColor(Utils.rgb(Utils.colours["green"]))
-            self.logStats(currVersion)
+            #self.logStats(currVersion)
         else:
-            self.logStats(currVersion)
+            #self.logStats(currVersion)
             if self.updaterError:
                 Log.info("Updater Encounter an Error. Version Check Incomplete")
             elif Config.instance.cfgEnableUpdater == 1:
@@ -83,6 +81,8 @@ class Updater:
 
     #Logs basic version stats to goo.gl analytics, no personal information saved and no information downloaded
     def logStats(self, version):
+        import encodings.ascii
+        import encodings.idna
         if Config.instance.cfgSendStats == 1:
             try:
                 h1 = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) Login/1.0"
