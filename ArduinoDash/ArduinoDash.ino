@@ -20,7 +20,7 @@ InvertedTM1638 module2(DIO, CLK, STB);
 TM1638* modules[2] = {&module1,&module2};
 
 byte bsettings, base, buttons, oldbuttons, page, oldpage;
-int intensity, oldintensity, ledNum, pitLimiterColor, deltaneg, delta;
+int intensity, oldintensity, ledNum, pitLimiterColor, deltaneg, delta, blinkVal;
 byte gear, spd_h, spd_l, shift, rpm_h, rpm_l, delta_h, delta_l, engine, lap, invert, ledCRL;
 String boost;
 int fuel, spd;
@@ -66,6 +66,7 @@ void setup() {
         oldpage = 0;
         changed = false;
         blinkrpm = false;
+        blinkVal = 15;
         ledOff = false;
         intensity = 0;
         oldintensity = 0;
@@ -125,7 +126,7 @@ void update(TM1638* module) {
 			oldbuttons = buttons;
                         oldpage = page;
 			page = buttons;
-                        module->clearDisplay();
+                        //module->clearDisplay();
                         changed = true;
                         milstart = millis();
 
@@ -436,7 +437,7 @@ void update(TM1638* module) {
         
         
         if ((engine & 0x10) == 0 & ledOff == false) {
-            if (shift == ledNum) {
+            if ((ledNum == 16 & shift >= blinkVal)|(ledNum == 8 & shift >= floor(blinkVal/2))) {
                 if ((millis() - milstart2) > 50) {
                     if (blinkrpm == false) {
                         module->setLEDs(0x0000);

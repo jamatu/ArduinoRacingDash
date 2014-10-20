@@ -43,7 +43,6 @@ class Updater:
                 self.remoteVersion = versionStr.split("|")[0]
                 self.reqArduinoUpdate = bool(versionStr.split("|")[1])
                 self.changeLog = versionStr.split("|")[2]
-                self.statsURL = "/Q0hICb"
                 conn.close()
         except Exception as e:
             Log.error("Couldn't get Version Information: %s" % e)
@@ -78,7 +77,7 @@ class Updater:
             elif Config.instance.cfgEnableUpdater == 1:
                 Log.info("Running Latest Version (v%s)" % (self.remoteVersion))
 
-    #Logs basic version stats to goo.gl analytics, no personal information saved and no information downloaded
+    #Logs basic version stats to goo.gl analytics, no personal information saved and no information downloaded (currently disabled)
     def logStats(self, version):
         import encodings.ascii
         import encodings.idna
