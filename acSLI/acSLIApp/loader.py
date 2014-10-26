@@ -17,6 +17,7 @@ class ConfigLoader:
 
     cfgTickFreq = 6
     cfgEnableUpdater = 1
+    cfgLapOffset = 0
     cfgSendStats = 1
 
     def __init__(self):
@@ -33,7 +34,7 @@ class ConfigLoader:
 
             self.cfgTickFreq = int(self.config.getOption("ADVANCED", "tickFrequency", True, self.cfgTickFreq))
             self.cfgEnableUpdater = int(self.config.getOption("ADVANCED", "enableUpdater", True, self.cfgEnableUpdater))
-            #self.cfgSendStats = int(self.config.getOption("ADVANCED", "sendStats", True, self.cfgSendStats))
+            self.cfgLapOffset = int(self.config.getOption("ADVANCED", "lapOffset", True, self.cfgLapOffset))
 
         except Exception as e:
             Log.error("Loading Config File: %s" % e)
@@ -43,6 +44,3 @@ class ConfigLoader:
         self.config.updateOption("SETTINGS", "unitSpeed", self.cfgSpeedUnit, True)
         self.config.updateOption("SETTINGS", "startupPage", self.cfgStartPage, True)
         self.config.updateOption("SETTINGS", "intensity", self.cfgIntensity, True)
-        self.config.updateOption("ADVANCED", "tickFrequency", self.cfgTickFreq, True)
-        self.config.updateOption("ADVANCED", "enableUpdater", self.cfgEnableUpdater, True)
-        #self.config.updateOption("ADVANCED", "sendStats", self.cfgSendStats, True)

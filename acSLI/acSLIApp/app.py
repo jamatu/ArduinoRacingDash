@@ -89,7 +89,7 @@ class App:
         self.maxFuel = self.simInfo.static.maxFuel if self.maxFuel == 0 else self.maxFuel
         fuel = int((current_fuel/self.maxFuel)*100)
 
-        lapCount = self.simInfo.graphics.completedLaps
+        lapCount = self.simInfo.graphics.completedLaps + Config.instance.cfgLapOffset
         if lapCount > 199:
             lapCount = 199
 

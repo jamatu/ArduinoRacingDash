@@ -49,7 +49,7 @@ class Updater:
             self.updaterError = True
 
         if (self.remoteVersion != 0) and (self.remoteVersion != Config.instance.cfgRemoteVersion)\
-                and ("".join(self.remoteVersion.split(".")) > "".join(currVersion.split("."))):
+                and (int("".join(self.remoteVersion.split("."))) > int("".join(currVersion.split(".")))):
             self.isOpen = True
             if self.reqArduinoUpdate == "1":
                 Log.info("New acSLI Version Available: v" + self.remoteVersion + ". Requires Arduino Sketch Update")
