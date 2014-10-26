@@ -1,6 +1,9 @@
 Arduino Racing Dash ChangeLog
 --------------------																																																									
 
+v2.0.9:
+	Fix shift light bug on 98T
+
 v2.0.8:
 	Arduino Bug fixes
 	inc/dec blinkVal from b8 + b6/b7 on dash

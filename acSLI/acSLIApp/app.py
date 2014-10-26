@@ -10,7 +10,7 @@ import acSLIApp.selector as Selector
 import acSLIApp.utils as Utils
 
 #################
-Version = "2.0.8"
+Version = "2.0.9"
 ArduinoVersion = "2.0.7"
 #################
 
@@ -71,19 +71,19 @@ class App:
         Connection.instance.close
 
     def compileDataPacket(self):
-
         ac_gear = ac.getCarState(0, acsys.CS.Gear)
         ac_speed = int(round(ac.getCarState(0, acsys.CS.SpeedMPH)) if Config.instance.cfgSpeedUnit == "MPH" else
                        round(ac.getCarState(0, acsys.CS.SpeedKMH)))
 
         rpms = int(ac.getCarState(0, acsys.CS.RPM))
-        self.maxRPM = self.simInfo.static.maxRpm if self.maxRPM == 0 else self.maxRPM
-
+        self.maxRPM = self.simInfo.static.maxRpm if self.maxRPM == 0 else self.maxRPM #blank the if statement if sim-info issue where max rpm doesn't change is fixed
         shift = 0
         if self.maxRPM > 0:
             thresh = self.maxRPM*0.65
             if rpms >= thresh:
                 shift = round(((rpms-thresh)/(self.maxRPM-thresh))*16)
+                if shift > 16:
+                    shift = 16
 
         current_fuel = self.simInfo.physics.fuel
         self.maxFuel = self.simInfo.static.maxFuel if self.maxFuel == 0 else self.maxFuel
