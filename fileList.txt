@@ -12,6 +12,7 @@ acSLIApp/utils.py
 dll/_ctypes.pyd
 dll/_socket.pyd
 dll/_ssl.pyd
+dll/unicodedata.pyd
 image/backBtnAuto.png
 image/backBtnUpdater.png
 image/backError.png
