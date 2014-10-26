@@ -1,6 +1,9 @@
 Arduino Racing Dash ChangeLog
 --------------------																																																									
 
+v2.0.11:
+	Try extended updater functions now idna errors are fixed
+	
 v2.0.10:
 	Compatibility Fixes
 	Added lapOffset config option under advanced. Is a static value added to the lap count. (by default set to 0 which displays laps COMPLETED, set to 1 to show current lap number)
