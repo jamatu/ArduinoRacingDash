@@ -41,7 +41,7 @@ class Updater:
                 versionFile = conn.getresponse()
                 versionStr = re.findall(r"\'(.+?)\'", str(versionFile.read()))[0]
                 self.remoteVersion = versionStr.split("|")[0]
-                self.reqArduinoUpdate = bool(versionStr.split("|")[1])
+                self.reqArduinoUpdate = versionStr.split("|")[1]
                 self.changeLog = versionStr.split("|")[2]
                 conn.close()
         except Exception as e:
@@ -51,7 +51,7 @@ class Updater:
         if (self.remoteVersion != 0) and (self.remoteVersion != Config.instance.cfgRemoteVersion)\
                 and ("".join(self.remoteVersion.split(".")) > "".join(currVersion.split("."))):
             self.isOpen = True
-            if self.reqArduinoUpdate:
+            if self.reqArduinoUpdate == "1":
                 Log.info("New acSLI Version Available: v" + self.remoteVersion + ". Requires Arduino Sketch Update")
             else:
                 Log.info("New acSLI Version Available: v" + self.remoteVersion)
@@ -154,7 +154,7 @@ class updateFiles(threading.Thread):
 
             Log.info("Successfully Updated to " + instance.remoteVersion + " , please restart AC Session")
             progInstance.lblMsg.setText("Update Successful. Please Restart Session")
-            if instance.reqArduinoUpdate:
+            if instance.reqArduinoUpdate == "1":
                 progInstance.lblMsg.setText("Success, Please Update Arduino (latest sketch in apps/python/acsli) and Restart Session")
             progInstance.dispButton()
         except Exception as e:
