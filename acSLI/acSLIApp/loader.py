@@ -12,6 +12,7 @@ class ConfigLoader:
     cfgRemoteVersion = "*"
     cfgPort = "AUTO"
     cfgSpeedUnit = "MPH"
+    cfgFuelDisp = "LAP ESTIMATE"
     cfgStartPage = 0
     cfgIntensity = 0
 
@@ -28,6 +29,7 @@ class ConfigLoader:
             self.cfgPort = str(self.config.getOption("SETTINGS", "port", True, self.cfgPort)).upper()
             self.cfgRemoteVersion = str(self.config.getOption("SETTINGS", "remoteVersion", True, self.cfgRemoteVersion))
             self.cfgSpeedUnit = str(self.config.getOption("SETTINGS", "unitSpeed", True, self.cfgSpeedUnit)).upper()
+            self.cfgFuelDisp = str(self.config.getOption("SETTINGS", "fuelDisplay", True, self.cfgFuelDisp)).upper()
             self.cfgStartPage = int(self.config.getOption("SETTINGS", "startupPage", True, self.cfgStartPage))
             self.cfgIntensity = int(self.config.getOption("SETTINGS", "intensity", True, self.cfgIntensity))
 
@@ -41,5 +43,6 @@ class ConfigLoader:
     def rewriteConfig(self):
         self.config.updateOption("SETTINGS", "port", self.cfgPort, True)
         self.config.updateOption("SETTINGS", "unitSpeed", self.cfgSpeedUnit, True)
+        self.config.updateOption("SETTINGS", "fuelDisplay", self.cfgFuelDisp, True)
         self.config.updateOption("SETTINGS", "startupPage", self.cfgStartPage, True)
         self.config.updateOption("SETTINGS", "intensity", self.cfgIntensity, True)

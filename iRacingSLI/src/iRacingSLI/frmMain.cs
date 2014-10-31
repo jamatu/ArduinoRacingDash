@@ -78,9 +78,9 @@ namespace iRacingSLI
                     Boost = String.Concat("0", Boost);
 
                 if (chkPit.Checked == true)
-                    Engine = 0x10;
+                    Engine = 1;
                 else
-                    Engine = 0x00;
+                    Engine = 0;
 
                 if (Delta <= 0)
                 {
@@ -159,7 +159,10 @@ namespace iRacingSLI
                         Delta = 9999;
                     }
 
-
+                    if (Engine == 0x10)
+                    {
+                        Engine = 1;
+                    }
                     if (Delta <= 0)
                     {
                         DeltaNeg = 1;

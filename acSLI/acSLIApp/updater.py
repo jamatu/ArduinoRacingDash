@@ -171,9 +171,9 @@ def logStats(type):
     global instance
     try:
         h1 = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) %s/1.0" % type
-        if not os.path.isfile("apps/python/acSLI/acSLIApp/.cache"):
+        if not os.path.isfile("apps/python/acSLI/user.cache"):
             h1 = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) New/1.0"
-            open("apps/python/acSLI/acSLIApp/.cache", 'w').write("".join(instance.currVersion.split(".")))
+            open("apps/python/acSLI/user.cache", 'w')
 
         stats = http.client.HTTPConnection("goo.gl")
         stats.request("GET", str(instance.statsURL), headers={str("User-Agent"): str(h1), str("Referer"): str("http://v%s" % instance.currVersion)})

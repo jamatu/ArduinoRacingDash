@@ -11,7 +11,7 @@
 #define STB 9
 
 
-PROGMEM  prog_uchar VERSION[] = {2, 0, 7};
+PROGMEM  prog_uchar VERSION[] = {2, 0, 13};
 PROGMEM  prog_uint16_t ledsLong[2][17] = {{0, 1, 3, 7, 15, 31, 63, 127, 255, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160}, {0, 1, 3, 7, 15, 31, 63, 127, 255, 1, 3, 7, 15, 31, 8223, 24607, 57375}};
 PROGMEM  prog_uint16_t ledsShort[2][9] = {{0, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160}, {0, 1, 3, 7, 15, 31, 8223, 24607, 57375}};
 
@@ -19,11 +19,11 @@ TM1638 module1(DIO, CLK, STB);
 InvertedTM1638 module2(DIO, CLK, STB);
 TM1638* modules[2] = {&module1,&module2};
 
-byte bsettings, base, buttons, oldbuttons, page, oldpage;
-int intensity, oldintensity, ledNum, pitLimiterColor, deltaneg, delta, blinkVal;
+byte bsettings, base, buttons, oldbuttons, page, oldpage, e2;
+int intensity, oldintensity, ledNum, pitLimiterColor, deltaneg, delta, blinkVal, lowFuel;
 byte gear, spd_h, spd_l, shift, rpm_h, rpm_l, delta_h, delta_l, engine, lap, invert, ledCRL;
-String boost;
-int fuel, spd;
+String fuel, boost;
+int spd;
 word rpm;
 boolean changed, blinkrpm, ledOff;
 unsigned long milstart, milstart2 = 0;
@@ -63,9 +63,9 @@ void setup() {
         } 
 
         modules[invert]->setDisplayToString("EDT", 0, 0);
-        modules[invert]->setDisplayDigit(pgm_read_byte_near(VERSION + 0), 5, 1);
-        modules[invert]->setDisplayDigit(pgm_read_byte_near(VERSION + 1), 6, 1);
-        modules[invert]->setDisplayDigit(pgm_read_byte_near(VERSION + 2), 7, 0); 
+        modules[invert]->setDisplayDigit(pgm_read_byte_near(VERSION + 0), 4, 1);
+        modules[invert]->setDisplayDigit(pgm_read_byte_near(VERSION + 1), 5, 1);
+        modules[invert]->setDisplayToString(String(pgm_read_byte_near(VERSION + 2)), 0, 6); 
 
 	oldbuttons = 0;
 	page = 0;
@@ -96,13 +96,13 @@ void update(TM1638* module) {
                                 spd_l = Serial.read();
 				rpm_h = Serial.read();
 				rpm_l = Serial.read();
-				fuel = Serial.read();
+				fuel = String(Serial.read());
 				if (ledNum == 8){
 				  shift = Serial.read() / 2;
                                 }else{
                                   shift = Serial.read();
                                 }
-				engine = Serial.read();
+				e2 = Serial.read();
                                 lap = Serial.read();
                                 boost = String(Serial.read());
                                 delta_h = Serial.read();
@@ -116,6 +116,12 @@ void update(TM1638* module) {
                                     page = 1 << (base-1);
                                     oldbuttons = page; 
                                 } 
+                                
+                                if  ((e2 & 1) == 1)
+                                  engine = 0x10;
+                                else
+                                  engine = 0x00;
+                                lowFuel = (e2 & 3) >> 1;
                                 
                                 spd = (spd_h << 8) | spd_l;
 				rpm = (rpm_h << 8) | rpm_l;
@@ -225,16 +231,13 @@ void update(TM1638* module) {
                                 }  
                                 // end of lap display
                          
-                                //Fuel
-                                String fuelstr = "";
-                                if (fuel == 100){
-                                  fuelstr = String(99, DEC);
-                                } else {
-                                  fuelstr = String(fuel, DEC);
-                                }
-                                
+                                //Fuel                              
                                 module->setDisplayToString(String("F"), 0, 5);
-        			module->setDisplayToString(String(fuelstr + " "), 0, 6);
+                                if (lowFuel == 1)
+        			  module->setDisplayDigit(fuel.charAt(0), 6, 1);
+                                else
+                                  module->setDisplayDigit(fuel.charAt(0), 6, 0);
+                                module->setDisplayDigit(fuel.charAt(1), 7, 0);
                                                                   
                                 break;
                         }
