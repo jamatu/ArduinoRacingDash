@@ -18,7 +18,6 @@ class ConfigLoader:
     cfgTickFreq = 6
     cfgEnableUpdater = 1
     cfgLapOffset = 0
-    cfgSendStats = 1
 
     def __init__(self):
         global instance, cfgPath

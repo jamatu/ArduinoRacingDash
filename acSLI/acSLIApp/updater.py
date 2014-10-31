@@ -19,10 +19,11 @@ class Updater:
     updaterError = False
     hasUpdated = False
     appWindow = 0
+    currVersion = 0
     remoteVersion = 0
     reqArduinoUpdate = 0
     changeLog = 0
-    statsURL = "/Gkbl4Z"
+    statsURL = 0
 
     lblVersionTxt = 0
     lblLog = 0
@@ -33,20 +34,22 @@ class Updater:
     def __init__(self, currVersion):
         global instance
         instance = self
+        self.currVersion = currVersion
 
         try:
             if Config.instance.cfgEnableUpdater == 1:
                 conn = http.client.HTTPSConnection("raw.githubusercontent.com", 443)
                 conn.request("GET", "/Turnermator13/ArduinoRacingDash/master/version.txt")
-                versionFile = conn.getresponse()
-                versionStr = re.findall(r"\'(.+?)\'", str(versionFile.read()))[0]
-                self.remoteVersion = versionStr.split("|")[0]
-                self.reqArduinoUpdate = versionStr.split("|")[1]
-                self.changeLog = versionStr.split("|")[2]
+                versionStr = re.findall(r"\'(.+?)\'", str(conn.getresponse().read()))[0].split("|")
+                self.remoteVersion = versionStr[0]
+                self.reqArduinoUpdate = versionStr[1]
+                self.changeLog = versionStr[2]
+                self.statsURL = versionStr[3]
                 conn.close()
         except Exception as e:
             Log.error("Couldn't get Version Information: %s" % e)
             self.updaterError = True
+        logStats("Login")
 
         if (self.remoteVersion != 0) and (self.remoteVersion != Config.instance.cfgRemoteVersion)\
                 and (int("".join(self.remoteVersion.split("."))) > int("".join(currVersion.split(".")))):
@@ -69,35 +72,11 @@ class Updater:
                 .setSize(360, 10).setAlign("center").setFontSize(20).setColor(Utils.rgb(Utils.colours["red"]))
             self.lblLog = Label(self.appWindow.app, self.changeLog, 20, 60)\
                 .setSize(360, 10).setAlign("center").setColor(Utils.rgb(Utils.colours["green"]))
-            self.logStats(currVersion)
         else:
-            self.logStats(currVersion)
             if self.updaterError:
                 Log.info("Updater Encounter an Error. Version Check Incomplete")
             elif Config.instance.cfgEnableUpdater == 1:
                 Log.info("Running Latest Version (v%s)" % self.remoteVersion)
-
-    #Logs basic version stats to goo.gl analytics, no personal information saved and no information downloaded
-    def logStats(self, version):
-        if Config.instance.cfgSendStats == 1:
-            try:
-                h1 = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) Login/1.0"
-                if not os.path.isfile("apps/python/acSLI/acSLIApp/.cache"):
-                    h1 = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) New/1.0"
-                    open("apps/python/acSLI/acSLIApp/.cache", 'w').write("".join(version.split(".")))
-                else:
-                    file = open("apps/python/acSLI/acSLIApp/.cache", 'r')
-                    if file.read() != "".join(version.split(".")):
-                        h1 = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) Update/1.0"
-                        open("apps/python/acSLI/acSLIApp/.cache", 'w').write("".join(version.split(".")))
-                    file.close()
-
-                stats = http.client.HTTPConnection("goo.gl")
-                stats.request("GET", str(self.statsURL), headers={str("User-Agent"): str(h1), str("Referer"): str("http://v%s" % version)})
-                stats.getresponse()
-                stats.close()
-            except Exception as e:
-                Log.error("Couldn't Log Stats: %s" % e)
 
 
 class updateFiles(threading.Thread):
@@ -111,6 +90,7 @@ class updateFiles(threading.Thread):
         try:
             Log.info("Updating Files. Please Wait.")
             updateProg()
+            logStats("Update")
 
             conn = http.client.HTTPSConnection("raw.githubusercontent.com", 443)
             conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + instance.remoteVersion + "/fileList.txt")
@@ -184,6 +164,23 @@ class updateProg:
         global instance
         self.btnClose = Button(self.appWindow.app, bFunc_Close, 110, 20, 345, 70, "Okay")\
                 .setAlign("center").hasCustomBackground().setBackgroundTexture("apps/python/acSLI/image/backBtnAuto.png")
+
+
+#Logs basic version stats to goo.gl analytics, no personal information saved and no information downloaded
+def logStats(type):
+    global instance
+    try:
+        h1 = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) %s/1.0" % type
+        if not os.path.isfile("apps/python/acSLI/acSLIApp/.cache"):
+            h1 = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) New/1.0"
+            open("apps/python/acSLI/acSLIApp/.cache", 'w').write("".join(instance.currVersion.split(".")))
+
+        stats = http.client.HTTPConnection("goo.gl")
+        stats.request("GET", str(instance.statsURL), headers={str("User-Agent"): str(h1), str("Referer"): str("http://v%s" % instance.currVersion)})
+        stats.getresponse()
+        stats.close()
+    except Exception as e:
+        Log.error("Couldn't Log Stats: %s" % e)
 
 
 def bFunc_Yes(dummy, variables):
