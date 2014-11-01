@@ -11,7 +11,7 @@
 #define STB 9
 
 
-PROGMEM  prog_uchar VERSION[] = {2, 0, 1, 4};
+PROGMEM  prog_uchar VERSION[] = {2, 0, 1, 5};
 PROGMEM  prog_uint16_t ledsLong[2][17] = {{0, 1, 3, 7, 15, 31, 63, 127, 255, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160}, {0, 1, 3, 7, 15, 31, 63, 127, 255, 1, 3, 7, 15, 31, 8223, 24607, 57375}};
 PROGMEM  prog_uint16_t ledsShort[2][9] = {{0, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160}, {0, 1, 3, 7, 15, 31, 8223, 24607, 57375}};
 
@@ -131,6 +131,11 @@ void update(TM1638* module) {
 				rpm = (rpm_h << 8) | rpm_l;
                                 fuel = String((f1 << 8) | f2);
                                 delta = (delta_h << 8)| delta_l;
+                                
+                                if (lowFuel < 3){
+                                  while (fuel.length() < 3)
+                                    fuel = "0" + fuel;
+                                }
                          }
                 }
 	}

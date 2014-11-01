@@ -10,8 +10,8 @@ import acSLIApp.selector as Selector
 import acSLIApp.utils as Utils
 
 #################
-Version = "2.0.14"
-ArduinoVersion = "2.0.14"
+Version = "2.0.15"
+ArduinoVersion = "2.0.15"
 #################
 
 Log = Logger()
@@ -36,6 +36,7 @@ class App:
     maxFuel = 0
 
     fuelEst = 0
+    fuelEstLaps = 0
     prevLap = 0
     prevFuel = 0
 
@@ -78,6 +79,7 @@ class App:
                 self.track = self.simInfo.static.track
                 self.car = self.simInfo.static.carModel
                 self.fuelEst = float(self.fuelCache.getOption(self.track, self.car, True, self.fuelEst))
+                self.fuelEstLaps = int(self.fuelCache.getOption(self.track, self.car + "_l", True, self.fuelEstLaps))
 
             if self.simInfo.graphics.completedLaps > self.prevLap:
                 self.prevLap = self.simInfo.graphics.completedLaps
@@ -159,8 +161,12 @@ class App:
             if self.fuelEst == 0:
                 self.fuelEst = fuelUsg
             else:
-                self.fuelEst = (self.fuelEst + fuelUsg)/2
+                tmp = (self.fuelEst*self.fuelEstLaps) + fuelUsg
+                self.fuelEstLaps += 1
+                self.fuelEst = tmp/self.fuelEstLaps
             self.fuelCache.updateOption(self.track, self.car, self.fuelEst, True)
+            self.fuelCache.updateOption(self.track, self.car + "_l", self.fuelEstLaps, True)
+            Log.log("Recalculate Fuel Usage Per Lap at %s in %s to %s" % (self.track, self.car, self.fuelEst))
 
         self.prevFuel = self.simInfo.physics.fuel
 
