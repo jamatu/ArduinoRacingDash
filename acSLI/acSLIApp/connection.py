@@ -52,27 +52,32 @@ def _findConnect():
             break
 
     if portValid:
-        instance.ser = serial.Serial(instance.port, 9600, timeout=5)
-        arduinoVer = instance.ser.read(4)
+        try:
+            instance.ser = serial.Serial(instance.port, 9600, timeout=5)
+            arduinoVer = instance.ser.read(4)
 
-        if str(arduinoVer) == "b''":
-            instance.port = "----"
-            Log.warning("No Response From Arduino. Please Ensure Arduino is running at least v" +
-                        acSLI.App.ArduinoVersion)
-            instance.dispSelect = True
-            instance.dispSelectMsg = "No Response from Arduino"
-        else:
-            aV = re.findall(r"\'(.+?)\'", str(arduinoVer))[0]
-            if "".join(acSLI.App.ArduinoVersion.split(".")) > aV:
+            if str(arduinoVer) == "b''":
                 instance.port = "----"
-                Log.warning("Arduino Code Outdated. Please Update Arduino to at least v" +
-                            acSLI.App.ArduinoVersion + " and then Restart AC")
-                Error.ErrorBox("Arduino Code Outdated. Please Update Arduino to at least v" +
-                               acSLI.App.ArduinoVersion + " and then Restart AC")
+                Log.warning("No Response From Arduino. Please Ensure Arduino is running at least v" +
+                            acSLI.App.ArduinoVersion)
+                instance.dispSelect = True
+                instance.dispSelectMsg = "No Response from Arduino"
             else:
-                instance.handshake = True
-                Log.info("Connected to Arduino running v"
-                         + aV[0] + '.' + aV[1] + '.' + aV[2] + aV[3] + " on port " + instance.port)
+                aV = re.findall(r"\'(.+?)\'", str(arduinoVer))[0]
+                if len(aV) < 4:
+                    aV = aV[0] + aV[1] + "0" + aV[2]
+
+                if "".join(acSLI.App.ArduinoVersion.split(".")) > aV:
+                    instance.port = "----"
+                    Log.warning("Arduino Code Outdated. Please Update Arduino to at least v" +
+                                acSLI.App.ArduinoVersion + " and then Restart AC")
+                    Error.ErrorBox("Arduino Code Outdated. Please Update Arduino to at least v" +
+                                   acSLI.App.ArduinoVersion + " and then Restart AC")
+                else:
+                    instance.handshake = True
+                    Log.info("Connected to Arduino running v" + aV[0] + '.' + aV[1] + '.' + aV[2] + aV[3] + " on port " + instance.port)
+        except Exception as e:
+            Log.error("On Open Port: %s" % e)
     else:
         instance.port = "----"
         if Config.instance.cfgPort == "AUTO":

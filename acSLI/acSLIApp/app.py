@@ -10,8 +10,8 @@ import acSLIApp.selector as Selector
 import acSLIApp.utils as Utils
 
 #################
-Version = "2.0.13"
-ArduinoVersion = "2.0.13"
+Version = "2.0.14"
+ArduinoVersion = "2.0.14"
 #################
 
 Log = Logger()
@@ -114,18 +114,22 @@ class App:
         if Config.instance.cfgFuelDisp == "PERCENTAGE":
             self.maxFuel = self.simInfo.static.maxFuel if self.maxFuel == 0 else self.maxFuel
             fuel = int((current_fuel/self.maxFuel)*100)
+            engine |= 3 << 1
         else:
             if self.fuelEst != 0:
-                fuel = round(current_fuel/self.fuelEst, 1)
-                if fuel > 9.9:
+                fuel = round(current_fuel/self.fuelEst, 2)
+                if fuel > 99.9:
                     fuel = round(fuel)
-                else:
+                elif fuel > 9.99:
                     fuel = round(fuel*10)
                     engine |= 1 << 1
+                else:
+                    fuel = round(fuel*100)
+                    engine |= 2 << 1
             else:
                 fuel = 0
-        if fuel > 99:
-            fuel = 99
+        if fuel > 999:
+            fuel = 999
 
         lapCount = self.simInfo.graphics.completedLaps + Config.instance.cfgLapOffset
         if lapCount > 199:
@@ -145,7 +149,8 @@ class App:
         bSetting = int(deltaNeg << 7) | int(Config.instance.cfgIntensity << 4) | int(Config.instance.cfgStartPage)
 
         key = bytes([255, bSetting, ac_gear, (ac_speed >> 8 & 0x00FF), (ac_speed & 0x00FF), ((rpms >> 8) & 0x00FF),
-                     (rpms & 0x00FF), fuel, shift, engine, lapCount, b1, ((delta >> 8) & 0x00FF), (delta & 0x00FF)])
+                     (rpms & 0x00FF), ((fuel >> 8) & 0x00FF), (fuel & 0x00FF), shift, engine, lapCount, b1,
+                     ((delta >> 8) & 0x00FF), (delta & 0x00FF)])
         return key
 
     def estimateFuel(self):

@@ -23,7 +23,7 @@ namespace iRacingSLI
         double Speed, RPM, Fuel, Shift;
         short iRPM, iFuel, iShift, iSpeed;
         byte Engine;
-        byte[] serialdata = new byte[14];
+        byte[] serialdata = new byte[15];
         byte[] shiftlights = new byte[16];
         String Boost;
         String[] startArgs;
@@ -78,9 +78,9 @@ namespace iRacingSLI
                     Boost = String.Concat("0", Boost);
 
                 if (chkPit.Checked == true)
-                    Engine = 1;
+                    Engine =  (3 << 1) | 1;
                 else
-                    Engine = 0;
+                    Engine = (3 << 1) | 0;
 
                 if (Delta <= 0)
                 {
@@ -101,16 +101,17 @@ namespace iRacingSLI
                 serialdata[4] = Convert.ToByte(iSpeed & 0x00FF);
                 serialdata[5] = Convert.ToByte((iRPM >> 8) & 0x00FF);
                 serialdata[6] = Convert.ToByte(iRPM & 0x00FF);
-                serialdata[7] = Convert.ToByte(iFuel);
-                serialdata[8] = Convert.ToByte(iShift);
-                serialdata[9] = Engine;
-                serialdata[10] = Convert.ToByte(Lap);
-                serialdata[11] = Convert.ToByte(Boost);
-                serialdata[12] = Convert.ToByte((Delta >> 8) & 0x00FF);
-                serialdata[13] = Convert.ToByte(Delta & 0x00FF);
+                serialdata[7] = Convert.ToByte((iFuel >> 8) & 0x00FF);
+                serialdata[8] = Convert.ToByte(iFuel & 0x00FF);
+                serialdata[9] = Convert.ToByte(iShift);
+                serialdata[10] = Engine;
+                serialdata[11] = Convert.ToByte(Lap);
+                serialdata[12] = Convert.ToByte(Boost);
+                serialdata[13] = Convert.ToByte((Delta >> 8) & 0x00FF);
+                serialdata[14] = Convert.ToByte(Delta & 0x00FF);
 
                 //lblConn.Text = "s1: " + serialdata[1] + " : " + (serialdata[1] >> 4);
-                SP.Write(serialdata, 0, 14);
+                SP.Write(serialdata, 0, 15);
 
             }
             else
@@ -161,7 +162,11 @@ namespace iRacingSLI
 
                     if (Engine == 0x10)
                     {
-                        Engine = 1;
+                        Engine = (3 << 1) | 1;
+                    }
+                    else
+                    {
+                        Engine = (3 << 1) | 0;
                     }
                     if (Delta <= 0)
                     {
@@ -186,15 +191,16 @@ namespace iRacingSLI
                     serialdata[4] = Convert.ToByte(iSpeed & 0x00FF);
                     serialdata[5] = Convert.ToByte((iRPM >> 8) & 0x00FF);
                     serialdata[6] = Convert.ToByte(iRPM & 0x00FF);
-                    serialdata[7] = Convert.ToByte(iFuel);
-                    serialdata[8] = Convert.ToByte(iShift);
-                    serialdata[9] = Engine;
-                    serialdata[10] = Convert.ToByte(Lap);
-                    serialdata[11] = 0;
-                    serialdata[12] = Convert.ToByte((Delta >> 8) & 0x00FF);
-                    serialdata[13] = Convert.ToByte(Delta & 0x00FF);
+                    serialdata[7] = Convert.ToByte((iFuel >> 8) & 0x00FF);
+                    serialdata[8] = Convert.ToByte(iFuel & 0x00FF);
+                    serialdata[9] = Convert.ToByte(iShift);
+                    serialdata[10] = Engine;
+                    serialdata[11] = Convert.ToByte(Lap);
+                    serialdata[12] = 0;
+                    serialdata[13] = Convert.ToByte((Delta >> 8) & 0x00FF);
+                    serialdata[14] = Convert.ToByte(Delta & 0x00FF);
 
-                    SP.Write(serialdata, 0, 14);
+                    SP.Write(serialdata, 0, 15);
                 }
                 else if (sdk.IsInitialized)
                 {

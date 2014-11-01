@@ -11,7 +11,7 @@
 #define STB 9
 
 
-PROGMEM  prog_uchar VERSION[] = {2, 0, 13};
+PROGMEM  prog_uchar VERSION[] = {2, 0, 1, 4};
 PROGMEM  prog_uint16_t ledsLong[2][17] = {{0, 1, 3, 7, 15, 31, 63, 127, 255, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160}, {0, 1, 3, 7, 15, 31, 63, 127, 255, 1, 3, 7, 15, 31, 8223, 24607, 57375}};
 PROGMEM  prog_uint16_t ledsShort[2][9] = {{0, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160}, {0, 1, 3, 7, 15, 31, 8223, 24607, 57375}};
 
@@ -21,7 +21,7 @@ TM1638* modules[2] = {&module1,&module2};
 
 byte bsettings, base, buttons, oldbuttons, page, oldpage, e2;
 int intensity, oldintensity, ledNum, pitLimiterColor, deltaneg, delta, blinkVal, lowFuel;
-byte gear, spd_h, spd_l, shift, rpm_h, rpm_l, delta_h, delta_l, engine, lap, invert, ledCRL;
+byte gear, spd_h, spd_l, shift, rpm_h, rpm_l, delta_h, delta_l, engine, lap, invert, ledCRL, f1, f2;
 String fuel, boost;
 int spd;
 word rpm;
@@ -34,6 +34,7 @@ void setup() {
         Serial.print(pgm_read_byte_near(VERSION + 0));
         Serial.print(pgm_read_byte_near(VERSION + 1));
         Serial.print(pgm_read_byte_near(VERSION + 2));
+        Serial.print(pgm_read_byte_near(VERSION + 3));
                   
         modules[0]->setupDisplay(true, 0);
         modules[1]->setupDisplay(true, 0);
@@ -65,7 +66,8 @@ void setup() {
         modules[invert]->setDisplayToString("EDT", 0, 0);
         modules[invert]->setDisplayDigit(pgm_read_byte_near(VERSION + 0), 4, 1);
         modules[invert]->setDisplayDigit(pgm_read_byte_near(VERSION + 1), 5, 1);
-        modules[invert]->setDisplayToString(String(pgm_read_byte_near(VERSION + 2)), 0, 6); 
+        modules[invert]->setDisplayDigit(pgm_read_byte_near(VERSION + 2), 6, 0);
+        modules[invert]->setDisplayDigit(pgm_read_byte_near(VERSION + 3), 7, 0);
 
 	oldbuttons = 0;
 	page = 0;
@@ -88,7 +90,8 @@ void update(TM1638* module) {
                     Serial.print(pgm_read_byte_near(VERSION + 0));
                     Serial.print(pgm_read_byte_near(VERSION + 1));
                     Serial.print(pgm_read_byte_near(VERSION + 2));
-                } else if (Serial.available() > 14) {
+                    Serial.print(pgm_read_byte_near(VERSION + 3));
+                } else if (Serial.available() > 15) {
 			if (Serial.read() == 255) {
                                 bsettings = Serial.read();                                
 				gear = Serial.read();
@@ -96,7 +99,8 @@ void update(TM1638* module) {
                                 spd_l = Serial.read();
 				rpm_h = Serial.read();
 				rpm_l = Serial.read();
-				fuel = String(Serial.read());
+				f1 = Serial.read();
+                                f2 = Serial.read();
 				if (ledNum == 8){
 				  shift = Serial.read() / 2;
                                 }else{
@@ -121,10 +125,11 @@ void update(TM1638* module) {
                                   engine = 0x10;
                                 else
                                   engine = 0x00;
-                                lowFuel = (e2 & 3) >> 1;
+                                lowFuel = (e2 & 7) >> 1;
                                 
                                 spd = (spd_h << 8) | spd_l;
 				rpm = (rpm_h << 8) | rpm_l;
+                                fuel = String((f1 << 8) | f2);
                                 delta = (delta_h << 8)| delta_l;
                          }
                 }
@@ -149,7 +154,7 @@ void update(TM1638* module) {
                                 module->setDisplayToString("L G FUEL", 0, 0);
                                 break;
                             case 4: // button 3 - lap & gear & boost
-                                module->setDisplayToString("L G  BST", 0, 0);
+                                module->setDisplayToString(" G  FUEL", 0, 0);
                                 break;
                             case 8: // button 4 - boost & gear & speed
                                 module->setDisplayToString("BST G SP", 0, 0);
@@ -231,13 +236,24 @@ void update(TM1638* module) {
                                 }  
                                 // end of lap display
                          
-                                //Fuel                              
-                                module->setDisplayToString(String("F"), 0, 5);
-                                if (lowFuel == 1)
-        			  module->setDisplayDigit(fuel.charAt(0), 6, 1);
-                                else
-                                  module->setDisplayDigit(fuel.charAt(0), 6, 0);
-                                module->setDisplayDigit(fuel.charAt(1), 7, 0);
+                                //Fuel
+                                if (lowFuel == 3){
+                                  if (fuel.length() > 2)
+                                    fuel = "99";
+                                  module->setDisplayToString(String("F" + fuel + " "), 0, 5);                              
+                                }else if (lowFuel == 2){
+        			  module->setDisplayDigit(fuel.charAt(0), 5, 1);
+                                  module->setDisplayDigit(fuel.charAt(1), 6, 0);
+                                  module->setDisplayDigit(fuel.charAt(2), 7, 0);
+                                }else if (lowFuel == 1){
+                                  module->setDisplayDigit(fuel.charAt(0), 5, 0);
+                                  module->setDisplayDigit(fuel.charAt(1), 6, 1);
+                                  module->setDisplayDigit(fuel.charAt(2), 7, 0);
+                                }else{
+                                  module->setDisplayDigit(fuel.charAt(0), 5, 0);
+                                  module->setDisplayDigit(fuel.charAt(1), 6, 0);
+                                  module->setDisplayDigit(fuel.charAt(2), 7, 0);
+                                }
                                                                   
                                 break;
                         }
@@ -245,35 +261,29 @@ void update(TM1638* module) {
                         case 4:{ // button 3 - lap & gear & boost
         
                                 if (gear == 0) 
-        			    module->setDisplayToString("R", 0, 3);
+        			    module->setDisplayToString("R", 0, 1);
                                 else if (gear == 1)
-                                    module->setDisplayToString("N", 0, 3);
+                                    module->setDisplayToString("N", 0, 1);
                                 else
-                                    module->setDisplayToString(String(gear - 1, DEC), 0, 3);
-                                
-                                // start of lap display
-                                if (lap < 10) {
-                                    module->clearDisplayDigit(1, false);
-                                    module->setDisplayToString(String(lap, DEC), 0, 0);
-                                }else if (lap >= 100 && lap < 110){
-                                    String lapstr = String(lap - 100, DEC);
-                                    module->setDisplayToString(String("0" + lapstr), 0, 0);
-                                }else if (lap >= 110){
-                                    module->setDisplayToString(String(lap - 100, DEC), 0, 0);
-                                }else{
-                                    module->setDisplayToString(String(lap, DEC), 0, 0);
-                                }  
-                                // end of lap display
+                                    module->setDisplayToString(String(gear - 1, DEC), 0, 1);
                          
-                                //Boost
-                                module->setDisplayToString(String("P"), 0, 5);
-                                if (boost.length() == 1) {
-                                  module->setDisplayDigit(boost.charAt(1), 6, 1);
-                                  module->setDisplayDigit(boost.charAt(0), 7, 0);
-                                } else {
-                                  module->setDisplayDigit(boost.charAt(0), 6, 1);
-                                  module->setDisplayDigit(boost.charAt(1), 7, 0);
-        			}
+                                //Fuel                              
+                                module->setDisplayToString(String("F"), 0, 4);
+                                if (lowFuel == 3){
+                                  module->setDisplayToString(String(fuel + "  "), 0, 5);                              
+                                }else if (lowFuel == 2){
+        			  module->setDisplayDigit(fuel.charAt(0), 5, 1);
+                                  module->setDisplayDigit(fuel.charAt(1), 6, 0);
+                                  module->setDisplayDigit(fuel.charAt(2), 7, 0);
+                                }else if (lowFuel == 1){
+                                  module->setDisplayDigit(fuel.charAt(0), 5, 0);
+                                  module->setDisplayDigit(fuel.charAt(1), 6, 1);
+                                  module->setDisplayDigit(fuel.charAt(2), 7, 0);
+                                }else{
+                                  module->setDisplayDigit(fuel.charAt(0), 5, 0);
+                                  module->setDisplayDigit(fuel.charAt(1), 6, 0);
+                                  module->setDisplayDigit(fuel.charAt(2), 7, 0);
+                                }
         
                                 break;
                         }
