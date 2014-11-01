@@ -158,12 +158,9 @@ class App:
     def estimateFuel(self):
         if self.prevFuel != 0 and self.fuelCache != 0:
             fuelUsg = self.prevFuel - self.simInfo.physics.fuel
-            if self.fuelEst == 0:
-                self.fuelEst = fuelUsg
-            else:
-                tmp = (self.fuelEst*self.fuelEstLaps) + fuelUsg
-                self.fuelEstLaps += 1
-                self.fuelEst = tmp/self.fuelEstLaps
+            tmp = (self.fuelEst*self.fuelEstLaps) + fuelUsg
+            self.fuelEstLaps += 1
+            self.fuelEst = tmp/self.fuelEstLaps
             self.fuelCache.updateOption(self.track, self.car, self.fuelEst, True)
             self.fuelCache.updateOption(self.track, self.car + "_l", self.fuelEstLaps, True)
             Log.log("Recalculate Fuel Usage Per Lap at %s in %s to %s" % (self.track, self.car, self.fuelEst))
