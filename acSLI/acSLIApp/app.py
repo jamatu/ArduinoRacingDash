@@ -82,7 +82,6 @@ class App:
             if self.simInfo.graphics.completedLaps > self.prevLap:
                 self.prevLap = self.simInfo.graphics.completedLaps
                 self.estimateFuel()
-                Log.info("new lap detected")
 
             self.ticker = 0
         else:
@@ -116,12 +115,15 @@ class App:
             self.maxFuel = self.simInfo.static.maxFuel if self.maxFuel == 0 else self.maxFuel
             fuel = int((current_fuel/self.maxFuel)*100)
         else:
-            fuel = round(current_fuel/self.fuelEst, 1)
-            if fuel > 9.9:
-                fuel = round(fuel)
+            if self.fuelEst != 0:
+                fuel = round(current_fuel/self.fuelEst, 1)
+                if fuel > 9.9:
+                    fuel = round(fuel)
+                else:
+                    fuel = round(fuel*10)
+                    engine |= 1 << 1
             else:
-                fuel = round(fuel*10)
-                engine |= 1 << 1
+                fuel = 0
         if fuel > 99:
             fuel = 99
 
@@ -156,8 +158,6 @@ class App:
             self.fuelCache.updateOption(self.track, self.car, self.fuelEst, True)
 
         self.prevFuel = self.simInfo.physics.fuel
-        Log.info(self.simInfo.physics.fuel)
-        Log.info(self.fuelEst)
 
 
 def bFunc_SpeedUnits(dummy, variables):

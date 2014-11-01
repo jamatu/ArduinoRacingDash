@@ -53,7 +53,7 @@ def _findConnect():
 
     if portValid:
         instance.ser = serial.Serial(instance.port, 9600, timeout=5)
-        arduinoVer = instance.ser.read(3)
+        arduinoVer = instance.ser.read(4)
 
         if str(arduinoVer) == "b''":
             instance.port = "----"
@@ -72,7 +72,7 @@ def _findConnect():
             else:
                 instance.handshake = True
                 Log.info("Connected to Arduino running v"
-                         + aV[0] + '.' + aV[1] + '.' + aV[2] + " on port " + instance.port)
+                         + aV[0] + '.' + aV[1] + '.' + aV[2] + aV[3] + " on port " + instance.port)
     else:
         instance.port = "----"
         if Config.instance.cfgPort == "AUTO":
