@@ -1,5 +1,7 @@
 import sys
 sys.path.insert(0, 'apps/python/acSLI/dll')
+import os
+import shutil
 
 from acSLIApp.logger import Logger
 import acSLIApp.app as App
@@ -19,6 +21,7 @@ def acMain(acVerison):
         Log.info("Start Loading acSLI v" + App.Version)
         Loader.ConfigLoader()
         Updater.Updater(App.Version)
+        cleanInstall()
 
         if not Updater.instance.isOpen:
             hasInit = True
@@ -56,3 +59,12 @@ def acShutdown(deltaT):
 
     except Exception as e:
         Log.error("On Close: %s" % e)
+
+
+def cleanInstall():
+    if os.path.exists("apps/python/acSLI/acSLIUpdater.py"):
+        os.remove("apps/python/acSLI/acSLIUpdater.py")
+    if os.path.exists("apps/python/acSLI/ArduinoDash/"):
+        shutil.rmtree("apps/python/acSLI/ArduinoDash")
+    if os.path.exists("apps/python/acSLI/acSLIApp/.cache"):
+        os.remove("apps/python/acSLI/acSLIApp/.cache")

@@ -5,7 +5,7 @@ USE
 --------------
 button 1 - lap counter, gear, speed
 button 2 - lap counter, gear, fuel percent left
-button 3 - lap counter, gear, boost pressure
+button 3 - gear, fuel
 button 4 - boost pressure, gear, speed
 button 5 - gear, engine rpms
 button 6 - gear, delta (to thousandth)

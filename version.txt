@@ -1,1 +1,1 @@
-2.0.12|0|Optimisations and Fixes|/miIkZT
+2.0.16|1|Added Laps Remaining Fuel Estimate|/miIkZT

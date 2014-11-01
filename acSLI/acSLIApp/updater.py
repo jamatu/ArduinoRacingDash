@@ -1,5 +1,4 @@
 import os
-import shutil
 import http.client
 import re
 import threading
@@ -124,11 +123,6 @@ class updateFiles(threading.Thread):
                         Log.error("On Update: %s" % e)
 
             conn.close()
-
-            if os.path.exists("apps/python/acSLI/acSLIUpdater.py"):
-                os.remove("apps/python/acSLI/acSLIUpdater.py")
-            if os.path.exists("apps/python/acSLI/ArduinoDash/"):
-                shutil.rmtree("apps/python/acSLI/ArduinoDash")
 
             Log.info("Successfully Updated to " + instance.remoteVersion + " , please restart AC Session")
             progInstance.lblMsg.setText("Update Successful. Please Restart Session")
