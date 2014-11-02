@@ -15,10 +15,12 @@ namespace iRacingSLI
 
         static SerialPort SP;
         Action<String> console;
+        Boolean open;
 
         public connectionHelper(Action<String> callConsole)
         {
             console = callConsole;
+            open = false;
         }
 
         public void setupConnection(Action<String> startMethod, System.Windows.Forms.ComboBox cbo)
@@ -62,12 +64,19 @@ namespace iRacingSLI
             console("Opening Serial Port on: " + port);
             SP = new SerialPort(port, 9600, Parity.None, 8);
             SP.Open();
+            open = true;
         }
 
         public void closeSerial()
         {
             SP.Close();
             console("Closing Serial Port");
+            open = false;
+        }
+
+        public Boolean isOpen()
+        {
+            return open;
         }
 
         public void send(Byte[] data)

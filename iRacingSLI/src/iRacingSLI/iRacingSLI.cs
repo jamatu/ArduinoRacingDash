@@ -18,6 +18,10 @@ namespace iRacingSLI
     {
         private SdkWrapper wrapper;
         private connectionHelper connection;
+        private int ticker;
+        private Boolean hasInit;
+        private String track;
+        private String car;
 
         public iRacingSLI()
         {
@@ -45,6 +49,8 @@ namespace iRacingSLI
                 if (wrapper.IsRunning)
                 {
                     statusLabel.Text = "Status: connected!";
+                    ticker = 0;
+                    hasInit = false;
                 }
                 else
                 {
@@ -77,15 +83,34 @@ namespace iRacingSLI
         // Event handler called when the session info is updated
         private void wrapper_SessionInfoUpdated(object sender, SdkWrapper.SessionInfoUpdatedEventArgs e)
         {
-            console("sessionInfoUpdated");
+            if (!hasInit)
+            {
+                hasInit = true;
+                track = e.SessionInfo["WeekendInfo"]["TrackName"].Value;
+                int driverID = Convert.ToInt16(e.SessionInfo["DriverInfo"]["DriverCarIdx"].Value);
+                car = e.SessionInfo["DriverInfo"]["Drivers"]["CarIdx", driverID]["CarPath"].Value;
+                console(track);
+                console(car);
+            }
         }
 
         // Event handler called when the telemetry is updated
         private void wrapper_TelemetryUpdated(object sender, SdkWrapper.TelemetryUpdatedEventArgs e)
         {
-            dataPacket data = new dataPacket(console);
-            data.fetch(e.TelemetryInfo, wrapper.Sdk, false);
-            connection.send(data.compile(false, 0));
+            if (connection.isOpen())
+            {
+                dataPacket data = new dataPacket(console);
+                data.fetch(e.TelemetryInfo, wrapper.Sdk, false);
+                connection.send(data.compile(false, 0));
+            }
+
+            if (ticker == 40)
+            {
+                //console("checkLaps: " + e.TelemetryInfo.Lap);
+                ticker = 0;
+            }
+            else
+                ticker += 1;
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
