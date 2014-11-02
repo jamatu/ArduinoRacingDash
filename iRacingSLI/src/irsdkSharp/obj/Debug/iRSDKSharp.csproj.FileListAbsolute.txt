@@ -1,0 +1,30 @@
+C:\Users\Nick\Documents\Visual Studio 2010\Projects\iRSDKSharp_Public\irsdkSharp\bin\Debug\iRSDKSharp.dll
+C:\Users\Nick\Documents\Visual Studio 2010\Projects\iRSDKSharp_Public\irsdkSharp\bin\Debug\iRSDKSharp.pdb
+C:\Users\Nick\Documents\Visual Studio 2010\Projects\iRSDKSharp_Public\irsdkSharp\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Nick\Documents\Visual Studio 2010\Projects\iRSDKSharp_Public\irsdkSharp\obj\Debug\iRSDKSharp.dll
+C:\Users\Nick\Documents\Visual Studio 2010\Projects\iRSDKSharp_Public\irsdkSharp\obj\Debug\iRSDKSharp.pdb
+C:\Users\Nick\Documents\Visual Studio 2010\Projects\iRacingSdkWrapper\irsdkSharp\bin\Debug\iRSDKSharp.dll
+C:\Users\Nick\Documents\Visual Studio 2010\Projects\iRacingSdkWrapper\irsdkSharp\bin\Debug\iRSDKSharp.pdb
+C:\Users\Nick\Documents\Visual Studio 2010\Projects\iRacingSdkWrapper\irsdkSharp\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Nick\Documents\Visual Studio 2010\Projects\iRacingSdkWrapper\irsdkSharp\obj\Debug\iRSDKSharp.dll
+C:\Users\Nick\Documents\Visual Studio 2010\Projects\iRacingSdkWrapper\irsdkSharp\obj\Debug\iRSDKSharp.pdb
+C:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\bin\Debug\iRSDKSharp.dll
+C:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\bin\Debug\iRSDKSharp.pdb
+C:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\obj\Debug\iRSDKSharp.dll
+C:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\obj\Debug\iRSDKSharp.pdb
+C:\Users\nthissen\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\bin\Debug\iRSDKSharp.dll
+C:\Users\nthissen\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\bin\Debug\iRSDKSharp.pdb
+C:\Users\nthissen\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\obj\Debug\iRSDKSharp.dll
+C:\Users\nthissen\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\obj\Debug\iRSDKSharp.pdb
+F:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\bin\Debug\iRSDKSharp.dll
+F:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\bin\Debug\iRSDKSharp.pdb
+F:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\obj\Debug\iRSDKSharp.dll
+F:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\obj\Debug\iRSDKSharp.pdb
+F:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\obj\Debug\iRSDKSharp.csprojResolveAssemblyReference.cache
+C:\Users\nthissen\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\obj\Debug\iRSDKSharp.csprojResolveAssemblyReference.cache
+C:\Users\James\Downloads\iRacingSdkWrapper_v15\irsdkSharp\bin\Debug\iRSDKSharp.dll
+C:\Users\James\Downloads\iRacingSdkWrapper_v15\irsdkSharp\bin\Debug\iRSDKSharp.pdb
+C:\Users\James\Downloads\iRacingSdkWrapper_v15\irsdkSharp\obj\Debug\iRSDKSharp.csprojResolveAssemblyReference.cache
+C:\Users\James\Downloads\iRacingSdkWrapper_v15\irsdkSharp\obj\Debug\iRSDKSharp.dll
+C:\Users\James\Downloads\iRacingSdkWrapper_v15\irsdkSharp\obj\Debug\iRSDKSharp.pdb

@@ -1,0 +1,10 @@
+F:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\obj\Release\iRSDKSharp.csprojResolveAssemblyReference.cache
+F:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\bin\Release\iRSDKSharp.dll
+F:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\bin\Release\iRSDKSharp.pdb
+F:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\obj\Release\iRSDKSharp.dll
+F:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\obj\Release\iRSDKSharp.pdb
+C:\Users\nthissen\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\bin\Release\iRSDKSharp.dll
+C:\Users\nthissen\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\bin\Release\iRSDKSharp.pdb
+C:\Users\nthissen\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\obj\Release\iRSDKSharp.csprojResolveAssemblyReference.cache
+C:\Users\nthissen\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\obj\Release\iRSDKSharp.dll
+C:\Users\nthissen\Dropbox\VS Projects\iRacingSdkWrapper\irsdkSharp\obj\Release\iRSDKSharp.pdb

@@ -1,0 +1,95 @@
+﻿<#@ template debug="true" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core.dll" #>
+<#@ Assembly Name="System.Windows.Forms.dll" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+<#
+
+var rows = ReadFile();
+
+#>
+// This is the output code from your template
+// you only get syntax-highlighting here - not intellisense
+
+public class X
+{
+	
+<# foreach (var row in rows) { 
+	var type = GetTypeString(row);
+	var unit = row.Unit == "" ? "" : "Unit: " + row.Unit;
+	#>
+
+	/// <summary>
+	/// <#= row.Desc #>. <#= unit #>
+	/// </summary>
+	public TelemetryValue< <#= type #> > <#= row.Name #> { get { return new TelemetryValue< <#= type #> >(sdk, "<#= row.Name #>"); } }
+
+<# } #>
+	
+}
+
+ 
+<#+
+
+  	public class Row
+	{
+		public string Name;
+		public string Desc;
+		public string Unit;
+		public string Type;
+		public int Length;
+	}
+	
+	public string GetTypeString(Row row)
+	{
+		if (row.Length == 1)
+		{
+			return GetType(row.Type);
+		}
+		else
+		{
+			return GetType(row.Type) + "[]";
+		}
+	}
+	
+	public string GetType(string type)
+	{
+		if (type == "bitfield") return "int";
+		return type;
+	}
+	
+	public List<Row> ReadFile()
+	{
+		var rows = new List<Row>();
+		StreamReader sr = new StreamReader(@"C:\Users\Nick\Desktop\iracingvars2.csv");
+
+		string strline = "";
+		string[] values = null;
+		
+		int x = 0;
+		sr.ReadLine();
+		while (!sr.EndOfStream)
+		{
+		    x++;
+		    strline = sr.ReadLine();
+		    values = strline.Split(',');
+		    
+			var row = new Row();
+			row.Name = values[0].Trim();
+			row.Desc = values[1].Trim();
+			row.Unit = values[2].Trim();
+			row.Type = values[3].Trim();
+			row.Length = int.Parse(values[4].Trim());
+			
+			rows.Add(row);			
+		}
+		sr.Close();
+		
+		return rows;
+	}
+#>

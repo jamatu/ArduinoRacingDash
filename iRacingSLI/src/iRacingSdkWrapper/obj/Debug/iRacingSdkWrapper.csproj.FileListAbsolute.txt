@@ -1,0 +1,41 @@
+C:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\bin\Debug\iRacingSdkWrapper.dll
+C:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\bin\Debug\iRacingSdkWrapper.pdb
+C:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\bin\Debug\iRSDKSharp.dll
+C:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\obj\Debug\iRacingSdkWrapper.dll
+C:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\obj\Debug\iRacingSdkWrapper.pdb
+C:\Users\nthissen\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\bin\Debug\iRacingSdkWrapper.dll
+C:\Users\nthissen\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\bin\Debug\iRacingSdkWrapper.pdb
+C:\Users\nthissen\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\bin\Debug\YamlDotNet.Core.dll
+C:\Users\nthissen\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\bin\Debug\YamlDotNet.Core.pdb
+C:\Users\nthissen\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\obj\Debug\iRacingSdkWrapper.dll
+C:\Users\nthissen\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\obj\Debug\iRacingSdkWrapper.pdb
+C:\Users\nthissen\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\bin\Debug\iRSDKSharp.dll
+C:\Users\nthissen\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\bin\Debug\iRSDKSharp.pdb
+C:\Users\nthissen\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\obj\Debug\iRacingSdkWrapper.csprojResolveAssemblyReference.cache
+F:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\bin\Debug\iRacingSdkWrapper.dll
+F:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\bin\Debug\iRacingSdkWrapper.pdb
+F:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\bin\Debug\iRSDKSharp.dll
+F:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\bin\Debug\YamlDotNet.Core.dll
+F:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\bin\Debug\YamlDotNet.RepresentationModel.dll
+F:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\bin\Debug\iRSDKSharp.pdb
+F:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\bin\Debug\YamlDotNet.Core.pdb
+F:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\bin\Debug\YamlDotNet.RepresentationModel.pdb
+F:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\obj\Debug\iRacingSdkWrapper.csprojResolveAssemblyReference.cache
+F:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\obj\Debug\iRacingSdkWrapper.dll
+F:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\obj\Debug\iRacingSdkWrapper.pdb
+C:\Users\nthissen\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\bin\Debug\sessioninfo_example.yaml
+F:\Users\Nick\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\bin\Debug\sessioninfo_example.yaml
+C:\Users\nthissen\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\bin\Debug\iRacingSdkWrapper.dll.config
+C:\Users\nthissen\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\bin\Debug\YamlDotNet.dll
+C:\Users\nthissen\Dropbox\VS Projects\iRacingSdkWrapper\iRacingSdkWrapper\bin\Debug\YamlDotNet.pdb
+C:\Users\James\Downloads\iRacingSdkWrapper_v15\iRacingSdkWrapper\bin\Debug\sessioninfo_example.yaml
+C:\Users\James\Downloads\iRacingSdkWrapper_v15\iRacingSdkWrapper\bin\Debug\iRacingSdkWrapper.dll.config
+C:\Users\James\Downloads\iRacingSdkWrapper_v15\iRacingSdkWrapper\bin\Debug\iRacingSdkWrapper.dll
+C:\Users\James\Downloads\iRacingSdkWrapper_v15\iRacingSdkWrapper\bin\Debug\iRacingSdkWrapper.pdb
+C:\Users\James\Downloads\iRacingSdkWrapper_v15\iRacingSdkWrapper\bin\Debug\iRSDKSharp.dll
+C:\Users\James\Downloads\iRacingSdkWrapper_v15\iRacingSdkWrapper\bin\Debug\iRSDKSharp.pdb
+C:\Users\James\Downloads\iRacingSdkWrapper_v15\iRacingSdkWrapper\bin\Debug\YamlDotNet.pdb
+C:\Users\James\Downloads\iRacingSdkWrapper_v15\iRacingSdkWrapper\bin\Debug\YamlDotNet.Core.pdb
+C:\Users\James\Downloads\iRacingSdkWrapper_v15\iRacingSdkWrapper\obj\Debug\iRacingSdkWrapper.csprojResolveAssemblyReference.cache
+C:\Users\James\Downloads\iRacingSdkWrapper_v15\iRacingSdkWrapper\obj\Debug\iRacingSdkWrapper.dll
+C:\Users\James\Downloads\iRacingSdkWrapper_v15\iRacingSdkWrapper\obj\Debug\iRacingSdkWrapper.pdb

@@ -1,0 +1,2626 @@
+---
+WeekendInfo:
+ TrackName: spa combined
+ TrackID: 165
+ TrackLength: 6.93 km
+ TrackDisplayName: Circuit de Spa-Francorchamps
+ TrackDisplayShortName: Spa
+ TrackCity: Francorchamps
+ TrackCountry: Belgium
+ TrackAltitude: 397.84 m
+ TrackLatitude: 50.444077 m
+ TrackLongitude: 5.968383 m
+ TrackNumTurns: 21
+ TrackPitSpeedLimit: 60.00 kph
+ TrackType: road course
+ TrackWeatherType: Constant
+ TrackSkies: Clear
+ TrackSurfaceTemp: 33.33 C
+ TrackAirTemp: 18.33 C
+ TrackAirPressure: 28.54 Hg
+ TrackWindVel: 4.47 m/s
+ TrackWindDir: 3.14 rad
+ TrackRelativeHumidity: 72 %
+ TrackFogLevel: 0 %
+ SeriesID: 227
+ SeasonID: 1174
+ SessionID: 48044679
+ SubSessionID: 11506257
+ LeagueID: 0
+ Official: 1
+ RaceWeek: 0
+ EventType: Race
+ Category: Road
+ SimMode: full
+ WeekendOptions:
+  NumStarters: 60
+  StartingGrid: 2x2 inline pole on left
+  QualifyScoring: best lap
+  CourseCautions: local
+  StandingStart: 0
+  Restarts: double file lapped cars inside
+  WeatherType: Constant
+  Skies: Clear
+  WindDirection: S
+  WindSpeed: 16.09 km/h
+  WeatherTemp: 18.33 C
+  RelativeHumidity: 72 %
+  FogLevel: 0 %
+  Unofficial: 0
+  CommercialMode: consumer
+  NightMode: 0
+  IsFixedSetup: 0
+  StrictLapsChecking: default
+  HasOpenRegistration: 0
+  HardcoreLevel: 0
+ TelemetryOptions:
+  TelemetryDiskFile: ""
+
+SessionInfo:
+ Sessions:
+ - SessionNum: 0
+   SessionLaps: unlimited
+   SessionTime: 600.00 sec
+   SessionNumLapsToAvg: 0
+   SessionType: Practice
+   ResultsPositions:
+   - Position: 1
+     ClassPosition: 0
+     CarIdx: 9
+     Lap: 2
+     Time: 125.986
+     FastestLap: 2
+     FastestTime: 125.986
+     LastTime: 125.986
+     LapsLed: 0
+     LapsComplete: 2
+     LapsDriven: 3.806
+     Incidents: 7
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 2
+     ClassPosition: 1
+     CarIdx: 2
+     Lap: 1
+     Time: 126.097
+     FastestLap: 1
+     FastestTime: 126.097
+     LastTime: 126.097
+     LapsLed: 0
+     LapsComplete: 1
+     LapsDriven: 2.470
+     Incidents: 2
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 3
+     ClassPosition: 2
+     CarIdx: 12
+     Lap: 2
+     Time: 126.493
+     FastestLap: 2
+     FastestTime: 126.493
+     LastTime: 126.493
+     LapsLed: 0
+     LapsComplete: 2
+     LapsDriven: 2.939
+     Incidents: 3
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 4
+     ClassPosition: 3
+     CarIdx: 7
+     Lap: 1
+     Time: 126.512
+     FastestLap: 1
+     FastestTime: 126.512
+     LastTime: 127.027
+     LapsLed: 0
+     LapsComplete: 2
+     LapsDriven: 3.548
+     Incidents: 4
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 5
+     ClassPosition: 4
+     CarIdx: 13
+     Lap: 2
+     Time: 127.659
+     FastestLap: 2
+     FastestTime: 127.659
+     LastTime: 127.659
+     LapsLed: 0
+     LapsComplete: 2
+     LapsDriven: 3.660
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 6
+     ClassPosition: 5
+     CarIdx: 15
+     Lap: 1
+     Time: 131.611
+     FastestLap: 1
+     FastestTime: 131.611
+     LastTime: 131.611
+     LapsLed: 0
+     LapsComplete: 1
+     LapsDriven: 2.275
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 7
+     ClassPosition: 6
+     CarIdx: 5
+     Lap: 1
+     Time: 132.751
+     FastestLap: 1
+     FastestTime: 132.751
+     LastTime: 135.902
+     LapsLed: 0
+     LapsComplete: 2
+     LapsDriven: 3.041
+     Incidents: 5
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 8
+     ClassPosition: 7
+     CarIdx: 11
+     Lap: 1
+     Time: 132.876
+     FastestLap: 1
+     FastestTime: 132.876
+     LastTime: 140.270
+     LapsLed: 0
+     LapsComplete: 2
+     LapsDriven: 2.965
+     Incidents: 2
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 9
+     ClassPosition: 8
+     CarIdx: 17
+     Lap: 2
+     Time: 133.028
+     FastestLap: 2
+     FastestTime: 133.028
+     LastTime: 133.028
+     LapsLed: 0
+     LapsComplete: 2
+     LapsDriven: 2.934
+     Incidents: 4
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 10
+     ClassPosition: 9
+     CarIdx: 8
+     Lap: 1
+     Time: 133.518
+     FastestLap: 1
+     FastestTime: 133.518
+     LastTime: 133.518
+     LapsLed: 0
+     LapsComplete: 1
+     LapsDriven: 2.264
+     Incidents: 2
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 11
+     ClassPosition: 10
+     CarIdx: 18
+     Lap: 1
+     Time: 136.721
+     FastestLap: 1
+     FastestTime: 136.721
+     LastTime: 136.721
+     LapsLed: 0
+     LapsComplete: 1
+     LapsDriven: 1.940
+     Incidents: 3
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 12
+     ClassPosition: 0
+     CarIdx: 22
+     Lap: 1
+     Time: 138.110
+     FastestLap: 1
+     FastestTime: 138.110
+     LastTime: 138.110
+     LapsLed: 0
+     LapsComplete: 1
+     LapsDriven: 3.000
+     Incidents: 2
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 13
+     ClassPosition: 0
+     CarIdx: 24
+     Lap: 1
+     Time: 143.984
+     FastestLap: 1
+     FastestTime: 143.984
+     LastTime: 143.984
+     LapsLed: 0
+     LapsComplete: 1
+     LapsDriven: 3.094
+     Incidents: 2
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 14
+     ClassPosition: 0
+     CarIdx: 27
+     Lap: 2
+     Time: 147.592
+     FastestLap: 2
+     FastestTime: 147.592
+     LastTime: 147.592
+     LapsLed: 0
+     LapsComplete: 2
+     LapsDriven: 3.048
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 15
+     ClassPosition: 1
+     CarIdx: 30
+     Lap: 1
+     Time: 147.902
+     FastestLap: 1
+     FastestTime: 147.902
+     LastTime: 147.902
+     LapsLed: 0
+     LapsComplete: 1
+     LapsDriven: 2.040
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 16
+     ClassPosition: 2
+     CarIdx: 35
+     Lap: 1
+     Time: 149.059
+     FastestLap: 1
+     FastestTime: 149.059
+     LastTime: 149.059
+     LapsLed: 0
+     LapsComplete: 1
+     LapsDriven: 2.247
+     Incidents: 2
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 17
+     ClassPosition: 3
+     CarIdx: 28
+     Lap: 1
+     Time: 149.562
+     FastestLap: 1
+     FastestTime: 149.562
+     LastTime: 150.449
+     LapsLed: 0
+     LapsComplete: 2
+     LapsDriven: 3.377
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 18
+     ClassPosition: 4
+     CarIdx: 31
+     Lap: 1
+     Time: 152.161
+     FastestLap: 1
+     FastestTime: 152.161
+     LastTime: 152.598
+     LapsLed: 0
+     LapsComplete: 2
+     LapsDriven: 3.098
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 19
+     ClassPosition: 5
+     CarIdx: 29
+     Lap: 1
+     Time: 152.214
+     FastestLap: 1
+     FastestTime: 152.214
+     LastTime: 152.214
+     LapsLed: 0
+     LapsComplete: 1
+     LapsDriven: 2.105
+     Incidents: 1
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 20
+     ClassPosition: 6
+     CarIdx: 33
+     Lap: 2
+     Time: 152.952
+     FastestLap: 2
+     FastestTime: 152.952
+     LastTime: 152.952
+     LapsLed: 0
+     LapsComplete: 2
+     LapsDriven: 3.222
+     Incidents: 7
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 21
+     ClassPosition: 7
+     CarIdx: 32
+     Lap: 1
+     Time: 155.230
+     FastestLap: 1
+     FastestTime: 155.230
+     LastTime: 155.230
+     LapsLed: 0
+     LapsComplete: 1
+     LapsDriven: 2.524
+     Incidents: 1
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 22
+     ClassPosition: 8
+     CarIdx: 34
+     Lap: 1
+     Time: 164.648
+     FastestLap: 1
+     FastestTime: 164.648
+     LastTime: 164.648
+     LapsLed: 0
+     LapsComplete: 1
+     LapsDriven: 2.867
+     Incidents: 2
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 23
+     ClassPosition: 11
+     CarIdx: 10
+     Lap: 0
+     Time: -1.000
+     FastestLap: -1
+     FastestTime: -1.000
+     LastTime: -1.000
+     LapsLed: 0
+     LapsComplete: 0
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 24
+     ClassPosition: 1
+     CarIdx: 23
+     Lap: 0
+     Time: -1.000
+     FastestLap: -1
+     FastestTime: -1.000
+     LastTime: -1.000
+     LapsLed: 0
+     LapsComplete: 0
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 25
+     ClassPosition: 1
+     CarIdx: 25
+     Lap: 0
+     Time: -1.000
+     FastestLap: -1
+     FastestTime: -1.000
+     LastTime: -1.000
+     LapsLed: 0
+     LapsComplete: 0
+     LapsDriven: 1.974
+     Incidents: 2
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 26
+     ClassPosition: 12
+     CarIdx: 3
+     Lap: 0
+     Time: -1.000
+     FastestLap: -1
+     FastestTime: -1.000
+     LastTime: -1.000
+     LapsLed: 0
+     LapsComplete: 0
+     LapsDriven: 0.470
+     Incidents: 1
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 27
+     ClassPosition: 13
+     CarIdx: 4
+     Lap: 0
+     Time: -1.000
+     FastestLap: -1
+     FastestTime: -1.000
+     LastTime: -1.000
+     LapsLed: 0
+     LapsComplete: 0
+     LapsDriven: 1.850
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 28
+     ClassPosition: 2
+     CarIdx: 26
+     Lap: 0
+     Time: -1.000
+     FastestLap: -1
+     FastestTime: -1.000
+     LastTime: -1.000
+     LapsLed: 0
+     LapsComplete: 0
+     LapsDriven: 1.164
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 29
+     ClassPosition: 14
+     CarIdx: 1
+     Lap: 0
+     Time: -1.000
+     FastestLap: -1
+     FastestTime: -1.000
+     LastTime: -1.000
+     LapsLed: 0
+     LapsComplete: 1
+     LapsDriven: 3.474
+     Incidents: 3
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 30
+     ClassPosition: 2
+     CarIdx: 20
+     Lap: 0
+     Time: -1.000
+     FastestLap: -1
+     FastestTime: -1.000
+     LastTime: -1.000
+     LapsLed: 0
+     LapsComplete: 0
+     LapsDriven: 1.596
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 31
+     ClassPosition: 3
+     CarIdx: 21
+     Lap: 0
+     Time: -1.000
+     FastestLap: -1
+     FastestTime: -1.000
+     LastTime: -1.000
+     LapsLed: 0
+     LapsComplete: 0
+     LapsDriven: 1.063
+     Incidents: 2
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 32
+     ClassPosition: 15
+     CarIdx: 16
+     Lap: 0
+     Time: -1.000
+     FastestLap: -1
+     FastestTime: -1.000
+     LastTime: -1.000
+     LapsLed: 0
+     LapsComplete: 0
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 33
+     ClassPosition: 16
+     CarIdx: 14
+     Lap: 0
+     Time: -1.000
+     FastestLap: -1
+     FastestTime: -1.000
+     LastTime: -1.000
+     LapsLed: 0
+     LapsComplete: 0
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 34
+     ClassPosition: 17
+     CarIdx: 6
+     Lap: 0
+     Time: -1.000
+     FastestLap: -1
+     FastestTime: -1.000
+     LastTime: -1.000
+     LapsLed: 0
+     LapsComplete: 0
+     LapsDriven: 1.845
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 35
+     ClassPosition: 18
+     CarIdx: 19
+     Lap: 0
+     Time: -1.000
+     FastestLap: -1
+     FastestTime: -1.000
+     LastTime: -1.000
+     LapsLed: 0
+     LapsComplete: 0
+     LapsDriven: 1.868
+     Incidents: 3
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   ResultsFastestLap:
+   - CarIdx: 9
+     FastestLap: 2
+     FastestTime: 125.986
+   ResultsAverageLapTime: -1.000
+   ResultsNumCautionFlags: 0
+   ResultsNumCautionLaps: 0
+   ResultsNumLeadChanges: 0
+   ResultsLapsComplete: -1
+   ResultsOfficial: 1
+ - SessionNum: 1
+   SessionLaps: 100
+   SessionTime: 2700.00 sec
+   SessionNumLapsToAvg: 0
+   SessionType: Race
+   ResultsPositions:
+   - Position: 1
+     ClassPosition: 0
+     CarIdx: 2
+     Lap: 0
+     Time: 0.000
+     FastestLap: 4
+     FastestTime: 124.941
+     LastTime: 126.148
+     LapsLed: 10
+     LapsComplete: 15
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 2
+     ClassPosition: 1
+     CarIdx: 3
+     Lap: 0
+     Time: 10.391
+     FastestLap: 3
+     FastestTime: 125.539
+     LastTime: 127.373
+     LapsLed: 0
+     LapsComplete: 14
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 3
+     ClassPosition: 2
+     CarIdx: 4
+     Lap: 0
+     Time: 11.428
+     FastestLap: 7
+     FastestTime: 125.731
+     LastTime: 129.074
+     LapsLed: 0
+     LapsComplete: 14
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 4
+     ClassPosition: 3
+     CarIdx: 5
+     Lap: 0
+     Time: 30.212
+     FastestLap: 3
+     FastestTime: 126.451
+     LastTime: 129.624
+     LapsLed: 0
+     LapsComplete: 14
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 5
+     ClassPosition: 4
+     CarIdx: 6
+     Lap: 0
+     Time: 40.459
+     FastestLap: 4
+     FastestTime: 127.297
+     LastTime: 132.314
+     LapsLed: 0
+     LapsComplete: 14
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 6
+     ClassPosition: 5
+     CarIdx: 13
+     Lap: 0
+     Time: 50.101
+     FastestLap: 9
+     FastestTime: 127.820
+     LastTime: 130.344
+     LapsLed: 0
+     LapsComplete: 14
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 7
+     ClassPosition: 6
+     CarIdx: 15
+     Lap: 0
+     Time: 65.807
+     FastestLap: 10
+     FastestTime: 128.802
+     LastTime: 130.414
+     LapsLed: 0
+     LapsComplete: 14
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 8
+     ClassPosition: 7
+     CarIdx: 14
+     Lap: 0
+     Time: 69.451
+     FastestLap: 10
+     FastestTime: 129.159
+     LastTime: 130.410
+     LapsLed: 0
+     LapsComplete: 14
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 9
+     ClassPosition: 8
+     CarIdx: 10
+     Lap: 0
+     Time: 92.711
+     FastestLap: 14
+     FastestTime: 128.103
+     LastTime: 128.103
+     LapsLed: 0
+     LapsComplete: 14
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 10
+     ClassPosition: 9
+     CarIdx: 17
+     Lap: 1
+     Time: 127.263
+     FastestLap: 5
+     FastestTime: 133.779
+     LastTime: 135.305
+     LapsLed: 0
+     LapsComplete: 13
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 11
+     ClassPosition: 0
+     CarIdx: 20
+     Lap: 1
+     Time: 149.969
+     FastestLap: 7
+     FastestTime: 135.805
+     LastTime: 136.172
+     LapsLed: 0
+     LapsComplete: 13
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 12
+     ClassPosition: 1
+     CarIdx: 23
+     Lap: 1
+     Time: 150.594
+     FastestLap: 4
+     FastestTime: 135.431
+     LastTime: 136.431
+     LapsLed: 0
+     LapsComplete: 13
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 13
+     ClassPosition: 2
+     CarIdx: 22
+     Lap: 1
+     Time: 172.299
+     FastestLap: 5
+     FastestTime: 137.708
+     LastTime: 139.114
+     LapsLed: 0
+     LapsComplete: 13
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 14
+     ClassPosition: 0
+     CarIdx: 24
+     Lap: 1
+     Time: 240.671
+     FastestLap: 2
+     FastestTime: 142.891
+     LastTime: 143.025
+     LapsLed: 0
+     LapsComplete: 13
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 15
+     ClassPosition: 10
+     CarIdx: 18
+     Lap: 2
+     Time: 175.325
+     FastestLap: 4
+     FastestTime: 133.835
+     LastTime: -1.000
+     LapsLed: 0
+     LapsComplete: 12
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 16
+     ClassPosition: 0
+     CarIdx: 27
+     Lap: 2
+     Time: 274.294
+     FastestLap: 4
+     FastestTime: 147.393
+     LastTime: 147.802
+     LapsLed: 0
+     LapsComplete: 12
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 17
+     ClassPosition: 1
+     CarIdx: 28
+     Lap: 2
+     Time: 297.153
+     FastestLap: 3
+     FastestTime: 148.552
+     LastTime: 150.393
+     LapsLed: 0
+     LapsComplete: 12
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 18
+     ClassPosition: 2
+     CarIdx: 30
+     Lap: 2
+     Time: 300.908
+     FastestLap: 8
+     FastestTime: 148.790
+     LastTime: 149.709
+     LapsLed: 0
+     LapsComplete: 12
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 19
+     ClassPosition: 3
+     CarIdx: 35
+     Lap: 2
+     Time: 308.858
+     FastestLap: 8
+     FastestTime: 148.360
+     LastTime: 151.422
+     LapsLed: 0
+     LapsComplete: 12
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 20
+     ClassPosition: 4
+     CarIdx: 34
+     Lap: 2
+     Time: 319.353
+     FastestLap: 10
+     FastestTime: 149.642
+     LastTime: 150.370
+     LapsLed: 0
+     LapsComplete: 12
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 21
+     ClassPosition: 5
+     CarIdx: 29
+     Lap: 2
+     Time: 321.543
+     FastestLap: 3
+     FastestTime: 149.644
+     LastTime: 149.717
+     LapsLed: 0
+     LapsComplete: 12
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 22
+     ClassPosition: 11
+     CarIdx: 11
+     Lap: 2
+     Time: 323.313
+     FastestLap: 7
+     FastestTime: 129.373
+     LastTime: 142.063
+     LapsLed: 0
+     LapsComplete: 12
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 23
+     ClassPosition: 6
+     CarIdx: 33
+     Lap: 2
+     Time: 338.829
+     FastestLap: 2
+     FastestTime: 150.428
+     LastTime: 151.558
+     LapsLed: 0
+     LapsComplete: 12
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 24
+     ClassPosition: 7
+     CarIdx: 31
+     Lap: 2
+     Time: 339.325
+     FastestLap: 3
+     FastestTime: 150.143
+     LastTime: 151.637
+     LapsLed: 0
+     LapsComplete: 12
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 25
+     ClassPosition: 8
+     CarIdx: 32
+     Lap: 3
+     Time: 356.741
+     FastestLap: 3
+     FastestTime: 154.776
+     LastTime: 163.388
+     LapsLed: 0
+     LapsComplete: 11
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 26
+     ClassPosition: 12
+     CarIdx: 19
+     Lap: 4
+     Time: 250.721
+     FastestLap: 6
+     FastestTime: 136.169
+     LastTime: -1.000
+     LapsLed: 0
+     LapsComplete: 10
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 27
+     ClassPosition: 13
+     CarIdx: 8
+     Lap: 7
+     Time: 156.245
+     FastestLap: 2
+     FastestTime: 129.561
+     LastTime: -1.000
+     LapsLed: 0
+     LapsComplete: 7
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 28
+     ClassPosition: 14
+     CarIdx: 7
+     Lap: 8
+     Time: 12.752
+     FastestLap: 4
+     FastestTime: 125.517
+     LastTime: -1.000
+     LapsLed: 0
+     LapsComplete: 6
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 29
+     ClassPosition: 15
+     CarIdx: 1
+     Lap: 8
+     Time: 13.295
+     FastestLap: 3
+     FastestTime: 124.206
+     LastTime: -1.000
+     LapsLed: 5
+     LapsComplete: 6
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 30
+     ClassPosition: 3
+     CarIdx: 21
+     Lap: 10
+     Time: 125.442
+     FastestLap: 3
+     FastestTime: 138.673
+     LastTime: 149.016
+     LapsLed: 0
+     LapsComplete: 4
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 31
+     ClassPosition: 1
+     CarIdx: 26
+     Lap: 10
+     Time: 224.011
+     FastestLap: -1
+     FastestTime: -1.000
+     LastTime: -1.000
+     LapsLed: 0
+     LapsComplete: 4
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 32
+     ClassPosition: 16
+     CarIdx: 9
+     Lap: 13
+     Time: 4.967
+     FastestLap: -1
+     FastestTime: -1.000
+     LastTime: 115.249
+     LapsLed: 0
+     LapsComplete: 1
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 33
+     ClassPosition: 17
+     CarIdx: 16
+     Lap: 13
+     Time: 18.414
+     FastestLap: -1
+     FastestTime: -1.000
+     LastTime: 128.690
+     LapsLed: 0
+     LapsComplete: 1
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 34
+     ClassPosition: 2
+     CarIdx: 25
+     Lap: 13
+     Time: 69.453
+     FastestLap: -1
+     FastestTime: -1.000
+     LastTime: 179.722
+     LapsLed: 0
+     LapsComplete: 1
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 35
+     ClassPosition: 18
+     CarIdx: 12
+     Lap: 14
+     Time: 0.010
+     FastestLap: -1
+     FastestTime: -1.000
+     LastTime: -1.000
+     LapsLed: 0
+     LapsComplete: 0
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   ResultsFastestLap:
+   - CarIdx: 1
+     FastestLap: 3
+     FastestTime: 124.206
+   ResultsAverageLapTime: 125.637
+   ResultsNumCautionFlags: 0
+   ResultsNumCautionLaps: 0
+   ResultsNumLeadChanges: 1
+   ResultsLapsComplete: 15
+   ResultsOfficial: 0
+
+QualifyResultsInfo:
+ Results:
+ - Position: 0
+   ClassPosition: 0
+   CarIdx: 1
+   FastestLap: 0
+   FastestTime: 123.036
+ - Position: 1
+   ClassPosition: 1
+   CarIdx: 2
+   FastestLap: 0
+   FastestTime: 123.268
+ - Position: 2
+   ClassPosition: 2
+   CarIdx: 3
+   FastestLap: 0
+   FastestTime: 124.844
+ - Position: 3
+   ClassPosition: 3
+   CarIdx: 4
+   FastestLap: 0
+   FastestTime: 125.043
+ - Position: 4
+   ClassPosition: 4
+   CarIdx: 5
+   FastestLap: 0
+   FastestTime: 125.512
+ - Position: 5
+   ClassPosition: 5
+   CarIdx: 6
+   FastestLap: 0
+   FastestTime: 125.591
+ - Position: 6
+   ClassPosition: 6
+   CarIdx: 7
+   FastestLap: 0
+   FastestTime: 125.689
+ - Position: 7
+   ClassPosition: 7
+   CarIdx: 8
+   FastestLap: 0
+   FastestTime: 125.846
+ - Position: 8
+   ClassPosition: 8
+   CarIdx: 9
+   FastestLap: 0
+   FastestTime: 126.130
+ - Position: 9
+   ClassPosition: 9
+   CarIdx: 10
+   FastestLap: 0
+   FastestTime: 0.000
+ - Position: 10
+   ClassPosition: 10
+   CarIdx: 11
+   FastestLap: 0
+   FastestTime: 0.000
+ - Position: 11
+   ClassPosition: 11
+   CarIdx: 12
+   FastestLap: 0
+   FastestTime: 0.000
+ - Position: 12
+   ClassPosition: 12
+   CarIdx: 13
+   FastestLap: 0
+   FastestTime: 0.000
+ - Position: 13
+   ClassPosition: 13
+   CarIdx: 14
+   FastestLap: 0
+   FastestTime: 0.000
+ - Position: 14
+   ClassPosition: 14
+   CarIdx: 15
+   FastestLap: 0
+   FastestTime: 0.000
+ - Position: 15
+   ClassPosition: 15
+   CarIdx: 16
+   FastestLap: 0
+   FastestTime: 0.000
+ - Position: 16
+   ClassPosition: 16
+   CarIdx: 17
+   FastestLap: 0
+   FastestTime: 0.000
+ - Position: 17
+   ClassPosition: 17
+   CarIdx: 18
+   FastestLap: 0
+   FastestTime: 0.000
+ - Position: 18
+   ClassPosition: 18
+   CarIdx: 19
+   FastestLap: 0
+   FastestTime: 0.000
+ - Position: 19
+   ClassPosition: 0
+   CarIdx: 20
+   FastestLap: 0
+   FastestTime: 136.658
+ - Position: 20
+   ClassPosition: 1
+   CarIdx: 21
+   FastestLap: 0
+   FastestTime: 137.466
+ - Position: 21
+   ClassPosition: 2
+   CarIdx: 22
+   FastestLap: 0
+   FastestTime: 0.000
+ - Position: 22
+   ClassPosition: 3
+   CarIdx: 23
+   FastestLap: 0
+   FastestTime: 0.000
+ - Position: 23
+   ClassPosition: 0
+   CarIdx: 24
+   FastestLap: 0
+   FastestTime: 142.583
+ - Position: 24
+   ClassPosition: 1
+   CarIdx: 25
+   FastestLap: 0
+   FastestTime: 0.000
+ - Position: 25
+   ClassPosition: 2
+   CarIdx: 26
+   FastestLap: 0
+   FastestTime: 0.000
+ - Position: 26
+   ClassPosition: 0
+   CarIdx: 27
+   FastestLap: 0
+   FastestTime: 146.356
+ - Position: 27
+   ClassPosition: 1
+   CarIdx: 28
+   FastestLap: 0
+   FastestTime: 148.330
+ - Position: 28
+   ClassPosition: 2
+   CarIdx: 29
+   FastestLap: 0
+   FastestTime: 148.713
+ - Position: 29
+   ClassPosition: 3
+   CarIdx: 30
+   FastestLap: 0
+   FastestTime: 148.958
+ - Position: 30
+   ClassPosition: 4
+   CarIdx: 31
+   FastestLap: 0
+   FastestTime: 149.868
+ - Position: 31
+   ClassPosition: 5
+   CarIdx: 32
+   FastestLap: 0
+   FastestTime: 156.066
+ - Position: 32
+   ClassPosition: 6
+   CarIdx: 33
+   FastestLap: 0
+   FastestTime: 0.000
+ - Position: 33
+   ClassPosition: 7
+   CarIdx: 34
+   FastestLap: 0
+   FastestTime: 0.000
+ - Position: 34
+   ClassPosition: 8
+   CarIdx: 35
+   FastestLap: 0
+   FastestTime: 0.000
+
+CameraInfo:
+ Groups:
+ - GroupNum: 1
+   GroupName: Nose
+   Cameras:
+   - CameraNum: 1
+     CameraName: CamNose
+ - GroupNum: 2
+   GroupName: Gearbox
+   Cameras:
+   - CameraNum: 1
+     CameraName: CamGearbox
+ - GroupNum: 3
+   GroupName: Roll Bar
+   Cameras:
+   - CameraNum: 1
+     CameraName: CamRoll Bar
+ - GroupNum: 4
+   GroupName: LF Susp
+   Cameras:
+   - CameraNum: 1
+     CameraName: CamLF Susp
+ - GroupNum: 5
+   GroupName: LR Susp
+   Cameras:
+   - CameraNum: 1
+     CameraName: CamLR Susp
+ - GroupNum: 6
+   GroupName: Gyro
+   Cameras:
+   - CameraNum: 1
+     CameraName: CamGyro
+ - GroupNum: 7
+   GroupName: RF Susp
+   Cameras:
+   - CameraNum: 1
+     CameraName: CamRF Susp
+ - GroupNum: 8
+   GroupName: RR Susp
+   Cameras:
+   - CameraNum: 1
+     CameraName: CamRR Susp
+ - GroupNum: 9
+   GroupName: Cockpit
+   Cameras:
+   - CameraNum: 1
+     CameraName: CamCockpit
+ - GroupNum: 10
+   GroupName: Blimp
+   Cameras:
+   - CameraNum: 1
+     CameraName: CamBlimp
+ - GroupNum: 11
+   GroupName: Chopper
+   Cameras:
+   - CameraNum: 1
+     CameraName: CamChopper
+ - GroupNum: 12
+   GroupName: Chase
+   Cameras:
+   - CameraNum: 1
+     CameraName: CamChase
+ - GroupNum: 13
+   GroupName: Far Chase
+   Cameras:
+   - CameraNum: 1
+     CameraName: CamFar Chase
+ - GroupNum: 14
+   GroupName: Rear Chase
+   Cameras:
+   - CameraNum: 1
+     CameraName: CamRear Chase
+ - GroupNum: 15
+   GroupName: Scenic
+   IsScenic: true
+   Cameras:
+   - CameraNum: 1
+     CameraName: Scenic_00
+   - CameraNum: 2
+     CameraName: Scenic_01
+   - CameraNum: 3
+     CameraName: Scenic_02
+   - CameraNum: 4
+     CameraName: Scenic_03
+   - CameraNum: 5
+     CameraName: Scenic_04
+   - CameraNum: 6
+     CameraName: Scenic_05
+   - CameraNum: 7
+     CameraName: Scenic_07
+   - CameraNum: 8
+     CameraName: Scenic_08
+   - CameraNum: 9
+     CameraName: Scenic_09
+   - CameraNum: 10
+     CameraName: Scenic_10
+ - GroupNum: 16
+   GroupName: Pit Lane
+   Cameras:
+   - CameraNum: 1
+     CameraName: CamPit Lane
+ - GroupNum: 17
+   GroupName: Pit Lane 2
+   Cameras:
+   - CameraNum: 1
+     CameraName: CamPit Lane 2
+ - GroupNum: 18
+   GroupName: TV1
+   Cameras:
+   - CameraNum: 1
+     CameraName: CamTV1_00
+   - CameraNum: 2
+     CameraName: CamTV1_01
+   - CameraNum: 3
+     CameraName: CamTV1_02
+   - CameraNum: 4
+     CameraName: CamTV1_03
+   - CameraNum: 5
+     CameraName: CamTV1_04
+   - CameraNum: 6
+     CameraName: CamTV1_05
+   - CameraNum: 7
+     CameraName: CamTV1_06
+   - CameraNum: 8
+     CameraName: CamTV1_07
+   - CameraNum: 9
+     CameraName: CamTV1_08
+   - CameraNum: 10
+     CameraName: CamTV1_09
+   - CameraNum: 11
+     CameraName: CamTV1_10
+   - CameraNum: 12
+     CameraName: CamTV1_11
+   - CameraNum: 13
+     CameraName: CamTV1_12
+   - CameraNum: 14
+     CameraName: CamTV1_13
+   - CameraNum: 15
+     CameraName: CamTV1_14
+   - CameraNum: 16
+     CameraName: CamTV1_15
+ - GroupNum: 19
+   GroupName: TV2
+   Cameras:
+   - CameraNum: 1
+     CameraName: CamTV2_13
+   - CameraNum: 2
+     CameraName: CamTV2_14
+   - CameraNum: 3
+     CameraName: CamTV2_15
+   - CameraNum: 4
+     CameraName: CamTV2_12
+   - CameraNum: 5
+     CameraName: CamTV2_11
+   - CameraNum: 6
+     CameraName: CamTV2_10
+   - CameraNum: 7
+     CameraName: CamTV2_09
+   - CameraNum: 8
+     CameraName: CamTV2_08
+   - CameraNum: 9
+     CameraName: CamTV2_07
+   - CameraNum: 10
+     CameraName: CamTV2_06
+   - CameraNum: 11
+     CameraName: CamTV2_05
+   - CameraNum: 12
+     CameraName: CamTV2_04
+   - CameraNum: 13
+     CameraName: CamTV2_03
+   - CameraNum: 14
+     CameraName: CamTV2_02
+   - CameraNum: 15
+     CameraName: CamTV2_01
+   - CameraNum: 16
+     CameraName: CamTV2_00
+ - GroupNum: 20
+   GroupName: TV3
+   Cameras:
+   - CameraNum: 1
+     CameraName: CamTV3_00
+   - CameraNum: 2
+     CameraName: CamTV3_01
+   - CameraNum: 3
+     CameraName: CamTV3_02
+   - CameraNum: 4
+     CameraName: CamTV3_03
+   - CameraNum: 5
+     CameraName: CamTV3_04
+   - CameraNum: 6
+     CameraName: CamTV3_05
+   - CameraNum: 7
+     CameraName: CamTV3_06
+   - CameraNum: 8
+     CameraName: CamTV3_07
+   - CameraNum: 9
+     CameraName: CamTV3_08
+   - CameraNum: 10
+     CameraName: CamTV3_09
+   - CameraNum: 11
+     CameraName: CamTV3_10
+   - CameraNum: 12
+     CameraName: CamTV3_11
+   - CameraNum: 13
+     CameraName: CamTV3_12
+   - CameraNum: 14
+     CameraName: CamTV3_13
+   - CameraNum: 15
+     CameraName: CamTV3_14
+   - CameraNum: 16
+     CameraName: CamTV3_15
+   - CameraNum: 17
+     CameraName: CamTV3_16
+   - CameraNum: 18
+     CameraName: CamTV3_17
+   - CameraNum: 19
+     CameraName: CamTV3_18
+   - CameraNum: 20
+     CameraName: CamTV3_19
+
+RadioInfo:
+ SelectedRadioNum: 0
+ Radios:
+ - RadioNum: 0
+   HopCount: 1
+   NumFrequencies: 4
+   TunedToFrequencyNum: 0
+   ScanningIsOn: 1
+   Frequencies:
+   - FrequencyNum: 0
+     FrequencyName: "@SPECTATORS"
+     Priority: 0
+     CarIdx: -1
+     EntryIdx: -1
+     ClubID: 0
+     CanScan: 1
+     CanSquawk: 1
+     Muted: 0
+     IsMutable: 1
+     IsDeletable: 0
+   - FrequencyNum: 1
+     FrequencyName: "@DRIVERS"
+     Priority: 15
+     CarIdx: -1
+     EntryIdx: -1
+     ClubID: 0
+     CanScan: 1
+     CanSquawk: 0
+     Muted: 0
+     IsMutable: 1
+     IsDeletable: 0
+   - FrequencyNum: 2
+     FrequencyName: "@RACECONTROL"
+     Priority: 80
+     CarIdx: -1
+     EntryIdx: -1
+     ClubID: 0
+     CanScan: 1
+     CanSquawk: 0
+     Muted: 0
+     IsMutable: 0
+     IsDeletable: 0
+   - FrequencyNum: 3
+     FrequencyName: "@PRIVATE"
+     Priority: 70
+     CarIdx: -1
+     EntryIdx: 37
+     ClubID: 0
+     CanScan: 1
+     CanSquawk: 1
+     Muted: 0
+     IsMutable: 0
+     IsDeletable: 0
+
+DriverInfo:
+ DriverCarIdx: 63
+ DriverHeadPosX: 0.200
+ DriverHeadPosY: 0.223
+ DriverHeadPosZ: 0.541
+ DriverCarRedLine: 7100.000
+ DriverCarFuelKgPerLtr: 0.750
+ DriverCarSLFirstRPM: 6700.000
+ DriverCarSLShiftRPM: 7000.000
+ DriverCarSLLastRPM: 7000.000
+ DriverCarSLBlinkRPM: 7100.000
+ DriverPitTrkPct: 0.142
+ Drivers:
+ - CarIdx: 0
+   UserName: Pace Car
+   AbbrevName: Car, P
+   Initials: PC
+   UserID: -1
+   CarNumber: "0"
+   CarNumberRaw: 0
+   CarPath: safety pcfr500s
+   CarClassID: 11
+   CarID: 32
+   CarClassShortName: 
+   CarClassRelSpeed: 0
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0x000000
+   IRating: 0
+   LicLevel: 0
+   LicSubLevel: 0
+   LicColor: 0xffffff
+   IsSpectator: 0
+   CarDesignStr: 0,ffffff,ffffff,ffffff
+   HelmetDesignStr: 0,ffffff,ffffff,ffffff
+   SuitDesignStr: 0,ffffff,ffffff,ffffff
+   CarNumberDesignStr: 0,0,ffffff,ffffff,ffffff
+   CarSponsor_1: 0
+   CarSponsor_2: 0
+   ClubName: -none-
+   DivisionName: Division 1
+ - CarIdx: 1
+   UserName: Kevin Siggy
+   AbbrevName: Siggy, K
+   Initials: KS
+   UserID: 93060
+   CarNumber: "7"
+   CarNumberRaw: 7
+   CarPath: hpdarx01c
+   CarClassID: 40
+   CarID: 39
+   CarClassShortName: HPD ARX-01c
+   CarClassRelSpeed: 160
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xffda59
+   IRating: 3053
+   LicLevel: 20
+   LicSubLevel: 499
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 0,fd7704,000000,01a604
+   HelmetDesignStr: 18,ffffff,000000,fc0706
+   SuitDesignStr: 18,ffffff,055ff3,fc0706
+   CarNumberDesignStr: 0,0,ffffff,055ff3,fc0706
+   CarSponsor_1: 0
+   CarSponsor_2: 0
+   ClubName: Central-Eastern Europe
+   DivisionName: Division 2
+ - CarIdx: 2
+   UserName: Iker Estefania
+   AbbrevName: Estefania, I
+   Initials: IE
+   UserID: 47921
+   CarNumber: "3"
+   CarNumberRaw: 3
+   CarPath: hpdarx01c
+   CarClassID: 40
+   CarID: 39
+   CarClassShortName: HPD ARX-01c
+   CarClassRelSpeed: 160
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xffda59
+   IRating: 3583
+   LicLevel: 18
+   LicSubLevel: 266
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 3,2b660b,242424,2b660b
+   HelmetDesignStr: 68,242424,aff50f,535f57
+   SuitDesignStr: 19,949995,000000,fc0706
+   CarNumberDesignStr: 0,0,ffffff,ffffff,000000
+   CarSponsor_1: 0
+   CarSponsor_2: 0
+   ClubName: Iberia
+   DivisionName: Division 1
+ - CarIdx: 3
+   UserName: Christian Kistner
+   AbbrevName: Kistner, C
+   Initials: CK
+   UserID: 74531
+   CarNumber: "13"
+   CarNumberRaw: 13
+   CarPath: hpdarx01c
+   CarClassID: 40
+   CarID: 39
+   CarClassShortName: HPD ARX-01c
+   CarClassRelSpeed: 160
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xffda59
+   IRating: 2405
+   LicLevel: 19
+   LicSubLevel: 343
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 16,ff5300,ffffff,2b2b2b
+   HelmetDesignStr: 59,292929,ffeb14,ffffff
+   SuitDesignStr: 26,f0e100,212121,ffffff
+   CarNumberDesignStr: 0,0,ffffff,777777,000000
+   CarSponsor_1: 0
+   CarSponsor_2: 0
+   ClubName: DE-AT-CH
+   DivisionName: Division 2
+ - CarIdx: 4
+   UserName: Brendan Hobbart
+   AbbrevName: Hobbart, B
+   Initials: BH
+   UserID: 79540
+   CarNumber: "8"
+   CarNumberRaw: 8
+   CarPath: hpdarx01c
+   CarClassID: 40
+   CarID: 39
+   CarClassShortName: HPD ARX-01c
+   CarClassRelSpeed: 160
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xffda59
+   IRating: 3002
+   LicLevel: 18
+   LicSubLevel: 259
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 8,ffffff,25a210,ff230a
+   HelmetDesignStr: 22,ffffff,42a211,ff9e29
+   SuitDesignStr: 21,031adc,000f26,feec04
+   CarNumberDesignStr: 0,0,ffffff,777777,000000
+   CarSponsor_1: 94
+   CarSponsor_2: 97
+   ClubName: West
+   DivisionName: Division 2
+ - CarIdx: 5
+   UserName: Jan Wiemer
+   AbbrevName: Wiemer, J
+   Initials: JW
+   UserID: 48536
+   CarNumber: "27"
+   CarNumberRaw: 27
+   CarPath: hpdarx01c
+   CarClassID: 40
+   CarID: 39
+   CarClassShortName: HPD ARX-01c
+   CarClassRelSpeed: 160
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xffda59
+   IRating: 1300
+   LicLevel: 18
+   LicSubLevel: 202
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 15,525252,07d9ea,ffffff
+   HelmetDesignStr: 56,0adbce,272626,ffffff
+   SuitDesignStr: 6,06ff0b,000000,dddddd
+   CarNumberDesignStr: 0,0,ffffff,777777,000000
+   CarSponsor_1: 1
+   CarSponsor_2: 1
+   ClubName: DE-AT-CH
+   DivisionName: Division 5
+ - CarIdx: 6
+   UserName: Dario Guarino2
+   AbbrevName: Guarino2, D
+   Initials: DG
+   UserID: 75767
+   CarNumber: "15"
+   CarNumberRaw: 15
+   CarPath: hpdarx01c
+   CarClassID: 40
+   CarID: 39
+   CarClassShortName: HPD ARX-01c
+   CarClassRelSpeed: 160
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xffda59
+   IRating: 1808
+   LicLevel: 18
+   LicSubLevel: 253
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 15,0077f0,0077f0,ffffff
+   HelmetDesignStr: 50,ff0000,ff0000,000000
+   SuitDesignStr: 24,ff0000,ff0000,0f83eb
+   CarNumberDesignStr: 0,0,ffffff,777777,000000
+   CarSponsor_1: 0
+   CarSponsor_2: 1
+   ClubName: Italy
+   DivisionName: Division 3
+ - CarIdx: 7
+   UserName: Attila Szabo
+   AbbrevName: Szabo, A
+   Initials: AS
+   UserID: 144133
+   CarNumber: "10"
+   CarNumberRaw: 10
+   CarPath: hpdarx01c
+   CarClassID: 40
+   CarID: 39
+   CarClassShortName: HPD ARX-01c
+   CarClassRelSpeed: 160
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xffda59
+   IRating: 2671
+   LicLevel: 18
+   LicSubLevel: 231
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 10,2a3795,cccccc,000000
+   HelmetDesignStr: 65,ca5a16,ffffff,5de925
+   SuitDesignStr: 16,d14b10,27da1b,000000
+   CarNumberDesignStr: 0,0,ffffff,ed2129,000000
+   CarSponsor_1: 107
+   CarSponsor_2: 57
+   ClubName: Central-Eastern Europe
+   DivisionName: Division 2
+ - CarIdx: 8
+   UserName: Philippe Gaillard
+   AbbrevName: Gaillard, P
+   Initials: PG
+   UserID: 145499
+   CarNumber: "29"
+   CarNumberRaw: 29
+   CarPath: hpdarx01c
+   CarClassID: 40
+   CarID: 39
+   CarClassShortName: HPD ARX-01c
+   CarClassRelSpeed: 160
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xffda59
+   IRating: 1251
+   LicLevel: 14
+   LicSubLevel: 241
+   LicColor: 0x00c702
+   IsSpectator: 0
+   CarDesignStr: 0,ffffff,cccccc,666666
+   HelmetDesignStr: 59,e3760d,6d6e71,000000
+   SuitDesignStr: 29,ffffff,cccccc,000000
+   CarNumberDesignStr: 0,0,ffffff,777777,000000
+   CarSponsor_1: 0
+   CarSponsor_2: 0
+   ClubName: France
+   DivisionName: Division 5
+ - CarIdx: 9
+   UserName: Michel de Jonge
+   AbbrevName: Jonge, M
+   Initials: MJ
+   UserID: 78330
+   CarNumber: "16"
+   CarNumberRaw: 16
+   CarPath: hpdarx01c
+   CarClassID: 40
+   CarID: 39
+   CarClassShortName: HPD ARX-01c
+   CarClassRelSpeed: 160
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xffda59
+   IRating: 1778
+   LicLevel: 15
+   LicSubLevel: 316
+   LicColor: 0x00c702
+   IsSpectator: 0
+   CarDesignStr: 18,679dd0,ef4106,fbf5f3
+   HelmetDesignStr: 37,ffffff,fe1637,70a4fa
+   SuitDesignStr: 27,ffffff,000000,f93606
+   CarNumberDesignStr: 0,0,ffffff,777777,000000
+   CarSponsor_1: 50
+   CarSponsor_2: 1
+   ClubName: Benelux
+   DivisionName: Division 5
+ - CarIdx: 10
+   UserName: Mikis Gutsche
+   AbbrevName: Gutsche, M
+   Initials: MG
+   UserID: 117786
+   CarNumber: "18"
+   CarNumberRaw: 18
+   CarPath: hpdarx01c
+   CarClassID: 40
+   CarID: 39
+   CarClassShortName: HPD ARX-01c
+   CarClassRelSpeed: 160
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xffda59
+   IRating: 1643
+   LicLevel: 18
+   LicSubLevel: 265
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 15,ffffff,ffffff,ffffff
+   HelmetDesignStr: 20,ffffff,ffffff,ffffff
+   SuitDesignStr: 0,ffffff,ffffff,ffffff
+   CarNumberDesignStr: 0,0,000000,ffffff,000000
+   CarSponsor_1: 0
+   CarSponsor_2: 0
+   ClubName: DE-AT-CH
+   DivisionName: Division 4
+ - CarIdx: 11
+   UserName: Adrian Blasco
+   AbbrevName: Blasco, A
+   Initials: AB
+   UserID: 122434
+   CarNumber: "22"
+   CarNumberRaw: 22
+   CarPath: hpdarx01c
+   CarClassID: 40
+   CarID: 39
+   CarClassShortName: HPD ARX-01c
+   CarClassRelSpeed: 160
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xffda59
+   IRating: 1516
+   LicLevel: 17
+   LicSubLevel: 115
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 8,ffffff,f8ff66,1000d6
+   HelmetDesignStr: 68,ffffff,c54034,d9bb26
+   SuitDesignStr: 3,dfe52a,ffffff,ee3f44
+   CarNumberDesignStr: 0,0,ffffff,777777,000000
+   CarSponsor_1: 51
+   CarSponsor_2: 61
+   ClubName: Iberia
+   DivisionName: Division 3
+ - CarIdx: 12
+   UserName: Brian Chatfield
+   AbbrevName: Chatfield, B
+   Initials: BC
+   UserID: 123388
+   CarNumber: "23"
+   CarNumberRaw: 23
+   CarPath: hpdarx01c
+   CarClassID: 40
+   CarID: 39
+   CarClassShortName: HPD ARX-01c
+   CarClassRelSpeed: 160
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xffda59
+   IRating: 1419
+   LicLevel: 18
+   LicSubLevel: 262
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 13,02c103,c40404,ffffff
+   HelmetDesignStr: 12,18c32d,eb0e09,ffffff
+   SuitDesignStr: 8,28ca07,e80b02,f9f9fb
+   CarNumberDesignStr: 0,0,000000,777777,000000
+   CarSponsor_1: 107
+   CarSponsor_2: 105
+   ClubName: Atlantic
+   DivisionName: Division 5
+ - CarIdx: 13
+   UserName: Benny Lageman
+   AbbrevName: Lageman, B
+   Initials: BL
+   UserID: 140268
+   CarNumber: "25"
+   CarNumberRaw: 25
+   CarPath: hpdarx01c
+   CarClassID: 40
+   CarID: 39
+   CarClassShortName: HPD ARX-01c
+   CarClassRelSpeed: 160
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xffda59
+   IRating: 1354
+   LicLevel: 14
+   LicSubLevel: 270
+   LicColor: 0x00c702
+   IsSpectator: 0
+   CarDesignStr: 21,ff0f0f,000000,ffffff
+   HelmetDesignStr: 62,60ff05,000000,ffffff
+   SuitDesignStr: 14,f9221f,ffffff,150f0f
+   CarNumberDesignStr: 0,0,ffffff,5bfb18,000000
+   CarSponsor_1: 72
+   CarSponsor_2: 38
+   ClubName: Benelux
+   DivisionName: Division 5
+ - CarIdx: 14
+   UserName: Bernd Jankowiak
+   AbbrevName: Jankowiak, B
+   Initials: BJ
+   UserID: 77356
+   CarNumber: "30"
+   CarNumberRaw: 30
+   CarPath: hpdarx01c
+   CarClassID: 40
+   CarID: 39
+   CarClassShortName: HPD ARX-01c
+   CarClassRelSpeed: 160
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xffda59
+   IRating: 1238
+   LicLevel: 15
+   LicSubLevel: 315
+   LicColor: 0x00c702
+   IsSpectator: 0
+   CarDesignStr: 2,0fbbff,ff8805,ffffff
+   HelmetDesignStr: 64,2ea6ff,ffffff,ffa40f
+   SuitDesignStr: 9,299fff,ff900a,ffffff
+   CarNumberDesignStr: 0,0,ffffff,777777,000000
+   CarSponsor_1: 0
+   CarSponsor_2: 0
+   ClubName: Scandinavia
+   DivisionName: Division 5
+ - CarIdx: 15
+   UserName: Pedro Leitao
+   AbbrevName: Leitao, P
+   Initials: PL
+   UserID: 144001
+   CarNumber: "31"
+   CarNumberRaw: 31
+   CarPath: hpdarx01c
+   CarClassID: 40
+   CarID: 39
+   CarClassShortName: HPD ARX-01c
+   CarClassRelSpeed: 160
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xffda59
+   IRating: 1182
+   LicLevel: 19
+   LicSubLevel: 322
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 0,24281f,ed2129,070708
+   HelmetDesignStr: 2,f00000,887c7c,4d68ff
+   SuitDesignStr: 1,f52e2e,2f2727,e5e8f5
+   CarNumberDesignStr: 0,0,ffffff,777777,000000
+   CarSponsor_1: 0
+   CarSponsor_2: 0
+   ClubName: Iberia
+   DivisionName: Division 6
+ - CarIdx: 16
+   UserName: Pebst Augusta
+   AbbrevName: Augusta, P
+   Initials: PA
+   UserID: 120505
+   CarNumber: "32"
+   CarNumberRaw: 32
+   CarPath: hpdarx01c
+   CarClassID: 40
+   CarID: 39
+   CarClassShortName: HPD ARX-01c
+   CarClassRelSpeed: 160
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xffda59
+   IRating: 1084
+   LicLevel: 20
+   LicSubLevel: 434
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 0,d8c17c,cccccc,666666
+   HelmetDesignStr: 60,aca944,ceb11b,ec2121
+   SuitDesignStr: 10,d9d9a7,cccccc,666666
+   CarNumberDesignStr: 0,0,ffffff,777777,000000
+   CarSponsor_1: 0
+   CarSponsor_2: 0
+   ClubName: Scandinavia
+   DivisionName: Division 8
+ - CarIdx: 17
+   UserName: Wilhelm Sommer
+   AbbrevName: Sommer, W
+   Initials: WS
+   UserID: 126711
+   CarNumber: "33"
+   CarNumberRaw: 33
+   CarPath: hpdarx01c
+   CarClassID: 40
+   CarID: 39
+   CarClassShortName: HPD ARX-01c
+   CarClassRelSpeed: 160
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xffda59
+   IRating: 869
+   LicLevel: 18
+   LicSubLevel: 200
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 6,404040,c0c0c0,00bfff
+   HelmetDesignStr: 65,404040,c0c0c0,00bfff
+   SuitDesignStr: 29,404040,c0c0c0,00bfff
+   CarNumberDesignStr: 0,0,ffffff,03ff00,000000
+   CarSponsor_1: 94
+   CarSponsor_2: 0
+   ClubName: DE-AT-CH
+   DivisionName: Division 8
+ - CarIdx: 18
+   UserName: Mike Whitehead
+   AbbrevName: Whitehead, M
+   Initials: MW
+   UserID: 45296
+   CarNumber: "34"
+   CarNumberRaw: 34
+   CarPath: hpdarx01c
+   CarClassID: 40
+   CarID: 39
+   CarClassShortName: HPD ARX-01c
+   CarClassRelSpeed: 160
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xffda59
+   IRating: 824
+   LicLevel: 14
+   LicSubLevel: 204
+   LicColor: 0x00c702
+   IsSpectator: 0
+   CarDesignStr: 18,ed2129,000000,ffffff
+   HelmetDesignStr: 57,000000,0a0a0a,24fe20
+   SuitDesignStr: 15,050000,eb0f05,000000
+   CarNumberDesignStr: 0,0,ffffff,777777,000000
+   CarSponsor_1: 1
+   CarSponsor_2: 1
+   ClubName: Plains
+   DivisionName: Division 8
+ - CarIdx: 19
+   UserName: David Brock
+   AbbrevName: Brock, D
+   Initials: DB
+   UserID: 150968
+   CarNumber: "35"
+   CarNumberRaw: 35
+   CarPath: hpdarx01c
+   CarClassID: 40
+   CarID: 39
+   CarClassShortName: HPD ARX-01c
+   CarClassRelSpeed: 160
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xffda59
+   IRating: 642
+   LicLevel: 13
+   LicSubLevel: 189
+   LicColor: 0x00c702
+   IsSpectator: 0
+   CarDesignStr: 0,dfd926,f10e0e,f02424
+   HelmetDesignStr: 27,ed2129,ffffff,edf122
+   SuitDesignStr: 14,ffffff,f1ee22,f72226
+   CarNumberDesignStr: 0,0,ffffff,c4160e,bd0f0f
+   CarSponsor_1: 0
+   CarSponsor_2: 0
+   ClubName: Canada
+   DivisionName: Division 9
+ - CarIdx: 20
+   UserName: Spyros Derekis
+   AbbrevName: Derekis, S
+   Initials: SD
+   UserID: 43715
+   CarNumber: "11"
+   CarNumberRaw: 11
+   CarPath: rileydp
+   CarClassID: 18
+   CarID: 21
+   CarClassShortName: Riley DP
+   CarClassRelSpeed: 90
+   CarClassLicenseLevel: 17
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0x33ceff
+   IRating: 2660
+   LicLevel: 15
+   LicSubLevel: 355
+   LicColor: 0x00c702
+   IsSpectator: 0
+   CarDesignStr: 27,f0ebf1,003180,003180
+   HelmetDesignStr: 39,0116bf,ffffff,111111
+   SuitDesignStr: 1,01129e,01129e,ffffff
+   CarNumberDesignStr: 0,0,ffffff,777777,000000
+   CarSponsor_1: 1
+   CarSponsor_2: 0
+   ClubName: International
+   DivisionName: Division 2
+ - CarIdx: 21
+   UserName: Dane Young2
+   AbbrevName: Young2, D
+   Initials: DY
+   UserID: 157614
+   CarNumber: "21"
+   CarNumberRaw: 21
+   CarPath: rileydp
+   CarClassID: 18
+   CarID: 21
+   CarClassShortName: Riley DP
+   CarClassRelSpeed: 90
+   CarClassLicenseLevel: 17
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0x33ceff
+   IRating: 1585
+   LicLevel: 18
+   LicSubLevel: 214
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 0,ffffff,000000,6d6e71
+   HelmetDesignStr: 33,ffffff,000000,6d6e71
+   SuitDesignStr: 1,ffffff,000000,000000
+   CarNumberDesignStr: 0,0,ffffff,777777,000000
+   CarSponsor_1: 0
+   CarSponsor_2: 0
+   ClubName: UK and I
+   DivisionName: Division 4
+ - CarIdx: 22
+   UserName: Massimo Artiglia
+   AbbrevName: Artiglia, M
+   Initials: MA
+   UserID: 98412
+   CarNumber: "1"
+   CarNumberRaw: 1
+   CarPath: rileydp
+   CarClassID: 18
+   CarID: 21
+   CarClassShortName: Riley DP
+   CarClassRelSpeed: 90
+   CarClassLicenseLevel: 17
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0x33ceff
+   IRating: 3720
+   LicLevel: 19
+   LicSubLevel: 332
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 3,26150c,701f1e,0c0c0c
+   HelmetDesignStr: 12,0e110e,f9f4e1,b96913
+   SuitDesignStr: 29,e9f1f1,030302,cd8623
+   CarNumberDesignStr: 0,0,d53131,d09736,000000
+   CarSponsor_1: 49
+   CarSponsor_2: 107
+   ClubName: DE-AT-CH
+   DivisionName: Division 2
+ - CarIdx: 23
+   UserName: Gareth Deacon
+   AbbrevName: Deacon, G
+   Initials: GD
+   UserID: 83706
+   CarNumber: "6"
+   CarNumberRaw: 6
+   CarPath: rileydp
+   CarClassID: 18
+   CarID: 21
+   CarClassShortName: Riley DP
+   CarClassRelSpeed: 90
+   CarClassLicenseLevel: 17
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0x33ceff
+   IRating: 3115
+   LicLevel: 19
+   LicSubLevel: 325
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 8,21a3ed,ffffff,ed2129
+   HelmetDesignStr: 64,21c0ed,ed2129,ffffff
+   SuitDesignStr: 2,ffffff,21a3ed,fc0706
+   CarNumberDesignStr: 0,0,ffffff,777777,000000
+   CarSponsor_1: 0
+   CarSponsor_2: 0
+   ClubName: Australia/NZ
+   DivisionName: Division 2
+ - CarIdx: 24
+   UserName: Fabian Jastremski
+   AbbrevName: Jastremski, F
+   Initials: FJ
+   UserID: 39556
+   CarNumber: "4"
+   CarNumberRaw: 4
+   CarPath: fordgt
+   CarClassID: 41
+   CarID: 40
+   CarClassShortName: Ford GT
+   CarClassRelSpeed: 51
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xff5888
+   IRating: 3536
+   LicLevel: 20
+   LicSubLevel: 499
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 20,3b1ac1,000000,ffffff
+   HelmetDesignStr: 10,ffffff,000000,6d4fd3
+   SuitDesignStr: 1,5532cc,ffffff,000000
+   CarNumberDesignStr: 0,0,dddddd,000000,866fdb
+   CarSponsor_1: 48
+   CarSponsor_2: 1
+   ClubName: DE-AT-CH
+   DivisionName: Division 1
+ - CarIdx: 25
+   UserName: Friedrich Ladits
+   AbbrevName: Ladits, F
+   Initials: FL
+   UserID: 127331
+   CarNumber: "26"
+   CarNumberRaw: 26
+   CarPath: fordgt
+   CarClassID: 41
+   CarID: 40
+   CarClassShortName: Ford GT
+   CarClassRelSpeed: 51
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xff5888
+   IRating: 1338
+   LicLevel: 18
+   LicSubLevel: 229
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 16,38b1ff,fa5429,000000
+   HelmetDesignStr: 18,38b1ff,fa5429,000000
+   SuitDesignStr: 29,38b1ff,fa5429,000000
+   CarNumberDesignStr: 0,0,ffffff,777777,000000
+   CarSponsor_1: 1
+   CarSponsor_2: 1
+   ClubName: DE-AT-CH
+   DivisionName: Division 4
+ - CarIdx: 26
+   UserName: Dakota Price
+   AbbrevName: Price, D
+   Initials: DP
+   UserID: 34198
+   CarNumber: "28"
+   CarNumberRaw: 28
+   CarPath: fordgt
+   CarClassID: 41
+   CarID: 40
+   CarClassShortName: Ford GT
+   CarClassRelSpeed: 51
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xff5888
+   IRating: 1297
+   LicLevel: 17
+   LicSubLevel: 165
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 9,ffffff,008dd5,000000
+   HelmetDesignStr: 0,bdbdbd,000000,0facff
+   SuitDesignStr: 0,000000,2a3795,ebe337
+   CarNumberDesignStr: 0,0,ffffff,777777,000000
+   CarSponsor_1: 0
+   CarSponsor_2: 0
+   ClubName: Canada
+   DivisionName: Division 4
+ - CarIdx: 27
+   UserName: Sergio Avendaño
+   AbbrevName: Avendaño, S
+   Initials: SA
+   UserID: 140685
+   CarNumber: "2"
+   CarNumberRaw: 2
+   CarPath: rufrt12r track cspec
+   CarClassID: 58
+   CarID: 52
+   CarClassShortName: Ruf RT12R CSpec
+   CarClassRelSpeed: 50
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xae6bff
+   IRating: 3590
+   LicLevel: 15
+   LicSubLevel: 332
+   LicColor: 0x00c702
+   IsSpectator: 0
+   CarDesignStr: 19,171717,c25900,fefa58
+   HelmetDesignStr: 64,d36209,000000,decd12
+   SuitDesignStr: 2,000000,c47912,b6a711
+   CarNumberDesignStr: 9,0,ffffff,777777,000000
+   CarSponsor_1: 107
+   CarSponsor_2: 99
+   ClubName: International
+   DivisionName: Division 1
+ - CarIdx: 28
+   UserName: Markus Pausackerl
+   AbbrevName: Pausackerl, M
+   Initials: MP
+   UserID: 135301
+   CarNumber: "5"
+   CarNumberRaw: 5
+   CarPath: rufrt12r track cspec
+   CarClassID: 58
+   CarID: 52
+   CarClassShortName: Ruf RT12R CSpec
+   CarClassRelSpeed: 50
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xae6bff
+   IRating: 3126
+   LicLevel: 20
+   LicSubLevel: 409
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 0,ffffff,cccccc,666666
+   HelmetDesignStr: 32,000000,f0efef,ff2424
+   SuitDesignStr: 30,012bf5,ffffff,000bd7
+   CarNumberDesignStr: 0,0,ffffff,777777,000000
+   CarSponsor_1: 106
+   CarSponsor_2: 0
+   ClubName: DE-AT-CH
+   DivisionName: Division 2
+ - CarIdx: 29
+   UserName: Jose Pedrosa Fernandez
+   AbbrevName: Fernandez, J
+   Initials: JF
+   UserID: 79143
+   CarNumber: "20"
+   CarNumberRaw: 20
+   CarPath: rufrt12r track cspec
+   CarClassID: 58
+   CarID: 52
+   CarClassShortName: Ruf RT12R CSpec
+   CarClassRelSpeed: 50
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xae6bff
+   IRating: 1586
+   LicLevel: 13
+   LicSubLevel: 170
+   LicColor: 0x00c702
+   IsSpectator: 0
+   CarDesignStr: 0,ffffff,2a3ef7,feec04,ffffff
+   HelmetDesignStr: 62,c2061e,feec04,000000
+   SuitDesignStr: 26,a30100,fdf566,000e81
+   CarNumberDesignStr: 14,0,0404fe,ffffff,000000
+   CarSponsor_1: 0
+   CarSponsor_2: 0
+   ClubName: Iberia
+   DivisionName: Division 3
+ - CarIdx: 30
+   UserName: Andy Perrs
+   AbbrevName: Perrs, A
+   Initials: AP
+   UserID: 68157
+   CarNumber: "9"
+   CarNumberRaw: 9
+   CarPath: rufrt12r track cspec
+   CarClassID: 58
+   CarID: 52
+   CarClassShortName: Ruf RT12R CSpec
+   CarClassRelSpeed: 50
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xae6bff
+   IRating: 2790
+   LicLevel: 19
+   LicSubLevel: 345
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 11,050505,0302d9,cb0d06,c2d2ff
+   HelmetDesignStr: 68,e5d601,004060,01a604
+   SuitDesignStr: 26,ffffff,0c17e4,cc0508
+   CarNumberDesignStr: 0,0,e00706,ffffff,031adc
+   CarSponsor_1: 93
+   CarSponsor_2: 104
+   ClubName: International
+   DivisionName: Division 2
+ - CarIdx: 31
+   UserName: Anthony Grant
+   AbbrevName: Grant, A
+   Initials: AG
+   UserID: 128480
+   CarNumber: "12"
+   CarNumberRaw: 12
+   CarPath: rufrt12r track cspec
+   CarClassID: 58
+   CarID: 52
+   CarClassShortName: Ruf RT12R CSpec
+   CarClassRelSpeed: 50
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xae6bff
+   IRating: 2549
+   LicLevel: 20
+   LicSubLevel: 440
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 7,079c2a,e8e24a,000000,000000
+   HelmetDesignStr: 0,000000,e8e24a,079c2a
+   SuitDesignStr: 14,079c2a,e8e24a,000000
+   CarNumberDesignStr: 0,0,000000,e6e147,079c2a
+   CarSponsor_1: 62
+   CarSponsor_2: 1
+   ClubName: Canada
+   DivisionName: Division 2
+ - CarIdx: 32
+   UserName: Jacob Beauchesne
+   AbbrevName: Beauchesne, J
+   Initials: JB
+   UserID: 140776
+   CarNumber: "24"
+   CarNumberRaw: 24
+   CarPath: rufrt12r track cspec
+   CarClassID: 58
+   CarID: 52
+   CarClassShortName: Ruf RT12R CSpec
+   CarClassRelSpeed: 50
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xae6bff
+   IRating: 1386
+   LicLevel: 14
+   LicSubLevel: 238
+   LicColor: 0x00c702
+   IsSpectator: 0
+   CarDesignStr: 0,ffffff,2a3795,2a3795,000000
+   HelmetDesignStr: 31,0071c5,ff7900,ff7900
+   SuitDesignStr: 15,0071c5,ff7900,0071c5
+   CarNumberDesignStr: 0,0,2a3795,000000,ffffff
+   CarSponsor_1: 0
+   CarSponsor_2: 0
+   ClubName: New England
+   DivisionName: Division 5
+ - CarIdx: 33
+   UserName: Humberto Rattmann
+   AbbrevName: Rattmann, H
+   Initials: HR
+   UserID: 136034
+   CarNumber: "14"
+   CarNumberRaw: 14
+   CarPath: rufrt12r track cspec
+   CarClassID: 58
+   CarID: 52
+   CarClassShortName: Ruf RT12R CSpec
+   CarClassRelSpeed: 50
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xae6bff
+   IRating: 1911
+   LicLevel: 17
+   LicSubLevel: 156
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 2,000000,000000,ceb51c
+   HelmetDesignStr: 64,1860e7,f0f221,8af141
+   SuitDesignStr: 1,d31212,ffffff,ffffff
+   CarNumberDesignStr: 24,2,ffffff,777777,000000
+   CarSponsor_1: 107
+   CarSponsor_2: 105
+   ClubName: DE-AT-CH
+   DivisionName: Division 3
+ - CarIdx: 34
+   UserName: Alain Fitoussi
+   AbbrevName: Fitoussi, A
+   Initials: AF
+   UserID: 80961
+   CarNumber: "17"
+   CarNumberRaw: 17
+   CarPath: rufrt12r track cspec
+   CarClassID: 58
+   CarID: 52
+   CarClassShortName: Ruf RT12R CSpec
+   CarClassRelSpeed: 50
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xae6bff
+   IRating: 1696
+   LicLevel: 19
+   LicSubLevel: 379
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 15,07031e,b733eb,000000,0b0a0a
+   HelmetDesignStr: 55,000000,c14fe8,d4b9da
+   SuitDesignStr: 1,760e90,7f3d99,000000
+   CarNumberDesignStr: 14,0,000000,b733eb,d4d3d9
+   CarSponsor_1: 0
+   CarSponsor_2: 0
+   ClubName: France
+   DivisionName: Division 4
+ - CarIdx: 35
+   UserName: Donatas Kasperavicius
+   AbbrevName: Kasperavicius, D
+   Initials: DK
+   UserID: 117464
+   CarNumber: "19"
+   CarNumberRaw: 19
+   CarPath: rufrt12r track cspec
+   CarClassID: 58
+   CarID: 52
+   CarClassShortName: Ruf RT12R CSpec
+   CarClassRelSpeed: 50
+   CarClassLicenseLevel: 0
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0xae6bff
+   IRating: 1613
+   LicLevel: 18
+   LicSubLevel: 222
+   LicColor: 0x0153db
+   IsSpectator: 0
+   CarDesignStr: 18,ffffff,238526,ffffff;27701a
+   HelmetDesignStr: 29,e5d601,01a604,e20100
+   SuitDesignStr: 7,feec04,01a604,fc0706
+   CarNumberDesignStr: 0,0,31792a,000000,000000
+   CarSponsor_1: 117
+   CarSponsor_2: 0
+   ClubName: Central-Eastern Europe
+   DivisionName: Division 4
+ - CarIdx: 63
+   UserName: Nick Thissen
+   AbbrevName: 
+   Initials: 
+   UserID: 74968
+   CarNumber: "89"
+   CarNumberRaw: 89
+   CarPath: rileydp
+   CarClassID: 18
+   CarID: 21
+   CarClassShortName: Riley DP
+   CarClassRelSpeed: 90
+   CarClassLicenseLevel: 17
+   CarClassMaxFuel: 1.000000 %
+   CarClassWeightPenalty: 0.000000 kg
+   CarClassColor: 0x33ceff
+   IRating: 3516
+   LicLevel: 15
+   LicSubLevel: 358
+   LicColor: 0x00c702
+   IsSpectator: 1
+   CarDesignStr: 26,333333,ffffff,c0ff05
+   HelmetDesignStr: 9,3b3b3b,ffffff,daff05
+   SuitDesignStr: 7,ffffff,000000,b9df62
+   CarNumberDesignStr: 0,0,ffffff,777777,000000
+   CarSponsor_1: 107
+   CarSponsor_2: 80
+   ClubName: Benelux
+   DivisionName: Division 1
+
+SplitTimeInfo:
+ Sectors:
+ - SectorNum: 0
+   SectorStartPct: 0.000
+ - SectorNum: 1
+   SectorStartPct: 0.311
+ - SectorNum: 2
+   SectorStartPct: 0.522
+ - SectorNum: 3
+   SectorStartPct: 0.693
+ - SectorNum: 4
+   SectorStartPct: 0.931
+
+...

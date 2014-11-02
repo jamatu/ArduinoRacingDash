@@ -1,0 +1,61 @@
+Name,Desc,Unit,Type,Length
+SessionTime,Seconds since session start,s,double,1
+SessionNum,Session number,,int,1
+SessionState,Session state,irsdk_SessionState,int,1
+SessionUniqueID,Session ID,,int,1
+SessionFlags,Session flags,irsdk_Flags,bitfield,1
+DriverMarker,Driver activated flag,,bool,1
+IsReplayPlaying,0=replay not playing  1=replay playing,,bool,1
+ReplayFrameNum,Integer replay frame number (60 per second),,int,1
+CarIdxLap,Lap count by car index,,int,64
+CarIdxLapDistPct,Percentage distance around lap by car index,%,float,64
+CarIdxTrackSurface,Track surface type by car index,irsdk_TrkLoc,int,64
+CarIdxSteer,Steering wheel angle by car index,rad,float,64
+CarIdxRPM,Engine rpm by car index,revs/min,float,64
+CarIdxGear,-1=reverse  0=neutral  1..n=current gear by car index,,int,64
+SteeringWheelAngle,Steering wheel angle,rad,float,1
+Throttle,0=off throttle to 1=full throttle,%,float,1
+Brake,0=brake released to 1=max pedal force,%,float,1
+Clutch,0=disengaged to 1=fully engaged,%,float,1
+Gear,-1=reverse  0=neutral  1..n=current gear,,int,1
+RPM,Engine rpm,revs/min,float,1
+Lap,Lap count,,int,1
+LapDist,Meters traveled from S/F this lap,m,float,1
+LapDistPct,Percentage distance around lap,%,float,1
+RaceLaps,Laps completed in race,,int,1
+LongAccel,Longitudinal acceleration (including gravity),m/s^2,float,1
+LatAccel,Lateral acceleration (including gravity),m/s^2,float,1
+VertAccel,Vertical acceleration (including gravity),m/s^2,float,1
+RollRate,Roll rate,rad/s,float,1
+PitchRate,Pitch rate,rad/s,float,1
+YawRate,Yaw rate,rad/s,float,1
+Speed,GPS vehicle speed,m/s,float,1
+VelocityX,X velocity,m/s,float,1
+VelocityY,Y velocity,m/s,float,1
+VelocityZ,Z velocity,m/s,float,1
+Yaw,Yaw orientation,rad,float,1
+Pitch,Pitch orientation,rad,float,1
+Roll,Roll orientation,rad,float,1
+CamCarIdx,Active camera's focus car index,,int,1
+CamCameraNumber,Active camera number,,int,1
+CamGroupNumber,Active camera group number,,int,1
+CamCameraState,State of camera system,irsdk_CameraState,bitfield,1
+IsOnTrack,1=Car on track physics running,,bool,1
+IsInGarage,1=Car in garage physics running,,bool,1
+SteeringWheelTorque,Output torque on steering shaft,N*m,float,1
+SteeringWheelPctTorque,Force feedback % max torque on steering shaft,%,float,1
+ShiftIndicatorPct,Percent of shift indicator to light up,%,float,1
+EngineWarnings,Bitfield for warning lights,irsdk_EngineWarnings,bitfield,1
+FuelLevel,Liters of fuel remaining,l,float,1
+FuelLevelPct,Percent fuel remaining,%,float,1
+ReplayPlaySpeed,Replay playback speed,,int,1
+ReplayPlaySlowMotion,0=not slow motion  1=replay is in slow motion,,bool,1
+ReplaySessionTime,Seconds since replay session start,s,double,1
+ReplaySessionNum,Replay session number,,int,1
+WaterTemp,Engine coolant temp,C,float,1
+WaterLevel,Engine coolant level,l,float,1
+FuelPress,Engine fuel pressure,bar,float,1
+OilTemp,Engine oil temperature,C,float,1
+OilPress,Engine oil pressure,bar,float,1
+OilLevel,Engine oil level,l,float,1
+Voltage,Engine voltage,V,float,1

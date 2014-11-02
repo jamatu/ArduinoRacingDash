@@ -140,13 +140,9 @@ namespace iRacingSLI
                     }
 
                     if (chkSpeedUnits.Checked == true)
-                    {
                         Speed = Convert.ToDouble(sdk.GetData("Speed")) * (2.23693629 * 1.609344); //KPH
-                    }
                     else
-                    {
                         Speed = Convert.ToDouble(sdk.GetData("Speed")) * 2.23693629; //MPH
-                    }
 
                     Gear = Convert.ToInt32(sdk.GetData("Gear"));
                     RPM = Convert.ToDouble(sdk.GetData("RPM"));

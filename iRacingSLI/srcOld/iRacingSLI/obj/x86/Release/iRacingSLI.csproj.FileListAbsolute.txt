@@ -66,3 +66,5 @@ E:\Games\ArduinoDash\src\iRacingSLI\obj\x86\Release\iRacingSLI.csprojResolveAsse
 E:\Games\ArduinoDash\src\iRacingSLI\obj\x86\Release\iRacingSLI.frmMain.resources
 E:\Games\ArduinoDash\src\iRacingSLI\obj\x86\Release\iRacingSLI.Properties.Resources.resources
 E:\Games\ArduinoDash\src\iRacingSLI\obj\x86\Release\iRacingSLI.csproj.GenerateResource.Cache
+E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\srcOld\iRacingSLI\obj\x86\Release\iRacingSLI.exe
+E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\srcOld\iRacingSLI\obj\x86\Release\iRacingSLI.pdb

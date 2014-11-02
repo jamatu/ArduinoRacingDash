@@ -1,0 +1,16 @@
+E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\iRacingSLI\bin\Debug\iRacingSLI.exe.config
+E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Debug\iRacingSLI.exe.config
+E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\Debug\iRacingSLI.csprojResolveAssemblyReference.cache
+E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\Debug\iRacingSLI.Properties.Resources.resources
+E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\Debug\iRacingSLI.csproj.GenerateResource.Cache
+E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Debug\iRacingSLI.exe
+E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Debug\iRacingSLI.pdb
+E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Debug\iRacingSdkWrapper.dll
+E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Debug\iRSDKSharp.dll
+E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Debug\YamlDotNet.dll
+E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Debug\iRacingSdkWrapper.pdb
+E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Debug\iRSDKSharp.pdb
+E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Debug\YamlDotNet.pdb
+E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\Debug\iRacingSLI.exe
+E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\Debug\iRacingSLI.pdb
+E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\Debug\iRacingSLI.iRacingSLI.resources
