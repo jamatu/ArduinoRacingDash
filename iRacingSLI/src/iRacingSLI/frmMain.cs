@@ -132,6 +132,9 @@ namespace iRacingSLI
                         else
                         {
                             this.hasRun = true;
+                            //label1.Text = YamlParser.Parse(sdk.GetSessionInfo(), "WeekendInfo:TrackName:");
+                            label1.Text = YamlParser.Parse(sdk.GetSessionInfo(), "DriverInfo:Drivers:");
+                            //Load user data
                         }
                         this.hasInit = true;
                     }
@@ -168,6 +171,7 @@ namespace iRacingSLI
                     {
                         Engine = (3 << 1) | 0;
                     }
+
                     if (Delta <= 0)
                     {
                         DeltaNeg = 1;

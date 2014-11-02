@@ -1,6 +1,9 @@
 Arduino Racing Dash ChangeLog
 --------------------																																																									
 
+v2.0.17:
+	Fix Reliant Robin Incompatibility
+
 v2.0.16:
 	Added Laps remaining fuel estimate
 	Changed display page 3 to fuel and gear only

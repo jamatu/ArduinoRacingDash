@@ -10,7 +10,7 @@ import acSLIApp.selector as Selector
 import acSLIApp.utils as Utils
 
 #################
-Version = "2.0.16"
+Version = "2.0.17"
 ArduinoVersion = "2.0.15"
 #################
 
@@ -139,6 +139,8 @@ class App:
 
         boost = round(ac.getCarState(0, acsys.CS.TurboBoost), 1)
         b1 = int(boost*10)
+        if b1 < 0:
+            b1 = 0
 
         delta = ac.getCarState(0, acsys.CS.PerformanceMeter)
         deltaNeg = 0
