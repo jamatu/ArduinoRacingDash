@@ -39,6 +39,7 @@
       <HintPath>..\irsdkSharp\bin\Debug\iRSDKSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
@@ -51,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="configHandler.cs" />
     <Compile Include="connectionHelper.cs" />
     <Compile Include="dataPacket.cs" />
     <Compile Include="iRacingSLI.cs">

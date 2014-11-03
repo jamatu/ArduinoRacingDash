@@ -23,7 +23,7 @@ namespace iRacingSLI
             console = callConsole;
         }
 
-        public void fetch(TelemetryInfo telem, iRacingSDK sdk, Boolean fuelDisp)
+        public void fetch(TelemetryInfo telem, iRacingSDK sdk, double fuelVal)
         {
             Engine = 0;
             DeltaNeg = 0;
@@ -38,9 +38,21 @@ namespace iRacingSLI
             if (Convert.ToString(telem.EngineWarnings.Value).Contains("PitSpeedLimiter"))
                 Engine = 1;
 
-            if (fuelDisp)
+            if (fuelVal != 0)
             {
-                Fuel = 0;
+                double tmp = Math.Round(telem.FuelLevel.Value/fuelVal, 2);
+                if (tmp > 99.9)
+                    Fuel = Convert.ToInt16(Math.Round(tmp));
+                else if(tmp > 9.99){
+                    Fuel = Convert.ToInt16(Math.Round(tmp * 10));
+                    Engine |= 1 << 1;
+                }
+                else
+                {
+                    Fuel = Convert.ToInt16(Math.Round(tmp * 100));
+                    Engine |= 2 << 1;
+                }
+
             }
             else
             {
