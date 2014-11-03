@@ -21,6 +21,7 @@ namespace iRacingSLI
         private configHandler cfg;
         private int ticker;
         private Boolean hasInit;
+        private int driverID;
         private String track;
         private String car;
         private double fuelEst;
@@ -46,6 +47,7 @@ namespace iRacingSLI
             cfg = new configHandler(console);
 
             wrapper.Start();
+            ticker = 39;
         }
 
         // Event handler called when the session info is updated
@@ -55,7 +57,7 @@ namespace iRacingSLI
             {
                 hasInit = true;
                 track = e.SessionInfo["WeekendInfo"]["TrackName"].Value;
-                int driverID = Convert.ToInt16(e.SessionInfo["DriverInfo"]["DriverCarIdx"].Value);
+                driverID = Convert.ToInt16(e.SessionInfo["DriverInfo"]["DriverCarIdx"].Value);
                 car = e.SessionInfo["DriverInfo"]["Drivers"]["CarIdx", driverID]["CarPath"].Value;
                 fuelEst = Convert.ToDouble(cfg.readSetting(track + "-" + car));
                 fuelLaps = Convert.ToInt32(cfg.readSetting(track + "-" + car + "-l"));
@@ -76,10 +78,19 @@ namespace iRacingSLI
             {
                 if (e.TelemetryInfo.Lap.Value > prevLap)
                 {
-                    prevLap = e.TelemetryInfo.Lap.Value;
                     estimateFuel(e.TelemetryInfo);
+                    prevLap = e.TelemetryInfo.Lap.Value;
                 }
+
+                if (wrapper.GetTelemetryValue<Boolean[]>("CarIdxOnPitRoad").Value[driverID])
+                    prevFuel = 0;
+
                 ticker = 0;
+            }
+            if (ticker % 5 == 0)
+            {
+                printTelemInfo(e.TelemetryInfo);
+                ticker += 1;
             }
             else
                 ticker += 1;
@@ -100,6 +111,35 @@ namespace iRacingSLI
             prevFuel = telem.FuelLevel.Value;
         }
 
+        private void printTelemInfo(TelemetryInfo telem)
+        {
+            telemTextBox.Clear();
+
+            String gr = "";
+            if (telem.Gear.Value == -1)
+                gr = "R";
+            else if (telem.Gear.Value == 0)
+                gr = "N";
+            else
+                gr = Convert.ToString(telem.Gear.Value);
+
+            telemPrint("Car: " + car);
+            telemPrint("Track: " + track);
+            telemPrint("");
+            telemPrint("Gear: " + gr);
+            telemPrint("RPM: " + Math.Round(telem.RPM.Value));
+            telemPrint("Speed: " + Math.Round(telem.Speed.Value * 2.23693629, 1) + "MPH");
+            telemPrint("Fuel PCT: " + telem.FuelLevelPct.Value * 100);
+            telemPrint("Fuel Lvl (L): " + telem.FuelLevel.Value);
+            telemPrint("Fuel Use Per Lap (L): " + Math.Round(fuelEst, 5));
+            telemPrint("Laps Left EST: " + Math.Round(telem.FuelLevel.Value / fuelEst, 2));
+            telemPrint("");
+            telemPrint("Lap: " + telem.Lap.Value);
+            telemPrint("prevFuelLvl: " + prevFuel);     
+            telemPrint("onPitRoad: " + wrapper.GetTelemetryValue<Boolean[]>("CarIdxOnPitRoad").Value[driverID]);
+
+        }
+
         private void StatusChanged()
         {
             if (wrapper.IsConnected)
@@ -113,6 +153,7 @@ namespace iRacingSLI
                 else
                 {
                     statusLabel.Text = "Status: disconnected.";
+                    telemTextBox.Clear();
                 }
             }
             else
@@ -120,10 +161,12 @@ namespace iRacingSLI
                 if (wrapper.IsRunning)
                 {
                     statusLabel.Text = "Status: disconnected, waiting for sim...";
+                    telemTextBox.Clear();
                 }
                 else
                 {
                     statusLabel.Text = "Status: disconnected";
+                    telemTextBox.Clear();
                 }
             }
         }
@@ -153,6 +196,12 @@ namespace iRacingSLI
             this.StatusChanged();
         }
 
+        private void closeButton_Click(object sender, EventArgs e)
+        {
+            wrapper.Stop();
+            Application.Exit();
+        }
+
         public void startConnection(String port)
         {
             //wrapper.Start();
@@ -175,5 +224,12 @@ namespace iRacingSLI
                 consoleTextBox.AppendText(str);
         }
 
+        public void telemPrint(String str)
+        {
+            if (telemTextBox.Text.Length > 0)
+                telemTextBox.AppendText("\r\n" + str);
+            else
+                telemTextBox.AppendText(str);
+        }
     }
 }
