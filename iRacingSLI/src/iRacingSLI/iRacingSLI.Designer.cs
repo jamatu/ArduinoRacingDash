@@ -167,6 +167,7 @@
             this.Controls.Add(this.startButton);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Name = "iRacingSLI";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "iRacing SLI";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.splitContainer1.Panel1.ResumeLayout(false);

@@ -32,6 +32,12 @@ namespace iRacingSLI
         public iRacingSLI()
         {
             InitializeComponent();
+            connection = new connectionHelper(console);
+            connection.setupConnection(startConnection, cboPorts);
+            cfg = new configHandler(console);
+
+            this.SetDesktopLocation(Convert.ToInt16(cfg.readSetting("Top", "100")), Convert.ToInt16(cfg.readSetting("Left", "100")));
+
             console("Start iRacingSDK Wrapper");
             wrapper = new SdkWrapper();
             wrapper.EventRaiseType = SdkWrapper.EventRaiseTypes.CurrentThread;
@@ -41,10 +47,6 @@ namespace iRacingSLI
             wrapper.Disconnected += wrapper_Disconnected;
             wrapper.SessionInfoUpdated += wrapper_SessionInfoUpdated;
             wrapper.TelemetryUpdated += wrapper_TelemetryUpdated;
-
-            connection = new connectionHelper(console);
-            connection.setupConnection(startConnection, cboPorts);
-            cfg = new configHandler(console);
 
             wrapper.Start();
             ticker = 39;
@@ -59,8 +61,8 @@ namespace iRacingSLI
                 track = e.SessionInfo["WeekendInfo"]["TrackName"].Value;
                 driverID = Convert.ToInt16(e.SessionInfo["DriverInfo"]["DriverCarIdx"].Value);
                 car = e.SessionInfo["DriverInfo"]["Drivers"]["CarIdx", driverID]["CarPath"].Value;
-                fuelEst = Convert.ToDouble(cfg.readSetting(track + "-" + car));
-                fuelLaps = Convert.ToInt32(cfg.readSetting(track + "-" + car + "-l"));
+                fuelEst = Convert.ToDouble(cfg.readSetting(track + "-" + car, "0"));
+                fuelLaps = Convert.ToInt32(cfg.readSetting(track + "-" + car + "-l", "0"));
             }
         }
 
@@ -199,6 +201,8 @@ namespace iRacingSLI
         private void closeButton_Click(object sender, EventArgs e)
         {
             wrapper.Stop();
+            cfg.writeSetting("Top", Convert.ToString(this.Location.X));
+            cfg.writeSetting("Left", Convert.ToString(this.Location.Y));
             Application.Exit();
         }
 

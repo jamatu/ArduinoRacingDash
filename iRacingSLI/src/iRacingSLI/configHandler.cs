@@ -16,7 +16,7 @@ namespace iRacingSLI
             console = callConsole;
         }
 
-        public String readSetting(String Key)
+        public String readSetting(String Key, String defaultValue)
         {
             try
             {
@@ -25,8 +25,8 @@ namespace iRacingSLI
                 if (result == "NotFound")
                 {
                     console("Key '" + Key + "' not found. Creating key....");
-                    writeSetting(Key, "0");
-                    result = "0";
+                    writeSetting(Key, defaultValue);
+                    result = defaultValue;
                 }
                 return result;
             }
