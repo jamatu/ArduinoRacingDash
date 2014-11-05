@@ -37,6 +37,8 @@ namespace iRacingSLI
             cfg = new configHandler(console);
 
             this.SetDesktopLocation(Convert.ToInt16(cfg.readSetting("Top", "100")), Convert.ToInt16(cfg.readSetting("Left", "100")));
+            this.cboSpdUnit.SelectedIndex = Convert.ToInt16(cfg.readSetting("spdUnit", "0"));
+            this.trkIntensity.Value = Convert.ToInt16(cfg.readSetting("intensity", "0"));
 
             console("Start iRacingSDK Wrapper");
             wrapper = new SdkWrapper();
@@ -73,7 +75,7 @@ namespace iRacingSLI
             {
                 dataPacket data = new dataPacket(console);
                 data.fetch(e.TelemetryInfo, wrapper.Sdk, fuelEst);
-                connection.send(data.compile(false, 0));
+                connection.send(data.compile(this.cboSpdUnit.SelectedIndex == 0, this.trkIntensity.Value));
             }
 
             if (ticker == 40)
@@ -108,7 +110,7 @@ namespace iRacingSLI
                 fuelEst = tmp / fuelLaps;
                 cfg.writeSetting(track + "-" + car, Convert.ToString(fuelEst));
                 cfg.writeSetting(track + "-" + car + "-l", Convert.ToString(fuelLaps));
-                console("Recalculate Fuel Usage per Lap to: " + fuelEst);
+                //console("Recalculate Fuel Usage per Lap to: " + fuelEst);
             }
             prevFuel = telem.FuelLevel.Value;
         }
@@ -130,15 +132,17 @@ namespace iRacingSLI
             telemPrint("");
             telemPrint("Gear: " + gr);
             telemPrint("RPM: " + Math.Round(telem.RPM.Value));
-            telemPrint("Speed: " + Math.Round(telem.Speed.Value * 2.23693629, 1) + "MPH");
+            if (this.cboSpdUnit.SelectedIndex == 0)
+                telemPrint("Speed: " + Math.Round(telem.Speed.Value * 2.23693629, 1) + "MPH");
+            else
+                telemPrint("Speed: " + Math.Round(telem.Speed.Value * (2.23693629 * 1.609344), 1) + "KPH");
+            telemPrint("Lap: " + telem.Lap.Value);
             telemPrint("Fuel PCT: " + telem.FuelLevelPct.Value * 100);
             telemPrint("Fuel Lvl (L): " + telem.FuelLevel.Value);
-            telemPrint("Fuel Use Per Lap (L): " + Math.Round(fuelEst, 5));
+            telemPrint("Fuel Use on Current Lap (L): " + Math.Round(fuelEst - telem.FuelLevel.Value));
+            telemPrint("Fuel Use Per Lap Avg(L): " + Math.Round(fuelEst, 5));
             telemPrint("Laps Left EST: " + Math.Round(telem.FuelLevel.Value / fuelEst, 2));
-            telemPrint("");
-            telemPrint("Lap: " + telem.Lap.Value);
-            telemPrint("prevFuelLvl: " + prevFuel);     
-            telemPrint("onPitRoad: " + wrapper.GetTelemetryValue<Boolean[]>("CarIdxOnPitRoad").Value[driverID]);
+            telemPrint("");                 
 
         }
 
@@ -204,6 +208,16 @@ namespace iRacingSLI
             cfg.writeSetting("Top", Convert.ToString(this.Location.X));
             cfg.writeSetting("Left", Convert.ToString(this.Location.Y));
             Application.Exit();
+        }
+
+        private void cboSpdUnit_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cfg.writeSetting("spdUnit", Convert.ToString(this.cboSpdUnit.SelectedIndex));
+        }
+
+        private void trkIntensity_ValueChanged(object sender, EventArgs e)
+        {
+            cfg.writeSetting("intensity", Convert.ToString(this.trkIntensity.Value));
         }
 
         public void startConnection(String port)

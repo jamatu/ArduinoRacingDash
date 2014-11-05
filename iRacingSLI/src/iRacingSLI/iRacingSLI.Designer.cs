@@ -32,16 +32,21 @@
             this.consoleTextBox = new System.Windows.Forms.TextBox();
             this.telemTextBox = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.lblSpdUnit = new System.Windows.Forms.Label();
+            this.cboSpdUnit = new System.Windows.Forms.ComboBox();
             this.consoleLabel = new System.Windows.Forms.Label();
             this.settingsLabel = new System.Windows.Forms.Label();
             this.telemetryLabel = new System.Windows.Forms.Label();
             this.statusLabel = new System.Windows.Forms.Label();
             this.cboPorts = new System.Windows.Forms.ComboBox();
             this.closeButton = new System.Windows.Forms.Button();
+            this.trkIntensity = new System.Windows.Forms.TrackBar();
+            this.lblIntensity = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trkIntensity)).BeginInit();
             this.SuspendLayout();
             // 
             // startButton
@@ -86,6 +91,10 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.lblIntensity);
+            this.splitContainer1.Panel1.Controls.Add(this.trkIntensity);
+            this.splitContainer1.Panel1.Controls.Add(this.lblSpdUnit);
+            this.splitContainer1.Panel1.Controls.Add(this.cboSpdUnit);
             this.splitContainer1.Panel1.Controls.Add(this.consoleLabel);
             this.splitContainer1.Panel1.Controls.Add(this.consoleTextBox);
             this.splitContainer1.Panel1.Controls.Add(this.settingsLabel);
@@ -97,6 +106,27 @@
             this.splitContainer1.Size = new System.Drawing.Size(807, 253);
             this.splitContainer1.SplitterDistance = 397;
             this.splitContainer1.TabIndex = 3;
+            // 
+            // lblSpdUnit
+            // 
+            this.lblSpdUnit.AutoSize = true;
+            this.lblSpdUnit.Location = new System.Drawing.Point(30, 28);
+            this.lblSpdUnit.Name = "lblSpdUnit";
+            this.lblSpdUnit.Size = new System.Drawing.Size(60, 13);
+            this.lblSpdUnit.TabIndex = 4;
+            this.lblSpdUnit.Text = "SpeedUnit:";
+            // 
+            // cboSpdUnit
+            // 
+            this.cboSpdUnit.FormattingEnabled = true;
+            this.cboSpdUnit.Items.AddRange(new object[] {
+            "MPH",
+            "KPH"});
+            this.cboSpdUnit.Location = new System.Drawing.Point(96, 25);
+            this.cboSpdUnit.Name = "cboSpdUnit";
+            this.cboSpdUnit.Size = new System.Drawing.Size(59, 21);
+            this.cboSpdUnit.TabIndex = 3;
+            this.cboSpdUnit.SelectedIndexChanged += new System.EventHandler(this.cboSpdUnit_SelectedIndexChanged);
             // 
             // consoleLabel
             // 
@@ -154,6 +184,24 @@
             this.closeButton.UseVisualStyleBackColor = true;
             this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
             // 
+            // trkIntensity
+            // 
+            this.trkIntensity.Location = new System.Drawing.Point(87, 61);
+            this.trkIntensity.Maximum = 7;
+            this.trkIntensity.Name = "trkIntensity";
+            this.trkIntensity.Size = new System.Drawing.Size(104, 45);
+            this.trkIntensity.TabIndex = 5;
+            this.trkIntensity.ValueChanged += new System.EventHandler(this.trkIntensity_ValueChanged);
+            // 
+            // lblIntensity
+            // 
+            this.lblIntensity.AutoSize = true;
+            this.lblIntensity.Location = new System.Drawing.Point(32, 66);
+            this.lblIntensity.Name = "lblIntensity";
+            this.lblIntensity.Size = new System.Drawing.Size(49, 13);
+            this.lblIntensity.TabIndex = 6;
+            this.lblIntensity.Text = "Intensity:";
+            // 
             // iRacingSLI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -176,6 +224,7 @@
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.trkIntensity)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -193,6 +242,10 @@
         private System.Windows.Forms.Label consoleLabel;
         private System.Windows.Forms.ComboBox cboPorts;
         private System.Windows.Forms.Button closeButton;
+        private System.Windows.Forms.Label lblSpdUnit;
+        private System.Windows.Forms.ComboBox cboSpdUnit;
+        private System.Windows.Forms.Label lblIntensity;
+        private System.Windows.Forms.TrackBar trkIntensity;
     }
 
 }
