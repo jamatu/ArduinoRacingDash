@@ -24,19 +24,14 @@ namespace iRacingSLI
         }
 
         public void fetch(TelemetryInfo telem, iRacingSDK sdk, double fuelVal)
-        {
-            Engine = 0;
-            DeltaNeg = 0;
-            
+        {           
             Gear = telem.Gear.Value;
             Speed = telem.Speed.Value;
             RPM = Convert.ToInt16(telem.RPM.Value);
             Shift = telem.ShiftIndicatorPct.Value;
-            Lap = telem.Lap.Value;
-            if (Lap > 199)
-                Lap = 199;
-            if (Convert.ToString(telem.EngineWarnings.Value).Contains("PitSpeedLimiter"))
-                Engine = 1;
+            Lap = telem.Lap.Value > 199 ? 199 : telem.Lap.Value;
+            Engine = (byte)(Convert.ToString(telem.EngineWarnings.Value).Contains("PitSpeedLimiter") ? 1 : 0);
+            DeltaNeg = 0;
 
             if (fuelVal != 0)
             {
@@ -66,17 +61,13 @@ namespace iRacingSLI
                 DeltaNeg = 1;
                 Delta = Delta * -1;
             }
-            if (Delta > 9999)
-                Delta = 9999;
+            Delta = Delta > 9999 ? 9999 : Delta;
         }
 
         public byte[] compile(Boolean spdUnit, int intensity){
 
-            int iSpeed = 0;
-            if (spdUnit)
-                iSpeed = Convert.ToInt16(Speed * (2.23693629 * 1.609344));
-            else
-                iSpeed = Convert.ToInt16(Speed * 2.23693629);
+            int iSpeed = spdUnit ? Convert.ToInt16(Speed * 2.23693629) : Convert.ToInt16(Speed * (2.23693629 * 1.609344));
+            int iShift = Convert.ToInt16(Math.Round((Shift * 100 * 16) / 100));
 
             serialdata[0] = 255;
             serialdata[1] = Convert.ToByte((DeltaNeg << 7) | (intensity << 4) | 0);
@@ -87,7 +78,7 @@ namespace iRacingSLI
             serialdata[6] = Convert.ToByte(RPM & 0x00FF);
             serialdata[7] = Convert.ToByte((Fuel >> 8) & 0x00FF);
             serialdata[8] = Convert.ToByte(Fuel & 0x00FF);
-            serialdata[9] = Convert.ToByte(Math.Round((Shift * 100 * 16) / 100));
+            serialdata[9] = Convert.ToByte(iShift);
             serialdata[10] = Engine;
             serialdata[11] = Convert.ToByte(Lap);
             serialdata[12] = 0;

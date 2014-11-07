@@ -46,9 +46,7 @@ namespace iRacingSLI
                     for (int j = 0; j < SerialPort.GetPortNames().Length; j++)
                     {
                         if (SerialPort.GetPortNames()[j].Equals(port))
-                        {
                             startPort = j;
-                        }
                     }
 
                     break;

@@ -132,14 +132,11 @@ namespace iRacingSLI
             telemPrint("");
             telemPrint("Gear: " + gr);
             telemPrint("RPM: " + Math.Round(telem.RPM.Value));
-            if (this.cboSpdUnit.SelectedIndex == 0)
-                telemPrint("Speed: " + Math.Round(telem.Speed.Value * 2.23693629, 1) + "MPH");
-            else
-                telemPrint("Speed: " + Math.Round(telem.Speed.Value * (2.23693629 * 1.609344), 1) + "KPH");
+            telemPrint("Speed: " + (this.cboSpdUnit.SelectedIndex == 0 ? Math.Round(telem.Speed.Value * 2.23693629, 1) + "MPH" : Math.Round(telem.Speed.Value * (2.23693629 * 1.609344), 1) + "KPH"));
             telemPrint("Lap: " + telem.Lap.Value);
             telemPrint("Fuel PCT: " + telem.FuelLevelPct.Value * 100);
             telemPrint("Fuel Lvl (L): " + telem.FuelLevel.Value);
-            telemPrint("Fuel Use on Current Lap (L): " + Math.Round(fuelEst - telem.FuelLevel.Value));
+            telemPrint("Fuel Use on Current Lap (L): " + ((this.prevFuel - telem.FuelLevel.Value)>0 ? Math.Round(this.prevFuel - telem.FuelLevel.Value, 3) : 0));
             telemPrint("Fuel Use Per Lap Avg(L): " + Math.Round(fuelEst, 5));
             telemPrint("Laps Left EST: " + Math.Round(telem.FuelLevel.Value / fuelEst, 2));
             telemPrint("");                 
@@ -190,6 +187,9 @@ namespace iRacingSLI
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             wrapper.Stop();
+            cfg.writeSetting("Top", Convert.ToString(this.Location.X));
+            cfg.writeSetting("Left", Convert.ToString(this.Location.Y));
+            Application.Exit();
         }
 
         private void startButton_Click(object sender, EventArgs e)
@@ -200,14 +200,6 @@ namespace iRacingSLI
                 startConnection(Regex.Match(cboPorts.Text, @"\(([^)]*)\)").Groups[1].Value);
 
             this.StatusChanged();
-        }
-
-        private void closeButton_Click(object sender, EventArgs e)
-        {
-            wrapper.Stop();
-            cfg.writeSetting("Top", Convert.ToString(this.Location.X));
-            cfg.writeSetting("Left", Convert.ToString(this.Location.Y));
-            Application.Exit();
         }
 
         private void cboSpdUnit_SelectedIndexChanged(object sender, EventArgs e)

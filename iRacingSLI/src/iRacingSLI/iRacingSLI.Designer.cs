@@ -32,6 +32,8 @@
             this.consoleTextBox = new System.Windows.Forms.TextBox();
             this.telemTextBox = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.lblIntensity = new System.Windows.Forms.Label();
+            this.trkIntensity = new System.Windows.Forms.TrackBar();
             this.lblSpdUnit = new System.Windows.Forms.Label();
             this.cboSpdUnit = new System.Windows.Forms.ComboBox();
             this.consoleLabel = new System.Windows.Forms.Label();
@@ -39,9 +41,6 @@
             this.telemetryLabel = new System.Windows.Forms.Label();
             this.statusLabel = new System.Windows.Forms.Label();
             this.cboPorts = new System.Windows.Forms.ComboBox();
-            this.closeButton = new System.Windows.Forms.Button();
-            this.trkIntensity = new System.Windows.Forms.TrackBar();
-            this.lblIntensity = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -106,6 +105,24 @@
             this.splitContainer1.Size = new System.Drawing.Size(807, 253);
             this.splitContainer1.SplitterDistance = 397;
             this.splitContainer1.TabIndex = 3;
+            // 
+            // lblIntensity
+            // 
+            this.lblIntensity.AutoSize = true;
+            this.lblIntensity.Location = new System.Drawing.Point(32, 66);
+            this.lblIntensity.Name = "lblIntensity";
+            this.lblIntensity.Size = new System.Drawing.Size(49, 13);
+            this.lblIntensity.TabIndex = 6;
+            this.lblIntensity.Text = "Intensity:";
+            // 
+            // trkIntensity
+            // 
+            this.trkIntensity.Location = new System.Drawing.Point(87, 61);
+            this.trkIntensity.Maximum = 7;
+            this.trkIntensity.Name = "trkIntensity";
+            this.trkIntensity.Size = new System.Drawing.Size(104, 45);
+            this.trkIntensity.TabIndex = 5;
+            this.trkIntensity.ValueChanged += new System.EventHandler(this.trkIntensity_ValueChanged);
             // 
             // lblSpdUnit
             // 
@@ -174,47 +191,22 @@
             this.cboPorts.Size = new System.Drawing.Size(200, 21);
             this.cboPorts.TabIndex = 5;
             // 
-            // closeButton
-            // 
-            this.closeButton.Location = new System.Drawing.Point(712, 12);
-            this.closeButton.Name = "closeButton";
-            this.closeButton.Size = new System.Drawing.Size(107, 23);
-            this.closeButton.TabIndex = 6;
-            this.closeButton.Text = "Close App";
-            this.closeButton.UseVisualStyleBackColor = true;
-            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
-            // 
-            // trkIntensity
-            // 
-            this.trkIntensity.Location = new System.Drawing.Point(87, 61);
-            this.trkIntensity.Maximum = 7;
-            this.trkIntensity.Name = "trkIntensity";
-            this.trkIntensity.Size = new System.Drawing.Size(104, 45);
-            this.trkIntensity.TabIndex = 5;
-            this.trkIntensity.ValueChanged += new System.EventHandler(this.trkIntensity_ValueChanged);
-            // 
-            // lblIntensity
-            // 
-            this.lblIntensity.AutoSize = true;
-            this.lblIntensity.Location = new System.Drawing.Point(32, 66);
-            this.lblIntensity.Name = "lblIntensity";
-            this.lblIntensity.Size = new System.Drawing.Size(49, 13);
-            this.lblIntensity.TabIndex = 6;
-            this.lblIntensity.Text = "Intensity:";
-            // 
             // iRacingSLI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(831, 307);
-            this.ControlBox = false;
-            this.Controls.Add(this.closeButton);
             this.Controls.Add(this.cboPorts);
             this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.startButton);
+            this.DoubleBuffered = true;
             this.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "iRacingSLI";
+            this.ShowIcon = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "iRacing SLI";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -241,7 +233,6 @@
         private System.Windows.Forms.Label statusLabel;
         private System.Windows.Forms.Label consoleLabel;
         private System.Windows.Forms.ComboBox cboPorts;
-        private System.Windows.Forms.Button closeButton;
         private System.Windows.Forms.Label lblSpdUnit;
         private System.Windows.Forms.ComboBox cboSpdUnit;
         private System.Windows.Forms.Label lblIntensity;
