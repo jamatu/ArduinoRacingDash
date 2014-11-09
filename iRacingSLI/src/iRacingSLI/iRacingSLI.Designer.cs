@@ -32,6 +32,13 @@
             this.consoleTextBox = new System.Windows.Forms.TextBox();
             this.telemTextBox = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblSens = new System.Windows.Forms.Label();
+            this.lblTol = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.trkSens = new System.Windows.Forms.TrackBar();
+            this.label1 = new System.Windows.Forms.Label();
+            this.trkTol = new System.Windows.Forms.TrackBar();
             this.lblIntensity = new System.Windows.Forms.Label();
             this.trkIntensity = new System.Windows.Forms.TrackBar();
             this.lblSpdUnit = new System.Windows.Forms.Label();
@@ -41,10 +48,14 @@
             this.telemetryLabel = new System.Windows.Forms.Label();
             this.statusLabel = new System.Windows.Forms.Label();
             this.cboPorts = new System.Windows.Forms.ComboBox();
+            this.chkBrake = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trkSens)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trkTol)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkIntensity)).BeginInit();
             this.SuspendLayout();
             // 
@@ -61,7 +72,7 @@
             // consoleTextBox
             // 
             this.consoleTextBox.BackColor = System.Drawing.SystemColors.Control;
-            this.consoleTextBox.Location = new System.Drawing.Point(0, 188);
+            this.consoleTextBox.Location = new System.Drawing.Point(0, 215);
             this.consoleTextBox.Multiline = true;
             this.consoleTextBox.Name = "consoleTextBox";
             this.consoleTextBox.ReadOnly = true;
@@ -77,7 +88,7 @@
             this.telemTextBox.Multiline = true;
             this.telemTextBox.Name = "telemTextBox";
             this.telemTextBox.ReadOnly = true;
-            this.telemTextBox.Size = new System.Drawing.Size(406, 240);
+            this.telemTextBox.Size = new System.Drawing.Size(406, 269);
             this.telemTextBox.TabIndex = 2;
             // 
             // splitContainer1
@@ -90,6 +101,8 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.chkBrake);
+            this.splitContainer1.Panel1.Controls.Add(this.groupBox1);
             this.splitContainer1.Panel1.Controls.Add(this.lblIntensity);
             this.splitContainer1.Panel1.Controls.Add(this.trkIntensity);
             this.splitContainer1.Panel1.Controls.Add(this.lblSpdUnit);
@@ -102,14 +115,89 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.telemTextBox);
             this.splitContainer1.Panel2.Controls.Add(this.telemetryLabel);
-            this.splitContainer1.Size = new System.Drawing.Size(807, 253);
+            this.splitContainer1.Size = new System.Drawing.Size(807, 282);
             this.splitContainer1.SplitterDistance = 397;
             this.splitContainer1.TabIndex = 3;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.lblSens);
+            this.groupBox1.Controls.Add(this.lblTol);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.trkSens);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.trkTol);
+            this.groupBox1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.groupBox1.Location = new System.Drawing.Point(51, 94);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(297, 100);
+            this.groupBox1.TabIndex = 13;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Brake settings";
+            // 
+            // lblSens
+            // 
+            this.lblSens.AutoSize = true;
+            this.lblSens.Location = new System.Drawing.Point(15, 74);
+            this.lblSens.Name = "lblSens";
+            this.lblSens.Size = new System.Drawing.Size(19, 13);
+            this.lblSens.TabIndex = 17;
+            this.lblSens.Text = "(3)";
+            // 
+            // lblTol
+            // 
+            this.lblTol.AutoSize = true;
+            this.lblTol.Location = new System.Drawing.Point(15, 37);
+            this.lblTol.Name = "lblTol";
+            this.lblTol.Size = new System.Drawing.Size(33, 13);
+            this.lblTol.TabIndex = 16;
+            this.lblTol.Text = "(30%)";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(15, 61);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(54, 13);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "Sensitivity";
+            // 
+            // trkSens
+            // 
+            this.trkSens.AutoSize = false;
+            this.trkSens.Location = new System.Drawing.Point(103, 57);
+            this.trkSens.Name = "trkSens";
+            this.trkSens.Size = new System.Drawing.Size(179, 37);
+            this.trkSens.TabIndex = 14;
+            this.trkSens.Tag = "";
+            this.trkSens.Value = 3;
+            this.trkSens.ValueChanged += new System.EventHandler(this.trkSens_ValueChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(15, 23);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(82, 13);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Break tolerance";
+            // 
+            // trkTol
+            // 
+            this.trkTol.Location = new System.Drawing.Point(103, 19);
+            this.trkTol.Maximum = 100;
+            this.trkTol.Name = "trkTol";
+            this.trkTol.Size = new System.Drawing.Size(179, 45);
+            this.trkTol.TabIndex = 12;
+            this.trkTol.Tag = "";
+            this.trkTol.TickFrequency = 10;
+            this.trkTol.Value = 30;
+            this.trkTol.ValueChanged += new System.EventHandler(this.trkTol_ValueChanged);
             // 
             // lblIntensity
             // 
             this.lblIntensity.AutoSize = true;
-            this.lblIntensity.Location = new System.Drawing.Point(32, 66);
+            this.lblIntensity.Location = new System.Drawing.Point(32, 57);
             this.lblIntensity.Name = "lblIntensity";
             this.lblIntensity.Size = new System.Drawing.Size(49, 13);
             this.lblIntensity.TabIndex = 6;
@@ -117,7 +205,7 @@
             // 
             // trkIntensity
             // 
-            this.trkIntensity.Location = new System.Drawing.Point(87, 61);
+            this.trkIntensity.Location = new System.Drawing.Point(87, 52);
             this.trkIntensity.Maximum = 7;
             this.trkIntensity.Name = "trkIntensity";
             this.trkIntensity.Size = new System.Drawing.Size(104, 45);
@@ -148,7 +236,7 @@
             // consoleLabel
             // 
             this.consoleLabel.AutoSize = true;
-            this.consoleLabel.Location = new System.Drawing.Point(0, 172);
+            this.consoleLabel.Location = new System.Drawing.Point(0, 199);
             this.consoleLabel.Name = "consoleLabel";
             this.consoleLabel.Size = new System.Drawing.Size(45, 13);
             this.consoleLabel.TabIndex = 2;
@@ -191,11 +279,21 @@
             this.cboPorts.Size = new System.Drawing.Size(200, 21);
             this.cboPorts.TabIndex = 5;
             // 
+            // chkBrake
+            // 
+            this.chkBrake.AutoSize = true;
+            this.chkBrake.Location = new System.Drawing.Point(30, 104);
+            this.chkBrake.Name = "chkBrake";
+            this.chkBrake.Size = new System.Drawing.Size(15, 14);
+            this.chkBrake.TabIndex = 14;
+            this.chkBrake.UseVisualStyleBackColor = true;
+            this.chkBrake.CheckedChanged += new System.EventHandler(this.chkBrake_CheckedChanged);
+            // 
             // iRacingSLI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(831, 307);
+            this.ClientSize = new System.Drawing.Size(831, 336);
             this.Controls.Add(this.cboPorts);
             this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.splitContainer1);
@@ -205,7 +303,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "iRacingSLI";
-            this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "iRacing SLI";
@@ -216,6 +313,10 @@
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trkSens)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trkTol)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkIntensity)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -237,6 +338,14 @@
         private System.Windows.Forms.ComboBox cboSpdUnit;
         private System.Windows.Forms.Label lblIntensity;
         private System.Windows.Forms.TrackBar trkIntensity;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label lblSens;
+        private System.Windows.Forms.Label lblTol;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TrackBar trkSens;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TrackBar trkTol;
+        private System.Windows.Forms.CheckBox chkBrake;
     }
 
 }

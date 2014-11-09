@@ -19,6 +19,7 @@ namespace iRacingSLI
         private SdkWrapper wrapper;
         private connectionHelper connection;
         private configHandler cfg;
+        private brakeVibe brk;
         private int ticker;
         private Boolean hasInit;
         private int driverID;
@@ -35,10 +36,17 @@ namespace iRacingSLI
             connection = new connectionHelper(console);
             connection.setupConnection(startConnection, cboPorts);
             cfg = new configHandler(console);
+            brk = new brakeVibe();
 
-            this.SetDesktopLocation(Convert.ToInt16(cfg.readSetting("Top", "100")), Convert.ToInt16(cfg.readSetting("Left", "100")));
+            int top = Convert.ToInt16(cfg.readSetting("Top", "100")) > -3000 ? Convert.ToInt16(cfg.readSetting("Top", "100")) : 100;
+            int left = Convert.ToInt16(cfg.readSetting("Left", "100")) > -3000 ? Convert.ToInt16(cfg.readSetting("Left", "100")) : 100;
+            this.SetDesktopLocation(top, left);
             this.cboSpdUnit.SelectedIndex = Convert.ToInt16(cfg.readSetting("spdUnit", "0"));
             this.trkIntensity.Value = Convert.ToInt16(cfg.readSetting("intensity", "0"));
+            this.chkBrake.Checked = Convert.ToBoolean(cfg.readSetting("brakeEnable", "false"));
+            this.groupBox1.Enabled = this.chkBrake.Checked;
+            this.trkTol.Value = Convert.ToInt16(cfg.readSetting("brakeTol", "35"));
+            this.trkSens.Value = Convert.ToInt16(cfg.readSetting("brakeSens", "3"));
 
             console("Start iRacingSDK Wrapper");
             wrapper = new SdkWrapper();
@@ -74,7 +82,7 @@ namespace iRacingSLI
             if (connection.isOpen())
             {
                 dataPacket data = new dataPacket(console);
-                data.fetch(e.TelemetryInfo, wrapper.Sdk, fuelEst);
+                data.fetch(e.TelemetryInfo, wrapper.Sdk, fuelEst, chkBrake.Checked ? brk.getBrakeVibe(e.TelemetryInfo, trkTol.Value, trkSens.Value) : 0);
                 connection.send(data.compile(this.cboSpdUnit.SelectedIndex == 0, this.trkIntensity.Value));
             }
 
@@ -210,6 +218,24 @@ namespace iRacingSLI
         private void trkIntensity_ValueChanged(object sender, EventArgs e)
         {
             cfg.writeSetting("intensity", Convert.ToString(this.trkIntensity.Value));
+        }
+
+        private void chkBrake_CheckedChanged(object sender, EventArgs e)
+        {
+            this.groupBox1.Enabled = this.chkBrake.Checked;
+            cfg.writeSetting("brakeEnable", Convert.ToString(chkBrake.Checked));
+        }
+
+        private void trkTol_ValueChanged(object sender, EventArgs e)
+        {
+            lblTol.Text = "(" + trkTol.Value + "%)";
+            cfg.writeSetting("brakeTol", Convert.ToString(trkTol.Value));
+        }
+
+        private void trkSens_ValueChanged(object sender, EventArgs e)
+        {
+            lblSens.Text = "(" + trkSens.Value + ")";
+            cfg.writeSetting("brakeSens", Convert.ToString(trkSens.Value));
         }
 
         public void startConnection(String port)

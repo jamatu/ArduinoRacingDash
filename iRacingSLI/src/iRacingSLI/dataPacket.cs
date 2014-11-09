@@ -23,7 +23,7 @@ namespace iRacingSLI
             console = callConsole;
         }
 
-        public void fetch(TelemetryInfo telem, iRacingSDK sdk, double fuelVal)
+        public void fetch(TelemetryInfo telem, iRacingSDK sdk, double fuelVal, int brake)
         {           
             Gear = telem.Gear.Value;
             Speed = telem.Speed.Value;
@@ -54,6 +54,7 @@ namespace iRacingSLI
                 Fuel = Convert.ToInt16(Math.Round(telem.FuelLevelPct.Value * 100));
                 Engine |= 3 << 1;
             }
+            Engine |= (byte)(brake << 3);
 
             Delta = (int)(Math.Round(Convert.ToSingle(sdk.GetData("LapDeltaToBestLap")) * 1000));
             if (Delta <= 0)

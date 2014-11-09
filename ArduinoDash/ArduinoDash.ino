@@ -19,11 +19,14 @@ TM1638 module1(DIO, CLK, STB);
 InvertedTM1638 module2(DIO, CLK, STB);
 TM1638* modules[2] = {&module1,&module2};
 
+const int outpin = 3;
+const int outpin2 = 4;
+
 byte bsettings, base, buttons, oldbuttons, page, oldpage, e2;
 int intensity, oldintensity, ledNum, pitLimiterColor, deltaneg, delta, blinkVal, lowFuel;
 byte gear, spd_h, spd_l, shift, rpm_h, rpm_l, delta_h, delta_l, engine, lap, invert, ledCRL, f1, f2;
 String fuel, boost;
-int spd;
+int spd, brk;
 word rpm;
 boolean changed, blinkrpm, ledOff;
 unsigned long milstart, milstart2 = 0;
@@ -62,6 +65,9 @@ void setup() {
           blinkVal = 16;
           EEPROM.write(3, blinkVal);
         } 
+
+        pinMode(outpin, OUTPUT);
+        pinMode(outpin2, OUTPUT);
 
         modules[invert]->setDisplayToString("EDT", 0, 0);
         modules[invert]->setDisplayDigit(pgm_read_byte_near(VERSION + 0), 4, 1);
@@ -126,6 +132,7 @@ void update(TM1638* module) {
                                 else
                                   engine = 0x00;
                                 lowFuel = (e2 & 7) >> 1;
+                                brk = (e2 & 15) >> 3;
                                 
                                 spd = (spd_h << 8) | spd_l;
 				rpm = (rpm_h << 8) | rpm_l;
@@ -136,6 +143,9 @@ void update(TM1638* module) {
                                   while (fuel.length() < 3)
                                     fuel = "0" + fuel;
                                 }
+                                
+                                digitalWrite(outpin, brk);
+                                digitalWrite(outpin2, brk);
                          }
                 }
 	}

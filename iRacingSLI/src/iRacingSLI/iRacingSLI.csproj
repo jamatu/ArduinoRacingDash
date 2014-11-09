@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="brakeVibe.cs" />
     <Compile Include="configHandler.cs" />
     <Compile Include="connectionHelper.cs" />
     <Compile Include="dataPacket.cs" />
