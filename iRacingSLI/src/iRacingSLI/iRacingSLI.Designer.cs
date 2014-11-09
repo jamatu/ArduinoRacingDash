@@ -49,6 +49,7 @@
             this.statusLabel = new System.Windows.Forms.Label();
             this.cboPorts = new System.Windows.Forms.ComboBox();
             this.chkBrake = new System.Windows.Forms.CheckBox();
+            this.chkTelem = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -113,6 +114,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.chkTelem);
             this.splitContainer1.Panel2.Controls.Add(this.telemTextBox);
             this.splitContainer1.Panel2.Controls.Add(this.telemetryLabel);
             this.splitContainer1.Size = new System.Drawing.Size(807, 282);
@@ -289,6 +291,16 @@
             this.chkBrake.UseVisualStyleBackColor = true;
             this.chkBrake.CheckedChanged += new System.EventHandler(this.chkBrake_CheckedChanged);
             // 
+            // chkTelem
+            // 
+            this.chkTelem.AutoSize = true;
+            this.chkTelem.Location = new System.Drawing.Point(388, 16);
+            this.chkTelem.Name = "chkTelem";
+            this.chkTelem.Size = new System.Drawing.Size(15, 14);
+            this.chkTelem.TabIndex = 15;
+            this.chkTelem.UseVisualStyleBackColor = true;
+            this.chkTelem.CheckedChanged += new System.EventHandler(this.chkTelem_CheckedChanged);
+            // 
             // iRacingSLI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -346,6 +358,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TrackBar trkTol;
         private System.Windows.Forms.CheckBox chkBrake;
+        private System.Windows.Forms.CheckBox chkTelem;
     }
 
 }

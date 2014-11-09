@@ -43,7 +43,8 @@ namespace iRacingSLI
             this.SetDesktopLocation(top, left);
             this.cboSpdUnit.SelectedIndex = Convert.ToInt16(cfg.readSetting("spdUnit", "0"));
             this.trkIntensity.Value = Convert.ToInt16(cfg.readSetting("intensity", "0"));
-            this.chkBrake.Checked = Convert.ToBoolean(cfg.readSetting("brakeEnable", "false"));
+            this.chkTelem.Checked = Convert.ToBoolean(cfg.readSetting("telemEnable", "True"));
+            this.chkBrake.Checked = Convert.ToBoolean(cfg.readSetting("brakeEnable", "False"));
             this.groupBox1.Enabled = this.chkBrake.Checked;
             this.trkTol.Value = Convert.ToInt16(cfg.readSetting("brakeTol", "35"));
             this.trkSens.Value = Convert.ToInt16(cfg.readSetting("brakeSens", "3"));
@@ -125,30 +126,31 @@ namespace iRacingSLI
 
         private void printTelemInfo(TelemetryInfo telem)
         {
-            telemTextBox.Clear();
+            if (this.chkTelem.Checked) {
+                telemTextBox.Clear();
 
-            String gr = "";
-            if (telem.Gear.Value == -1)
-                gr = "R";
-            else if (telem.Gear.Value == 0)
-                gr = "N";
-            else
-                gr = Convert.ToString(telem.Gear.Value);
+                String gr = "";
+                if (telem.Gear.Value == -1)
+                    gr = "R";
+                else if (telem.Gear.Value == 0)
+                    gr = "N";
+                else
+                    gr = Convert.ToString(telem.Gear.Value);
 
-            telemPrint("Car: " + car);
-            telemPrint("Track: " + track);
-            telemPrint("");
-            telemPrint("Gear: " + gr);
-            telemPrint("RPM: " + Math.Round(telem.RPM.Value));
-            telemPrint("Speed: " + (this.cboSpdUnit.SelectedIndex == 0 ? Math.Round(telem.Speed.Value * 2.23693629, 1) + "MPH" : Math.Round(telem.Speed.Value * (2.23693629 * 1.609344), 1) + "KPH"));
-            telemPrint("Lap: " + telem.Lap.Value);
-            telemPrint("Fuel PCT: " + telem.FuelLevelPct.Value * 100);
-            telemPrint("Fuel Lvl (L): " + telem.FuelLevel.Value);
-            telemPrint("Fuel Use on Current Lap (L): " + ((this.prevFuel - telem.FuelLevel.Value)>0 ? Math.Round(this.prevFuel - telem.FuelLevel.Value, 3) : 0));
-            telemPrint("Fuel Use Per Lap Avg(L): " + Math.Round(fuelEst, 5));
-            telemPrint("Laps Left EST: " + Math.Round(telem.FuelLevel.Value / fuelEst, 2));
-            telemPrint("");                 
-
+                telemPrint("Car: " + car);
+                telemPrint("Track: " + track);
+                telemPrint("");
+                telemPrint("Gear: " + gr);
+                telemPrint("RPM: " + Math.Round(telem.RPM.Value));
+                telemPrint("Speed: " + (this.cboSpdUnit.SelectedIndex == 0 ? Math.Round(telem.Speed.Value * 2.23693629, 1) + "MPH" : Math.Round(telem.Speed.Value * (2.23693629 * 1.609344), 1) + "KPH"));
+                telemPrint("Lap: " + telem.Lap.Value);
+                telemPrint("Fuel PCT: " + telem.FuelLevelPct.Value * 100);
+                telemPrint("Fuel Lvl (L): " + telem.FuelLevel.Value);
+                telemPrint("Fuel Use on Current Lap (L): " + ((this.prevFuel - telem.FuelLevel.Value)>0 ? Math.Round(this.prevFuel - telem.FuelLevel.Value, 3) : 0));
+                telemPrint("Fuel Use Per Lap Avg(L): " + Math.Round(fuelEst, 5));
+                telemPrint("Laps Left EST: " + Math.Round(telem.FuelLevel.Value / fuelEst, 2));
+                telemPrint("");   
+            }  
         }
 
         private void StatusChanged()
@@ -218,6 +220,12 @@ namespace iRacingSLI
         private void trkIntensity_ValueChanged(object sender, EventArgs e)
         {
             cfg.writeSetting("intensity", Convert.ToString(this.trkIntensity.Value));
+        }
+
+        private void chkTelem_CheckedChanged(object sender, EventArgs e)
+        {
+            cfg.writeSetting("telemEnable", Convert.ToString(chkTelem.Checked));
+            telemTextBox.Clear();
         }
 
         private void chkBrake_CheckedChanged(object sender, EventArgs e)
