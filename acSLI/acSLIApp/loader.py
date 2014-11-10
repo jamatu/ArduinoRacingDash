@@ -20,6 +20,10 @@ class ConfigLoader:
     cfgEnableUpdater = 1
     cfgLapOffset = 0
 
+    cfgBrakeEnable = 0
+    cfgBrakeTol = 30
+    cfgBrakeSens = 3
+
     def __init__(self):
         global instance, cfgPath
         instance = self
@@ -36,6 +40,10 @@ class ConfigLoader:
             self.cfgTickFreq = int(self.config.getOption("ADVANCED", "tickFrequency", True, self.cfgTickFreq))
             self.cfgEnableUpdater = int(self.config.getOption("ADVANCED", "enableUpdater", True, self.cfgEnableUpdater))
             self.cfgLapOffset = int(self.config.getOption("ADVANCED", "lapOffset", True, self.cfgLapOffset))
+
+            self.cfgBrakeEnable = int(self.config.getOption("BRAKE-VIBE", "enable", True, self.cfgBrakeEnable))
+            self.cfgBrakeTol = int(self.config.getOption("BRAKE-VIBE", "tolerance", True, self.cfgBrakeTol))
+            self.cfgBrakeSens = int(self.config.getOption("BRAKE-VIBE", "sensitivity", True, self.cfgBrakeSens))
 
         except Exception as e:
             Log.error("Loading Config File: %s" % e)

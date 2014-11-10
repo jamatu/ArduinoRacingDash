@@ -40,6 +40,9 @@ class App:
     prevLap = 0
     prevFuel = 0
 
+    old_ratio = 0
+    ratio = 0
+
     def __init__(self):
         self.simInfo = Info()
         self.appWindow = Window("acSLI", 250, 260).setBackgroundTexture("apps/python/acSLI/image/backMain.png")
@@ -150,6 +153,9 @@ class App:
         if delta > 9999:
             delta = 9999
 
+        if Config.instance.cfgBrakeEnable == 1:
+            engine |= (self.calcBrakeVibe() << 3)
+
         bSetting = int(deltaNeg << 7) | int(Config.instance.cfgIntensity << 4) | int(Config.instance.cfgStartPage)
 
         key = bytes([255, bSetting, ac_gear, (ac_speed >> 8 & 0x00FF), (ac_speed & 0x00FF), ((rpms >> 8) & 0x00FF),
@@ -168,6 +174,32 @@ class App:
             Log.log("Recalculate Fuel Usage Per Lap at %s in %s to %s" % (self.track, self.car, self.fuelEst))
 
         self.prevFuel = self.simInfo.physics.fuel
+
+    def calcBrakeVibe(self):
+            speed = ac.getCarState(0, acsys.CS.SpeedMS)
+            rpm = ac.getCarState(0, acsys.CS.RPM)
+            brake = ac.getCarState(0, acsys.CS.Brake)
+
+            #Calculates the ratio between the RPM and car speed
+            #If RPM is minimum and the car is still moving -> we probably have locked tires
+            if speed > 1:
+                self.old_ratio = self.ratio
+                self.ratio = rpm / speed
+            else:
+                self.old_ratio = 0
+                self.ratio = 0
+
+            #Check if we are pressing the brakes and the ratio is increasing (same RPM and less speed = higher ratio)
+            send = 0
+            thresh = Config.instance.cfgBrakeTol / 100
+            sens = 0.010 - (Config.instance.cfgBrakeSens / 1000)
+
+            if brake > thresh:
+                if (self.ratio > self.old_ratio) or (abs((self.ratio - self.old_ratio) / self.ratio) > sens):
+                    send = 1
+
+            return send
+
 
 
 def bFunc_SpeedUnits(dummy, variables):
