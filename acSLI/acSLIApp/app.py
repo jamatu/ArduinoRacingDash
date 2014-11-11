@@ -10,8 +10,8 @@ import acSLIApp.selector as Selector
 import acSLIApp.utils as Utils
 
 #################
-Version = "2.0.17"
-ArduinoVersion = "2.0.15"
+Version = "2.0.21"
+ArduinoVersion = "2.0.20"
 #################
 
 Log = Logger()
