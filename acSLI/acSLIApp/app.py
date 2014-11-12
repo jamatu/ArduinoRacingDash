@@ -10,7 +10,7 @@ import acSLIApp.selector as Selector
 import acSLIApp.utils as Utils
 
 #################
-Version = "2.0.21"
+Version = "2.0.22"
 ArduinoVersion = "2.0.20"
 #################
 
@@ -188,13 +188,14 @@ class App:
             else:
                 self.old_ratio = 0
                 self.ratio = 0
+                return 0
 
             #Check if we are pressing the brakes and the ratio is increasing (same RPM and less speed = higher ratio)
             send = 0
             thresh = Config.instance.cfgBrakeTol / 100
             sens = 0.010 - (Config.instance.cfgBrakeSens / 1000)
 
-            if brake > thresh:
+            if (brake > thresh) and (self.ratio > 0):
                 if (self.ratio > self.old_ratio) or (abs((self.ratio - self.old_ratio) / self.ratio) > sens):
                     send = 1
 
