@@ -33,9 +33,9 @@ namespace iRacingSLI
         public iRacingSLI()
         {
             InitializeComponent();
-            connection = new connectionHelper(console);
-            connection.setupConnection(startConnection, cboPorts);
             cfg = new configHandler(console);
+            connection = new connectionHelper(console);
+            connection.setupConnection(startConnection, cboPorts, cfg);
             brk = new brakeVibe();
 
             int top = Convert.ToInt16(cfg.readSetting("Top", "100")) > -3000 ? Convert.ToInt16(cfg.readSetting("Top", "100")) : 100;
@@ -212,6 +212,27 @@ namespace iRacingSLI
             this.StatusChanged();
         }
 
+        private void btnDefault_Click(object sender, EventArgs e)
+        {
+            if (Regex.Match(cboPorts.Text, @"\(([^)]*)\)").Groups[1].Value == cfg.readSetting("Port", "*"))
+                cfg.writeSetting("Port", "*");
+            else
+                cfg.writeSetting("Port", Regex.Match(cboPorts.Text, @"\(([^)]*)\)").Groups[1].Value);
+
+            if (Regex.Match(cboPorts.Text, @"\(([^)]*)\)").Groups[1].Value == cfg.readSetting("Port", "*"))
+                btnDefault.Text = "Remove Default";
+            else
+                btnDefault.Text = "Set Default";
+        }
+
+        private void cboPorts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Regex.Match(cboPorts.Text, @"\(([^)]*)\)").Groups[1].Value == cfg.readSetting("Port", "*"))
+                btnDefault.Text = "Remove Default";
+            else
+                btnDefault.Text = "Set Default";
+        }
+
         private void cboSpdUnit_SelectedIndexChanged(object sender, EventArgs e)
         {
             cfg.writeSetting("spdUnit", Convert.ToString(this.cboSpdUnit.SelectedIndex));
@@ -250,14 +271,16 @@ namespace iRacingSLI
         {
             //wrapper.Start();
             startButton.Text = "Stop";
+            cboPorts.Enabled = false;
             connection.openSerial(port);
         }
 
         public void stopConnection()
         {
             //wrapper.Stop();
-            startButton.Text = "Start";
             connection.closeSerial();
+            startButton.Text = "Start";
+            cboPorts.Enabled = true;
         }
 
         public void console(String str)
@@ -274,6 +297,11 @@ namespace iRacingSLI
                 telemTextBox.AppendText("\r\n" + str);
             else
                 telemTextBox.AppendText(str);
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -32,6 +32,7 @@
             this.consoleTextBox = new System.Windows.Forms.TextBox();
             this.telemTextBox = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.chkBrake = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblSens = new System.Windows.Forms.Label();
             this.lblTol = new System.Windows.Forms.Label();
@@ -45,11 +46,11 @@
             this.cboSpdUnit = new System.Windows.Forms.ComboBox();
             this.consoleLabel = new System.Windows.Forms.Label();
             this.settingsLabel = new System.Windows.Forms.Label();
+            this.chkTelem = new System.Windows.Forms.CheckBox();
             this.telemetryLabel = new System.Windows.Forms.Label();
             this.statusLabel = new System.Windows.Forms.Label();
             this.cboPorts = new System.Windows.Forms.ComboBox();
-            this.chkBrake = new System.Windows.Forms.CheckBox();
-            this.chkTelem = new System.Windows.Forms.CheckBox();
+            this.btnDefault = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -121,6 +122,16 @@
             this.splitContainer1.SplitterDistance = 397;
             this.splitContainer1.TabIndex = 3;
             // 
+            // chkBrake
+            // 
+            this.chkBrake.AutoSize = true;
+            this.chkBrake.Location = new System.Drawing.Point(30, 104);
+            this.chkBrake.Name = "chkBrake";
+            this.chkBrake.Size = new System.Drawing.Size(15, 14);
+            this.chkBrake.TabIndex = 14;
+            this.chkBrake.UseVisualStyleBackColor = true;
+            this.chkBrake.CheckedChanged += new System.EventHandler(this.chkBrake_CheckedChanged);
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.lblSens);
@@ -135,7 +146,8 @@
             this.groupBox1.Size = new System.Drawing.Size(297, 100);
             this.groupBox1.TabIndex = 13;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Brake settings";
+            this.groupBox1.Text = "Brake Vibe Settings";
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // lblSens
             // 
@@ -254,6 +266,16 @@
             this.settingsLabel.TabIndex = 1;
             this.settingsLabel.Text = "Settings";
             // 
+            // chkTelem
+            // 
+            this.chkTelem.AutoSize = true;
+            this.chkTelem.Location = new System.Drawing.Point(388, 16);
+            this.chkTelem.Name = "chkTelem";
+            this.chkTelem.Size = new System.Drawing.Size(15, 14);
+            this.chkTelem.TabIndex = 15;
+            this.chkTelem.UseVisualStyleBackColor = true;
+            this.chkTelem.CheckedChanged += new System.EventHandler(this.chkTelem_CheckedChanged);
+            // 
             // telemetryLabel
             // 
             this.telemetryLabel.AutoSize = true;
@@ -267,7 +289,7 @@
             // statusLabel
             // 
             this.statusLabel.AutoSize = true;
-            this.statusLabel.Location = new System.Drawing.Point(500, 17);
+            this.statusLabel.Location = new System.Drawing.Point(549, 17);
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(40, 13);
             this.statusLabel.TabIndex = 4;
@@ -280,32 +302,24 @@
             this.cboPorts.Name = "cboPorts";
             this.cboPorts.Size = new System.Drawing.Size(200, 21);
             this.cboPorts.TabIndex = 5;
+            this.cboPorts.SelectedIndexChanged += new System.EventHandler(this.cboPorts_SelectedIndexChanged);
             // 
-            // chkBrake
+            // btnDefault
             // 
-            this.chkBrake.AutoSize = true;
-            this.chkBrake.Location = new System.Drawing.Point(30, 104);
-            this.chkBrake.Name = "chkBrake";
-            this.chkBrake.Size = new System.Drawing.Size(15, 14);
-            this.chkBrake.TabIndex = 14;
-            this.chkBrake.UseVisualStyleBackColor = true;
-            this.chkBrake.CheckedChanged += new System.EventHandler(this.chkBrake_CheckedChanged);
-            // 
-            // chkTelem
-            // 
-            this.chkTelem.AutoSize = true;
-            this.chkTelem.Location = new System.Drawing.Point(388, 16);
-            this.chkTelem.Name = "chkTelem";
-            this.chkTelem.Size = new System.Drawing.Size(15, 14);
-            this.chkTelem.TabIndex = 15;
-            this.chkTelem.UseVisualStyleBackColor = true;
-            this.chkTelem.CheckedChanged += new System.EventHandler(this.chkTelem_CheckedChanged);
+            this.btnDefault.Location = new System.Drawing.Point(353, 11);
+            this.btnDefault.Name = "btnDefault";
+            this.btnDefault.Size = new System.Drawing.Size(93, 23);
+            this.btnDefault.TabIndex = 6;
+            this.btnDefault.Text = "Set Defualt";
+            this.btnDefault.UseVisualStyleBackColor = true;
+            this.btnDefault.Click += new System.EventHandler(this.btnDefault_Click);
             // 
             // iRacingSLI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(831, 336);
+            this.Controls.Add(this.btnDefault);
             this.Controls.Add(this.cboPorts);
             this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.splitContainer1);
@@ -317,7 +331,7 @@
             this.Name = "iRacingSLI";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "iRacing SLI";
+            this.Text = "iRacing SLI v2.0.22";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
@@ -359,6 +373,7 @@
         private System.Windows.Forms.TrackBar trkTol;
         private System.Windows.Forms.CheckBox chkBrake;
         private System.Windows.Forms.CheckBox chkTelem;
+        private System.Windows.Forms.Button btnDefault;
     }
 
 }

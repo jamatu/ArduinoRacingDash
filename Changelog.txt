@@ -1,6 +1,10 @@
 Arduino Racing Dash ChangeLog
 --------------------																																																									
 
+v2.0.22:
+	Added OPTIONAL brake vibration on brake lockup
+	Rewrote iRacing client 
+
 v2.0.17:
 	Fix Reliant Robin Incompatibility
 

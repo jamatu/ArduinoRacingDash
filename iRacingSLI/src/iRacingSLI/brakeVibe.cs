@@ -17,6 +17,7 @@ namespace iRacingSLI
             
         }
 
+        //Thanks to Stephane Turpin for locking algorithm
         public int getBrakeVibe(TelemetryInfo telem, int trkTol, int trkSens){
             speed = Convert.ToDouble(telem.Speed.Value);
             rpm = Convert.ToDouble(telem.RPM.Value);

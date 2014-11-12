@@ -1,1 +1,1 @@
-2.0.17|0|Fix Reliant Robin Incompatibility|/miIkZT
+2.0.22|1|Added OPTIONAL Brake Vibe. Rewrote iRacing Client|/miIkZT

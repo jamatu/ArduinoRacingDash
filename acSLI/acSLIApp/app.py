@@ -11,7 +11,7 @@ import acSLIApp.utils as Utils
 
 #################
 Version = "2.0.22"
-ArduinoVersion = "2.0.20"
+ArduinoVersion = "2.0.22"
 #################
 
 Log = Logger()
@@ -175,6 +175,7 @@ class App:
 
         self.prevFuel = self.simInfo.physics.fuel
 
+    #Thanks to Stephane Turpin for locking algorithm
     def calcBrakeVibe(self):
             speed = ac.getCarState(0, acsys.CS.SpeedMS)
             rpm = ac.getCarState(0, acsys.CS.RPM)

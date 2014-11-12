@@ -23,10 +23,11 @@ namespace iRacingSLI
             open = false;
         }
 
-        public void setupConnection(Action<String> startMethod, System.Windows.Forms.ComboBox cbo)
+        public void setupConnection(Action<String> startMethod, System.Windows.Forms.ComboBox cbo, configHandler cfg)
         {
             Object[] arrayPorts = null;
-            int startPort = 0;
+            int startPort = -1;
+            String setting = cfg.readSetting("Port", "*");
             using (var searcher = new ManagementObjectSearcher("SELECT * FROM WIN32_SerialPort"))
             {
                 string[] portnames = SerialPort.GetPortNames();
@@ -35,21 +36,43 @@ namespace iRacingSLI
             }
             cbo.Items.AddRange(arrayPorts);
 
-            for (int i = 0; i < cbo.Items.Count; i++)
+            if (setting != "*")
             {
-                if (cbo.Items[i].ToString().Contains("Arduino"))
+                for (int j = 0; j < SerialPort.GetPortNames().Length; j++)
                 {
-                    String port = Regex.Match(cbo.Items[i].ToString(), @"\(([^)]*)\)").Groups[1].Value;
-                    console("Found Arduino On Port: " + port);
-                    startMethod(port);
-
-                    for (int j = 0; j < SerialPort.GetPortNames().Length; j++)
+                    if (SerialPort.GetPortNames()[j].Equals(setting))
                     {
-                        if (SerialPort.GetPortNames()[j].Equals(port))
+                        try
+                        {
+                            startMethod(setting);
                             startPort = j;
+                        }
+                        catch{
+                            cfg.writeSetting("Port", "*");
+                        }
                     }
+                }
+                if (startPort == -1)
+                    cfg.writeSetting("Port", "*");   
+            }
+            else
+            {
+                for (int i = 0; i < cbo.Items.Count; i++)
+                {
+                    if (cbo.Items[i].ToString().Contains("Arduino"))
+                    {
+                        String port = Regex.Match(cbo.Items[i].ToString(), @"\(([^)]*)\)").Groups[1].Value;
+                        console("Found Arduino On Port: " + port);
+                        startMethod(port);
 
-                    break;
+                        for (int j = 0; j < SerialPort.GetPortNames().Length; j++)
+                        {
+                            if (SerialPort.GetPortNames()[j].Equals(port))
+                                startPort = j;
+                        }
+
+                        break;
+                    }
                 }
             }
             cbo.SelectedIndex = startPort;

@@ -73,16 +73,6 @@ Install -- iRacing
 *Profit
 
 
-iRacing - advanced
-------------------
-app can except start args to allow for easy starting without using any of the apps buttons (args order is NOT relivent, nor do you have to include irellivent args!!)
-
-example using a .bat file to launch the client, force a specific COM port (COM5), set speed units to KPH and set display intensity(brightness) to 2:
-##
-cd SLI Dash\iRacing Client
-start iRacingSLI.exe --Port COM5 --Unit MPH --Intensity 2
-##
-
 
 Shift Lights Modifications
 -----------------------------
