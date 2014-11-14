@@ -62,6 +62,7 @@ def _findConnect():
                             acSLI.App.ArduinoVersion)
                 instance.dispSelect = True
                 instance.dispSelectMsg = "No Response from Arduino"
+                instance.ser.close()
             else:
                 aV = re.findall(r"\'(.+?)\'", str(arduinoVer))[0]
                 if len(aV) < 4:
@@ -69,6 +70,7 @@ def _findConnect():
 
                 if "".join(acSLI.App.ArduinoVersion.split(".")) > aV:
                     instance.port = "----"
+                    instance.ser.close()
                     Log.warning("Arduino Code Outdated. Please Update Arduino to at least v" +
                                 acSLI.App.ArduinoVersion + " and then Restart AC")
                     Error.ErrorBox("Arduino Code Outdated. Please Update Arduino to at least v" +
