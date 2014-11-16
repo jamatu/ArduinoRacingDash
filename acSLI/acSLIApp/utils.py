@@ -9,9 +9,8 @@
 
 import os.path
 import configparser
-from acSLIApp.logger import Logger
+from acSLIApp.logger import Log
 
-Log = Logger()
 
 colours = {
     "white": [255, 255, 255],

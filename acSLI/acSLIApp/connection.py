@@ -1,14 +1,14 @@
 import serial as serial
 import serial.tools.list_ports
 import re
+import time
 import acSLI
 import threading
-from acSLIApp.logger import Logger
+from acSLIApp.logger import Log
 import acSLIApp.loader as Config
 import acSLIApp.error as Error
 import acSLIApp.utils as Utils
 
-Log = Logger()
 instance = 0
 
 
@@ -54,6 +54,8 @@ def _findConnect():
     if portValid:
         try:
             instance.ser = serial.Serial(instance.port, 9600, timeout=5)
+            time.sleep(2)
+            instance.ser.write(bytes([1]))
             arduinoVer = instance.ser.read(4)
 
             if str(arduinoVer) == "b''":

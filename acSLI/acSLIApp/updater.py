@@ -2,12 +2,11 @@ import os
 import http.client
 import re
 import threading
-from acSLIApp.logger import Logger
+from acSLIApp.logger import Log
 import acSLIApp.loader as Config
 from acSLIApp.components import Window, Label, Button
 import acSLIApp.utils as Utils
 
-Log = Logger()
 instance = 0
 progInstance = 0
 

@@ -2,7 +2,7 @@ import ac
 import acsys
 import acSLI
 from acSLIApp.components import Window, Label, Button, Spinner
-from acSLIApp.logger import Logger
+from acSLIApp.logger import Log
 from acSLIApp.sim_info import SimInfo as Info
 import acSLIApp.loader as Config
 import acSLIApp.connection as Connection
@@ -10,11 +10,9 @@ import acSLIApp.selector as Selector
 import acSLIApp.utils as Utils
 
 #################
-Version = "2.0.22"
-ArduinoVersion = "2.0.22"
+Version = "2.0.23"
+ArduinoVersion = "2.0.23"
 #################
-
-Log = Logger()
 
 
 class App:

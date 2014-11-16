@@ -1,7 +1,6 @@
-from acSLIApp.logger import Logger
+from acSLIApp.logger import Log
 from acSLIApp.utils import Config
 
-Log = Logger()
 instance = 0
 cfgPath = "apps/python/acSLI.cfg"
 

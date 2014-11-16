@@ -1,11 +1,10 @@
-from acSLIApp.logger import Logger
+from acSLIApp.logger import Log
 from acSLIApp.components import Window, Label, Button
 import serial.tools.list_ports
 import acSLIApp.loader as Config
 import acSLIApp.connection as Connection
 import acSLIApp.utils as Utils
 
-Log = Logger()
 instance = 0
 
 

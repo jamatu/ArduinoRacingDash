@@ -1,6 +1,5 @@
 import ac
-from acSLIApp.logger import Logger
-Log = Logger()
+from acSLIApp.logger import Log
 
 
 class Window:

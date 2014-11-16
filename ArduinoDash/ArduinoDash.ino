@@ -11,7 +11,7 @@
 #define STB 9
 
 
-PROGMEM  prog_uchar VERSION[] = {2, 0, 2, 2};
+PROGMEM  prog_uchar VERSION[] = {2, 0, 2, 3};
 PROGMEM  prog_uint16_t ledsLong[2][17] = {{0, 1, 3, 7, 15, 31, 63, 127, 255, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160}, {0, 1, 3, 7, 15, 31, 63, 127, 255, 1, 3, 7, 15, 31, 8223, 24607, 57375}};
 PROGMEM  prog_uint16_t ledsShort[2][9] = {{0, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160}, {0, 1, 3, 7, 15, 31, 8223, 24607, 57375}};
 
@@ -34,10 +34,10 @@ unsigned long milstart, milstart2 = 0;
 
 void setup() {
         Serial.begin(9600);
-        Serial.print(pgm_read_byte_near(VERSION + 0));
-        Serial.print(pgm_read_byte_near(VERSION + 1));
-        Serial.print(pgm_read_byte_near(VERSION + 2));
-        Serial.print(pgm_read_byte_near(VERSION + 3));
+        //Serial.print(pgm_read_byte_near(VERSION + 0));
+        //Serial.print(pgm_read_byte_near(VERSION + 1));
+        //Serial.print(pgm_read_byte_near(VERSION + 2));
+        //Serial.print(pgm_read_byte_near(VERSION + 3));
                   
         modules[0]->setupDisplay(true, 0);
         modules[1]->setupDisplay(true, 0);
@@ -97,6 +97,8 @@ void update(TM1638* module) {
                     Serial.print(pgm_read_byte_near(VERSION + 1));
                     Serial.print(pgm_read_byte_near(VERSION + 2));
                     Serial.print(pgm_read_byte_near(VERSION + 3));
+                    digitalWrite(outpin, LOW);
+                    digitalWrite(outpin2, LOW);  
                 } else if (Serial.available() > 15) {
 			if (Serial.read() == 255) {
                                 bsettings = Serial.read();                                
@@ -148,6 +150,7 @@ void update(TM1638* module) {
                                 digitalWrite(outpin2, brk);
                          }
                 }
+                Serial.flush();
 	}
 
 	buttons = module->getButtons();
