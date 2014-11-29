@@ -11,7 +11,7 @@
 #define STB 9
 
 
-PROGMEM  prog_uchar VERSION[] = {2, 0, 2, 3};
+PROGMEM  prog_uchar VERSION[] = {2, 0, 2, 4};
 PROGMEM  prog_uint16_t ledsLong[2][17] = {{0, 1, 3, 7, 15, 31, 63, 127, 255, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160}, {0, 1, 3, 7, 15, 31, 63, 127, 255, 1, 3, 7, 15, 31, 8223, 24607, 57375}};
 PROGMEM  prog_uint16_t ledsShort[2][9] = {{0, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160}, {0, 1, 3, 7, 15, 31, 8223, 24607, 57375}};
 
@@ -22,22 +22,18 @@ TM1638* modules[2] = {&module1,&module2};
 const int outpin = 3;
 const int outpin2 = 4;
 
-byte bsettings, base, buttons, oldbuttons, page, oldpage, e2;
+byte bsettings, base, buttons, oldbuttons, page, oldpage, e2, lapComplete;
 int intensity, oldintensity, ledNum, pitLimiterColor, deltaneg, delta, blinkVal, lowFuel;
 byte gear, spd_h, spd_l, shift, rpm_h, rpm_l, delta_h, delta_l, engine, lap, invert, ledCRL, f1, f2;
 String fuel, boost;
-int spd, brk;
+int spd, brk, mins, secs, milsecs;
 word rpm;
-boolean changed, blinkrpm, ledOff;
-unsigned long milstart, milstart2 = 0;
+boolean changed, blinkrpm, ledOff, lapDispSwitch;
+unsigned long milstart, milstart2 = 0, mils;
 
 
 void setup() {
         Serial.begin(9600);
-        //Serial.print(pgm_read_byte_near(VERSION + 0));
-        //Serial.print(pgm_read_byte_near(VERSION + 1));
-        //Serial.print(pgm_read_byte_near(VERSION + 2));
-        //Serial.print(pgm_read_byte_near(VERSION + 3));
                   
         modules[0]->setupDisplay(true, 0);
         modules[1]->setupDisplay(true, 0);
@@ -135,11 +131,17 @@ void update(TM1638* module) {
                                   engine = 0x00;
                                 lowFuel = (e2 & 7) >> 1;
                                 brk = (e2 & 15) >> 3;
+                                lapComplete = (e2 & 31) >> 4;
                                 
                                 spd = (spd_h << 8) | spd_l;
 				rpm = (rpm_h << 8) | rpm_l;
                                 fuel = String((f1 << 8) | f2);
-                                delta = (delta_h << 8)| delta_l;
+                                
+                                if (lapComplete == 1) {
+                                  mils = millis(); 
+                                } else {
+                                  delta = (delta_h << 8)| delta_l;
+                                }
                                 
                                 if (lowFuel < 3){
                                   while (fuel.length() < 3)
@@ -277,30 +279,38 @@ void update(TM1638* module) {
                         }
 
                         case 4:{ // button 3 - lap & gear & boost
-        
-                                if (gear == 0) 
-        			    module->setDisplayToString("R", 0, 1);
-                                else if (gear == 1)
-                                    module->setDisplayToString("N", 0, 1);
-                                else
-                                    module->setDisplayToString(String(gear - 1, DEC), 0, 1);
-                         
-                                //Fuel                              
-                                module->setDisplayToString(String("F"), 0, 4);
-                                if (lowFuel == 3){
-                                  module->setDisplayToString(String(fuel + "  "), 0, 5);                              
-                                }else if (lowFuel == 2){
-        			  module->setDisplayDigit(fuel.charAt(0), 5, 1);
-                                  module->setDisplayDigit(fuel.charAt(1), 6, 0);
-                                  module->setDisplayDigit(fuel.charAt(2), 7, 0);
-                                }else if (lowFuel == 1){
-                                  module->setDisplayDigit(fuel.charAt(0), 5, 0);
-                                  module->setDisplayDigit(fuel.charAt(1), 6, 1);
-                                  module->setDisplayDigit(fuel.charAt(2), 7, 0);
-                                }else{
-                                  module->setDisplayDigit(fuel.charAt(0), 5, 0);
-                                  module->setDisplayDigit(fuel.charAt(1), 6, 0);
-                                  module->setDisplayDigit(fuel.charAt(2), 7, 0);
+                                if ((millis() - mils) < 3000) {
+                                    if (!lapDispSwitch){
+                                      lapDispSwitch = true;
+                                      module->clearDisplay();
+                                    }
+                                    module->setDisplayToString("LAP", 0, 0);  
+                                } else {
+                                    if (lapDispSwitch){
+                                      lapDispSwitch = false;
+                                      module->clearDisplay();
+                                    }
+                                    mins = floor((millis() - mils)/60000);
+                                    secs = floor(((millis() - mils)-(mins*60000))/1000);
+                                    milsecs = floor((millis() - mils)-(mins*60000)-(secs*1000));
+                                    
+                                    String m = String(mins);
+                                    if (m.length() == 1)
+                                      m = "0" + m;
+                                    String s = String(secs);
+                                    if (s.length() == 1)
+                                      s = "0" + s;
+                                    String mi = String(milsecs);
+                                    if (mi.length() == 1)
+                                      mi = "0" + mi;
+                                    if (mi.length() == 2)
+                                      mi = "0" + mi;   
+                                    
+                                    module->setDisplayDigit(m.charAt(0), 1, 0);
+                                    module->setDisplayDigit(m.charAt(1), 2, 1);
+                                    module->setDisplayDigit(s.charAt(0), 3, 0);
+                                    module->setDisplayDigit(s.charAt(1), 4, 1);
+                                    module->setDisplayToString(mi, 0, 5);
                                 }
         
                                 break;

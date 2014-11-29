@@ -10,8 +10,8 @@ import acSLIApp.selector as Selector
 import acSLIApp.utils as Utils
 
 #################
-Version = "2.0.23"
-ArduinoVersion = "2.0.23"
+Version = "2.0.24"
+ArduinoVersion = "2.0.24"
 #################
 
 
@@ -37,6 +37,8 @@ class App:
     fuelEstLaps = 0
     prevLap = 0
     prevFuel = 0
+
+    sendTimeReset = 0
 
     old_ratio = 0
     ratio = 0
@@ -72,8 +74,12 @@ class App:
             elif Connection.instance.dispSelect:
                 Selector.instance.open(Connection.instance.dispSelectMsg)
                 Connection.instance.dispSelect = False
+        if self.simInfo.graphics.completedLaps > self.prevLap:
+            self.prevLap = self.simInfo.graphics.completedLaps
+            self.estimateFuel()
+            self.sendTimeReset = 1
 
-        if self.ticker == 60:
+        if self.ticker == (Config.instance.cfgTickFreq * 10):
             if self.fuelCache == 0 and self.simInfo.static.track != "" and self.simInfo.static.carModel != "":
                 Log.info("Load Fuel Usage Cache")
                 self.fuelCache = Utils.Config("apps/python/acSLI/user.cache")
@@ -81,10 +87,6 @@ class App:
                 self.car = self.simInfo.static.carModel
                 self.fuelEst = float(self.fuelCache.getOption(self.track, self.car, True, self.fuelEst))
                 self.fuelEstLaps = int(self.fuelCache.getOption(self.track, self.car + "_l", True, self.fuelEstLaps))
-
-            if self.simInfo.graphics.completedLaps > self.prevLap:
-                self.prevLap = self.simInfo.graphics.completedLaps
-                self.estimateFuel()
 
             self.ticker = 0
         else:
@@ -143,16 +145,25 @@ class App:
         if b1 < 0:
             b1 = 0
 
-        delta = ac.getCarState(0, acsys.CS.PerformanceMeter)
-        deltaNeg = 0
-        if delta <= 0:
-            deltaNeg = 1
-        delta = int(abs(delta) * 1000)
-        if delta > 9999:
-            delta = 9999
-
         if Config.instance.cfgBrakeEnable == 1:
             engine |= (self.calcBrakeVibe() << 3)
+
+
+        delta = 0
+        deltaNeg = 0
+        if self.sendTimeReset == 1:
+            self.sendTimeReset = 0
+            engine |= (1 << 4)
+            Log.info(self.simInfo.graphics.lastTime)
+        else:
+            delta = ac.getCarState(0, acsys.CS.PerformanceMeter)
+            deltaNeg = 0
+            if delta <= 0:
+                deltaNeg = 1
+            delta = int(abs(delta) * 1000)
+            if delta > 9999:
+                delta = 9999
+
 
         bSetting = int(deltaNeg << 7) | int(Config.instance.cfgIntensity << 4) | int(Config.instance.cfgStartPage)
 
