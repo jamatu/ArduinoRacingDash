@@ -10,8 +10,8 @@ import acSLIApp.selector as Selector
 import acSLIApp.utils as Utils
 
 #################
-Version = "2.0.50"
-ArduinoVersion = "2.0.50"
+Version = "2.0.51"
+ArduinoVersion = "2.0.51"
 #################
 
 
@@ -38,6 +38,7 @@ class App:
     prevLap = 0
     prevFuel = 0
 
+    sendTime = 0
     sendTimeReset = 0
 
     old_ratio = 0
@@ -76,8 +77,10 @@ class App:
                 Connection.instance.dispSelect = False
         if self.simInfo.graphics.completedLaps > self.prevLap:
             self.prevLap = self.simInfo.graphics.completedLaps
-            self.estimateFuel()
             self.sendTimeReset = 1
+            if self.prevFuel != 0:
+                self.sendTime = 1
+            self.estimateFuel()
 
         if self.ticker == (Config.instance.cfgTickFreq * 10):
             if self.fuelCache == 0 and self.simInfo.static.track != "" and self.simInfo.static.carModel != "":
@@ -152,9 +155,14 @@ class App:
         delta = 0
         deltaNeg = 0
         mins = 0
+        if self.prevFuel != 0:
+            engine |= (1 << 4)
         if self.sendTimeReset == 1:
             self.sendTimeReset = 0
-            engine |= (1 << 4)
+            engine |= (1 << 5)
+        if self.sendTime == 1:
+            self.sendTime = 0
+            engine |= (1 << 6)
             time = self.simInfo.graphics.lastTime.split(":")
             delta = (int(time[1]) << 9) | int(time[2])
             mins = int(time[0])

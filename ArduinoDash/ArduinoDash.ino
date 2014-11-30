@@ -11,7 +11,7 @@
 #define STB 9
 
 
-PROGMEM  prog_uchar VERSION[] = {2, 0, 5, 0};
+PROGMEM  prog_uchar VERSION[] = {2, 0, 5, 1};
 PROGMEM  prog_uint16_t ledsLong[2][17] = {{0, 1, 3, 7, 15, 31, 63, 127, 255, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160}, {0, 1, 3, 7, 15, 31, 63, 127, 255, 1, 3, 7, 15, 31, 8223, 24607, 57375}};
 PROGMEM  prog_uint16_t ledsShort[2][9] = {{0, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160}, {0, 1, 3, 7, 15, 31, 8223, 24607, 57375}};
 
@@ -22,14 +22,14 @@ TM1638* modules[2] = {&module1,&module2};
 const int outpin = 3;
 const int outpin2 = 4;
 
-byte bsettings, base, buttons, oldbuttons, page, oldpage, e2, lapComplete;
+byte bsettings, base, buttons, oldbuttons, page, oldpage, e2, lapComplete, lapActive, lapReset;
 int intensity, oldintensity, ledNum, pitLimiterColor, deltaneg, delta, blinkVal, lowFuel;
 byte gear, spd_h, spd_l, shift, rpm_h, rpm_l, delta_h, delta_l, tm, engine, lap, invert, ledCRL, f1, f2;
 String fuel, boost;
 int spd, brk, mins, secs, milsecs;
 word rpm;
-boolean changed, blinkrpm, ledOff;
-unsigned long milstart, milstart2 = 0, mils;
+boolean changed, blinkrpm, ledOff, firstLap;
+unsigned long milstart, milstart2 = 0, mils, cnctGap;
 
 
 void setup() {
@@ -86,6 +86,11 @@ void setup() {
 }
 
 void update(TM1638* module) {
+        if ((millis() - cnctGap) > 1000) {
+          digitalWrite(outpin, LOW);
+          digitalWrite(outpin2, LOW);  
+          lapActive = 0;  
+        }
 	if (Serial.available() > 0) {
                 if (Serial.available() == 1 ) {
                     bsettings = Serial.read();
@@ -95,6 +100,7 @@ void update(TM1638* module) {
                     Serial.print(pgm_read_byte_near(VERSION + 3));
                     digitalWrite(outpin, LOW);
                     digitalWrite(outpin2, LOW);  
+                    lapActive = 0;
                 } else if (Serial.available() > 17) {
 			if (Serial.read() == 255) {
                                 bsettings = Serial.read();                                
@@ -132,15 +138,24 @@ void update(TM1638* module) {
                                   engine = 0x00;
                                 lowFuel = (e2 & 7) >> 1;
                                 brk = (e2 & 15) >> 3;
-                                lapComplete = (e2 & 31) >> 4;
+                                lapActive = (e2 & 31) >> 4;
+                                lapReset = (e2 & 63) >> 5;
+                                lapComplete = (e2 & 127) >> 6;
                                 
                                 spd = (spd_h << 8) | spd_l;
 				rpm = (rpm_h << 8) | rpm_l;
                                 fuel = String((f1 << 8) | f2);
                                 
-                                if (lapComplete == 1) {
+                                if (lapReset == 1) {
                                   mils = millis(); 
-                                  
+                                  if (lapComplete == 0) {
+                                    firstLap = true;
+                                  } else {
+                                    firstLap = false;
+                                  }
+                                }
+                                
+                                if (lapComplete == 1) {                                 
                                   int tmp = (delta_h << 8)| delta_l;                                  
                                   milsecs = tmp & 1023;
                                   secs = (tmp & 65024) >> 9;
@@ -153,6 +168,8 @@ void update(TM1638* module) {
                                   while (fuel.length() < 3)
                                     fuel = "0" + fuel;
                                 }
+                                
+                                cnctGap = millis();
                                 
                                 digitalWrite(outpin, brk);
                                 digitalWrite(outpin2, brk);
@@ -180,7 +197,7 @@ void update(TM1638* module) {
                                 module->setDisplayToString("L G FUEL", 0, 0);
                                 break;
                             case 4: // button 3 - lap & gear & boost
-                                module->setDisplayToString(" G  FUEL", 0, 0);
+                                module->setDisplayToString("CURR LAP", 0, 0);
                                 break;
                             case 8: // button 4 - boost & gear & speed
                                 module->setDisplayToString("BST G SP", 0, 0);
@@ -285,11 +302,23 @@ void update(TM1638* module) {
                         }
 
                         case 4:{ // button 3 - lap & gear & boost
-                                if ((millis() - mils) > 3000) {  
-                                    mins = floor((millis() - mils)/60000);
-                                    secs = floor(((millis() - mils)-(mins*60000))/1000);
-                                    milsecs = floor((millis() - mils)-(mins*60000)-(secs*1000));    
+                                if (((millis() - mils) > 3000) || firstLap) {  
+                                    if (lapActive == 0){
+                                      mins = 0;
+                                      secs = 0;
+                                      milsecs = 0;  
+                                    } else {
+                                      mins = floor((millis() - mils)/60000);
+                                      secs = floor(((millis() - mils)-(mins*60000))/1000);
+                                      milsecs = floor((millis() - mils)-(mins*60000)-(secs*1000));
+                                    }    
                                 }    
+                                
+                                if (lapActive == 0){
+                                  mins = 0;
+                                  secs = 0;
+                                  milsecs = 0;  
+                                }
                                 
                                 if (mins > 99){
                                   mins = 99; 

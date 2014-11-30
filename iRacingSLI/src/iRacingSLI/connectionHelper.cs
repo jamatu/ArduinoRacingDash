@@ -93,7 +93,7 @@ namespace iRacingSLI
             SP.ReadTimeout = 5000;
             SP.Write(b, 0, 1);
 
-            String s = "";
+            /*String s = "";
             int t = 0;
             while (s.Length < 4 && t < 500)
             {
@@ -113,7 +113,7 @@ namespace iRacingSLI
                 return true;
             }
 
-            console("Handshake Sucsessful, Connected to Arduino Running: v" + s[0] + "." + s[1] + "." + s[2] + s[3]);
+            console("Handshake Sucsessful, Connected to Arduino Running: v" + s[0] + "." + s[1] + "." + s[2] + s[3]);}*/
             return false;
         }
 
