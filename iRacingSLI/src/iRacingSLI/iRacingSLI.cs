@@ -30,9 +30,13 @@ namespace iRacingSLI
         private int prevLap;
         private double prevFuel;
 
+        private String Version = "2.0.50";
+        private String ArduinoVersion = "2.0.50";
+
         public iRacingSLI()
         {
             InitializeComponent();
+            this.Text = "iRacing SLI v" + Version;
             cfg = new configHandler(console);
             connection = new connectionHelper(console);
             connection.setupConnection(startConnection, cboPorts, cfg);
@@ -87,8 +91,9 @@ namespace iRacingSLI
                 connection.send(data.compile(this.cboSpdUnit.SelectedIndex == 0, this.trkIntensity.Value));
             }
 
-            if (ticker == 40)
+            if (ticker % 5 == 0)
             {
+                printTelemInfo(e.TelemetryInfo);
                 if (e.TelemetryInfo.Lap.Value > prevLap)
                 {
                     estimateFuel(e.TelemetryInfo);
@@ -98,12 +103,12 @@ namespace iRacingSLI
                 if (wrapper.GetTelemetryValue<Boolean[]>("CarIdxOnPitRoad").Value[driverID])
                     prevFuel = 0;
 
-                ticker = 0;
-            }
-            if (ticker % 5 == 0)
-            {
-                printTelemInfo(e.TelemetryInfo);
                 ticker += 1;
+            }
+
+            if (ticker == 40)
+            {
+                ticker = 0;
             }
             else
                 ticker += 1;
@@ -272,7 +277,8 @@ namespace iRacingSLI
             //wrapper.Start();
             startButton.Text = "Stop";
             cboPorts.Enabled = false;
-            connection.openSerial(port);
+            if (connection.openSerial(port, ArduinoVersion))
+                stopConnection();
         }
 
         public void stopConnection()

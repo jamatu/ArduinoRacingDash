@@ -10,8 +10,8 @@ import acSLIApp.selector as Selector
 import acSLIApp.utils as Utils
 
 #################
-Version = "2.0.24"
-ArduinoVersion = "2.0.24"
+Version = "2.0.50"
+ArduinoVersion = "2.0.50"
 #################
 
 
@@ -151,10 +151,15 @@ class App:
 
         delta = 0
         deltaNeg = 0
+        mins = 0
         if self.sendTimeReset == 1:
             self.sendTimeReset = 0
             engine |= (1 << 4)
-            Log.info(self.simInfo.graphics.lastTime)
+            time = self.simInfo.graphics.lastTime.split(":")
+            delta = (int(time[1]) << 9) | int(time[2])
+            mins = int(time[0])
+            if mins > 99:
+                mins = 99
         else:
             delta = ac.getCarState(0, acsys.CS.PerformanceMeter)
             deltaNeg = 0
@@ -169,7 +174,7 @@ class App:
 
         key = bytes([255, bSetting, ac_gear, (ac_speed >> 8 & 0x00FF), (ac_speed & 0x00FF), ((rpms >> 8) & 0x00FF),
                      (rpms & 0x00FF), ((fuel >> 8) & 0x00FF), (fuel & 0x00FF), shift, engine, lapCount, b1,
-                     ((delta >> 8) & 0x00FF), (delta & 0x00FF)])
+                     ((delta >> 8) & 0x00FF), (delta & 0x00FF), mins])
         return key
 
     def estimateFuel(self):

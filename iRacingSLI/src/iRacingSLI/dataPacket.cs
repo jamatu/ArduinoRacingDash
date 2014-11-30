@@ -11,7 +11,7 @@ namespace iRacingSLI
     class dataPacket
     {
         Action<String> console;
-        byte[] serialdata = new byte[15];
+        byte[] serialdata = new byte[16];
 
         int Gear, RPM, Lap, Fuel, Delta, DeltaNeg;
         float Speed, Shift;
@@ -85,6 +85,7 @@ namespace iRacingSLI
             serialdata[12] = 0;
             serialdata[13] = Convert.ToByte((Delta >> 8) & 0x00FF);
             serialdata[14] = Convert.ToByte(Delta & 0x00FF);
+            serialdata[15] = 0;
             return serialdata;
         }
 

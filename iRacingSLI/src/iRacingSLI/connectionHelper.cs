@@ -78,7 +78,7 @@ namespace iRacingSLI
             cbo.SelectedIndex = startPort;
         }
 
-        public void openSerial(String port)
+        public Boolean openSerial(String port, String arduinoVer)
         {
             if (SP != null && SP.IsOpen)
                 SP.Close();
@@ -86,6 +86,35 @@ namespace iRacingSLI
             SP = new SerialPort(port, 9600, Parity.None, 8);
             SP.Open();
             open = true;
+            //handshake
+
+            byte[] b = new byte[4];
+            b[0] = 1;
+            SP.ReadTimeout = 5000;
+            SP.Write(b, 0, 1);
+
+            String s = "";
+            int t = 0;
+            while (s.Length < 4 && t < 500)
+            {
+                System.Threading.Thread.Sleep(10);
+                s = SP.ReadExisting();
+                t += 1;
+            }
+            String av = arduinoVer.Replace(@".", string.Empty);
+            if (av.Length < 4)
+            {
+                av = av[0] + av[1] + "0" + av[2];
+            }
+
+            if (s != null && Convert.ToInt16(s) < Convert.ToInt16(av))
+            {
+                console("Arduino Code Outdated. Please Update Arduino to at least v" + arduinoVer + " and then Retry");
+                return true;
+            }
+
+            console("Handshake Sucsessful, Connected to Arduino Running: v" + s[0] + "." + s[1] + "." + s[2] + s[3]);
+            return false;
         }
 
         public void closeSerial()
@@ -102,7 +131,7 @@ namespace iRacingSLI
 
         public void send(Byte[] data)
         {
-            SP.Write(data, 0, 15);
+            SP.Write(data, 0, 16);
         }
     }
 }
