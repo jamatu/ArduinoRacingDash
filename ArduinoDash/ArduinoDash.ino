@@ -297,8 +297,10 @@ void update(TM1638* module) {
                                 
                                 boolean longMins = true;
                                 String m = String(mins);
-                                if (m.length() == 1)
+                                if (m.length() == 1){
                                   longMins = false;
+                                  m = "0" + m;
+                                }
                                 String s = String(secs);
                                 if (s.length() == 1)
                                   s = "0" + s;
@@ -310,6 +312,8 @@ void update(TM1638* module) {
                                 
                                 if (longMins)
                                   module->setDisplayDigit(m.charAt(0), 1, 0);
+                                else
+                                  module->setDisplayToString(" ", 0, 1);
                                 module->setDisplayDigit(m.charAt(1), 2, 1);
                                 module->setDisplayDigit(s.charAt(0), 3, 0);
                                 module->setDisplayDigit(s.charAt(1), 4, 1);
