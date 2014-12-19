@@ -198,7 +198,7 @@ class App:
             self.fuelEst = tmp/self.fuelEstLaps
             self.fuelCache.updateOption(self.track, self.car, self.fuelEst, True)
             self.fuelCache.updateOption(self.track, self.car + "_l", self.fuelEstLaps, True)
-            Log.log("Recalculate Fuel Usage Per Lap at %s in %s to %s" % (self.track, self.car, self.fuelEst))
+            #Log.log("Recalculate Fuel Usage Per Lap at %s in %s to %s" % (self.track, self.car, self.fuelEst))
 
         self.prevFuel = self.simInfo.physics.fuel
 
