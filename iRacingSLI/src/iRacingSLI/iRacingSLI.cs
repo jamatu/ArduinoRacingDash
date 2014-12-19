@@ -89,11 +89,7 @@ namespace iRacingSLI
                 dataPacket data = new dataPacket(console);
                 data.fetch(e.TelemetryInfo, wrapper.Sdk, fuelEst, chkBrake.Checked ? brk.getBrakeVibe(e.TelemetryInfo, trkTol.Value, trkSens.Value) : 0);
                 connection.send(data.compile(this.cboSpdUnit.SelectedIndex == 0, this.trkIntensity.Value));
-            }
 
-            if (ticker % 5 == 0)
-            {
-                printTelemInfo(e.TelemetryInfo);
                 if (e.TelemetryInfo.Lap.Value > prevLap)
                 {
                     estimateFuel(e.TelemetryInfo);
@@ -102,7 +98,11 @@ namespace iRacingSLI
 
                 if (wrapper.GetTelemetryValue<Boolean[]>("CarIdxOnPitRoad").Value[driverID])
                     prevFuel = 0;
+            }
 
+            if (ticker % 5 == 0)
+            {
+                printTelemInfo(e.TelemetryInfo);              
                 ticker += 1;
             }
 

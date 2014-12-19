@@ -1,6 +1,12 @@
 Arduino Racing Dash ChangeLog
 --------------------																																																									
 
+v2.1:
+	Added current lap display on Page 3
+	Delta (page 6 only) now shows last laptime for 3 secs upon crossing start/finish line
+	Improved Handshaking Algorithm
+	
+
 v2.0.23:
 	Fix potential critical handshake bug
 	All logs are now in 1 file

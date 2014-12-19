@@ -11,7 +11,7 @@
 #define STB 9
 
 
-PROGMEM  prog_uchar VERSION[] = {2, 0, 5, 1};
+PROGMEM  prog_uchar VERSION[] = {2, 0, 5, 2};
 PROGMEM  prog_uint16_t ledsLong[2][17] = {{0, 1, 3, 7, 15, 31, 63, 127, 255, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160}, {0, 1, 3, 7, 15, 31, 63, 127, 255, 1, 3, 7, 15, 31, 8223, 24607, 57375}};
 PROGMEM  prog_uint16_t ledsShort[2][9] = {{0, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160}, {0, 1, 3, 7, 15, 31, 8223, 24607, 57375}};
 
@@ -83,6 +83,52 @@ void setup() {
         
         delay(3000);
         modules[invert]->clearDisplay();
+}
+
+void displayLapTime(TM1638* module){
+        if (lapActive == 0){
+          mins = 0;
+          secs = 0;
+          milsecs = 0;  
+        }
+        
+        if (mins > 99){
+          mins = 99; 
+        }
+        
+        boolean longMins = true;
+        String m = String(mins);
+        if (m.length() == 1){
+          longMins = false;
+          m = "0" + m;
+        }
+        String s = String(secs);
+        if (s.length() == 1)
+          s = "0" + s;
+        String mi = String(milsecs);
+        if (mi.length() == 1)
+          mi = "0" + mi;
+        if (mi.length() == 2)
+          mi = "0" + mi;   
+        
+        if (longMins)
+          module->setDisplayDigit(m.charAt(0), 1, 0);
+        else
+          module->setDisplayToString(" ", 0, 1);
+          
+        if (invert == 1){
+          module->setDisplayDigit(m.charAt(1), 2, 0);
+          module->setDisplayDigit(s.charAt(0), 3, 1);
+          module->setDisplayDigit(s.charAt(1), 4, 0);
+          module->setDisplayDigit(mi.charAt(0), 5, 1);
+          module->setDisplayDigit(mi.charAt(1), 6, 0);
+          module->setDisplayDigit(mi.charAt(2), 7, 0);  
+        }else{
+          module->setDisplayDigit(m.charAt(1), 2, 1);
+          module->setDisplayDigit(s.charAt(0), 3, 0);
+          module->setDisplayDigit(s.charAt(1), 4, 1);
+          module->setDisplayToString(mi, 0, 5);
+        }  
 }
 
 void update(TM1638* module) {
@@ -285,13 +331,23 @@ void update(TM1638* module) {
                                     fuel = "99";
                                   module->setDisplayToString(String("F" + fuel + " "), 0, 5);                              
                                 }else if (lowFuel == 2){
-        			  module->setDisplayDigit(fuel.charAt(0), 5, 1);
-                                  module->setDisplayDigit(fuel.charAt(1), 6, 0);
+                                  if (invert == 1) {
+                                    module->setDisplayDigit(fuel.charAt(0), 5, 0);
+                                    module->setDisplayDigit(fuel.charAt(1), 6, 1);
+                                  }else{
+                                    module->setDisplayDigit(fuel.charAt(0), 5, 1);
+                                    module->setDisplayDigit(fuel.charAt(1), 6, 0);  
+                                  }		  
                                   module->setDisplayDigit(fuel.charAt(2), 7, 0);
                                 }else if (lowFuel == 1){
                                   module->setDisplayDigit(fuel.charAt(0), 5, 0);
-                                  module->setDisplayDigit(fuel.charAt(1), 6, 1);
-                                  module->setDisplayDigit(fuel.charAt(2), 7, 0);
+                                  if (invert == 1) {
+                                    module->setDisplayDigit(fuel.charAt(1), 6, 0);
+                                    module->setDisplayDigit(fuel.charAt(2), 7, 1);
+                                  }else{
+                                    module->setDisplayDigit(fuel.charAt(1), 6, 1);
+                                    module->setDisplayDigit(fuel.charAt(2), 7, 0);
+                                  }
                                 }else{
                                   module->setDisplayDigit(fuel.charAt(0), 5, 0);
                                   module->setDisplayDigit(fuel.charAt(1), 6, 0);
@@ -301,53 +357,14 @@ void update(TM1638* module) {
                                 break;
                         }
 
-                        case 4:{ // button 3 - lap & gear & boost
+                        case 4:{ // button 3 - current lap
                                 if (((millis() - mils) > 3000) || firstLap) {  
-                                    if (lapActive == 0){
-                                      mins = 0;
-                                      secs = 0;
-                                      milsecs = 0;  
-                                    } else {
                                       mins = floor((millis() - mils)/60000);
                                       secs = floor(((millis() - mils)-(mins*60000))/1000);
-                                      milsecs = floor((millis() - mils)-(mins*60000)-(secs*1000));
-                                    }    
+                                      milsecs = floor((millis() - mils)-(mins*60000)-(secs*1000));  
                                 }    
                                 
-                                if (lapActive == 0){
-                                  mins = 0;
-                                  secs = 0;
-                                  milsecs = 0;  
-                                }
-                                
-                                if (mins > 99){
-                                  mins = 99; 
-                                }
-                                
-                                boolean longMins = true;
-                                String m = String(mins);
-                                if (m.length() == 1){
-                                  longMins = false;
-                                  m = "0" + m;
-                                }
-                                String s = String(secs);
-                                if (s.length() == 1)
-                                  s = "0" + s;
-                                String mi = String(milsecs);
-                                if (mi.length() == 1)
-                                  mi = "0" + mi;
-                                if (mi.length() == 2)
-                                  mi = "0" + mi;   
-                                
-                                if (longMins)
-                                  module->setDisplayDigit(m.charAt(0), 1, 0);
-                                else
-                                  module->setDisplayToString(" ", 0, 1);
-                                module->setDisplayDigit(m.charAt(1), 2, 1);
-                                module->setDisplayDigit(s.charAt(0), 3, 0);
-                                module->setDisplayDigit(s.charAt(1), 4, 1);
-                                module->setDisplayToString(mi, 0, 5);
-        
+                                displayLapTime(module);        
                                 break;
                         }
                         
@@ -422,42 +439,54 @@ void update(TM1638* module) {
                         } 
    
                         case 32:{ // gear & delta
-                                                                                       
-                                //Gear
-                                if (gear == 0) 
-        			    module->setDisplayToString("R", 0, 1);
-                                else if (gear == 1)
-                                    module->setDisplayToString("N", 0, 1);
-                                else
-                                    module->setDisplayToString(String(gear - 1, DEC), 0, 1);                               
-                                
-                                //Delta
-                                if (deltaneg == 1) {
-                                  module->setDisplayToString("-", 0, 3);
-                                } else {
-                                  module->clearDisplayDigit(3, false);
-                                }
-                                
-                                if (delta < 10){
-                                  module->setDisplayDigit(0, 4, 1);
-                                  module->setDisplayDigit(0, 5, 0);
-                                  module->setDisplayDigit(0, 6, 0);
-                                  module->setDisplayDigit(String(delta).charAt(0), 7, 0);
-                                } else if (delta < 100) {
-                                  module->setDisplayDigit(0, 4, 1);
-                                  module->setDisplayDigit(0, 5, 0);
-                                  module->setDisplayDigit(String(delta).charAt(0), 6, 0);
-                                  module->setDisplayDigit(String(delta).charAt(1), 7, 0);
-                                } else if (delta < 1000) {
-                                  module->setDisplayDigit(0, 4, 1);
-                                  module->setDisplayDigit(String(delta).charAt(0), 5, 0);
-                                  module->setDisplayDigit(String(delta).charAt(1), 6, 0);
-                                  module->setDisplayDigit(String(delta).charAt(2), 7, 0);
-                                } else {
-                                  module->setDisplayDigit(String(delta).charAt(0), 4, 1);
-                                  module->setDisplayDigit(String(delta).charAt(1), 5, 0);
-                                  module->setDisplayDigit(String(delta).charAt(2), 6, 0);
-                                  module->setDisplayDigit(String(delta).charAt(3), 7, 0);
+                                if (((millis() - mils) < 3001) && (!firstLap) && (lapActive != 0)) {   
+                                  module->setDisplayToString(" ", 0, 0);
+                                  displayLapTime(module); 
+                                }else{                                                       
+                                  //Gear
+                                  if (gear == 0) 
+          			    module->setDisplayToString("R", 0, 1);
+                                  else if (gear == 1)
+                                      module->setDisplayToString("N", 0, 1);
+                                  else
+                                      module->setDisplayToString(String(gear - 1, DEC), 0, 1);       
+                                 module->setDisplayToString(" ", 0, 2);                               
+                                  
+                                  //Delta
+                                  if (deltaneg == 1) {
+                                    module->setDisplayToString("-", 0, 3);
+                                  } else {
+                                    module->clearDisplayDigit(3, false);
+                                  }
+                                  
+                                  int d1 = 1;
+                                  int d2 = 0;
+                                  if (invert == 1){
+                                    d1 = 0;
+                                    d2 = 1;
+                                  }
+                                  
+                                  if (delta < 10){
+                                    module->setDisplayDigit(0, 4, d1);
+                                    module->setDisplayDigit(0, 5, d2);
+                                    module->setDisplayDigit(0, 6, 0);
+                                    module->setDisplayDigit(String(delta).charAt(0), 7, 0);
+                                  } else if (delta < 100) {
+                                    module->setDisplayDigit(0, 4, d1);
+                                    module->setDisplayDigit(0, 5, d2);
+                                    module->setDisplayDigit(String(delta).charAt(0), 6, 0);
+                                    module->setDisplayDigit(String(delta).charAt(1), 7, 0);
+                                  } else if (delta < 1000) {
+                                    module->setDisplayDigit(0, 4, d1);
+                                    module->setDisplayDigit(String(delta).charAt(0), 5, d2);
+                                    module->setDisplayDigit(String(delta).charAt(1), 6, 0);
+                                    module->setDisplayDigit(String(delta).charAt(2), 7, 0);
+                                  } else {
+                                    module->setDisplayDigit(String(delta).charAt(0), 4, d1);
+                                    module->setDisplayDigit(String(delta).charAt(1), 5, d2);
+                                    module->setDisplayDigit(String(delta).charAt(2), 6, 0);
+                                    module->setDisplayDigit(String(delta).charAt(3), 7, 0);
+                                  }
                                 }
                                 break;
                         }   
@@ -491,20 +520,27 @@ void update(TM1638* module) {
                                   module->clearDisplayDigit(5, false);
                                 }
                                 
+                                int d1 = 1;
+                                int d2 = 0;
+                                if (invert == 1){
+                                  d1 = 0;
+                                  d2 = 1;
+                                }
+                                
                                 if (String(delta).length() == 1) { 
                                   delta = 0;
                                 } else if (String(delta).charAt(String(delta).length()-2) >= 53 && delta < 9949){
                                    delta = delta + 50; 
                                 }
                                 if (delta < 100){
-                                  module->setDisplayDigit(0, 6, 1);
-                                  module->setDisplayDigit(0, 7, 0);
+                                  module->setDisplayDigit(0, 6, d1);
+                                  module->setDisplayDigit(0, 7, d2);
                                 } else if (delta < 1000) {
-                                  module->setDisplayDigit(0, 6, 1);
-                                  module->setDisplayDigit(String(delta, DEC).charAt(0), 7, 0);
+                                  module->setDisplayDigit(0, 6, d1);
+                                  module->setDisplayDigit(String(delta, DEC).charAt(0), 7, d2);
                                 } else {
-                                  module->setDisplayDigit(String(delta, DEC).charAt(0), 6, 1);
-                                  module->setDisplayDigit(String(delta, DEC).charAt(1), 7, 0);
+                                  module->setDisplayDigit(String(delta, DEC).charAt(0), 6, d1);
+                                  module->setDisplayDigit(String(delta, DEC).charAt(1), 7, d2);
                                 }
                                 break;
                         }                  
