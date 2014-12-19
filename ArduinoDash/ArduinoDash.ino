@@ -211,7 +211,7 @@ void update(TM1638* module) {
                                 digitalWrite(outpin, brk);
                                 digitalWrite(outpin2, brk);
                          }
-                } else if (Serial.available() > 1) {
+                } else if ((Serial.available() > 1) && (Serial.available() < 4)) {
                     bsettings = Serial.read();
                     Serial.print(".");
                     Serial.print(pgm_read_byte_near(VERSION + 0));
@@ -220,7 +220,6 @@ void update(TM1638* module) {
                     Serial.print(pgm_read_byte_near(VERSION + 3));
                     digitalWrite(outpin, LOW);
                     digitalWrite(outpin2, LOW);  
-                    lapActive = 0;
                 }                
 	}
 

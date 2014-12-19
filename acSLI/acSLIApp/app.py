@@ -7,6 +7,7 @@ from acSLIApp.sim_info import SimInfo as Info
 import acSLIApp.loader as Config
 import acSLIApp.connection as Connection
 import acSLIApp.selector as Selector
+import acSLIApp.advSettings as AdvSet
 import acSLIApp.utils as Utils
 
 #################
@@ -62,6 +63,7 @@ class App:
     def onStart(self):
         global Version
         Selector.Selector()
+        AdvSet.AdvSet()
         Connection.Connection()
         Connection.findConnection().start()
         self.ticker = 0

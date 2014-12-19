@@ -55,7 +55,7 @@ def _findConnect():
         try:
             instance.ser = serial.Serial(instance.port, 9600, timeout=5)
             time.sleep(2)
-            instance.ser.write(bytes([1]))
+            instance.ser.write(bytes([1, 1]))
             arduinoVer = instance.ser.read(5)
 
             if str(arduinoVer) == "b''":
