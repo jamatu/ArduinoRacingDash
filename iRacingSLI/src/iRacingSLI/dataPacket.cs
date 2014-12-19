@@ -32,6 +32,7 @@ namespace iRacingSLI
             Lap = telem.Lap.Value > 199 ? 199 : telem.Lap.Value;
             Engine = (byte)(Convert.ToString(telem.EngineWarnings.Value).Contains("PitSpeedLimiter") ? 1 : 0);
             DeltaNeg = 0;
+            Mins = 0;
 
             if (fuelVal != 0)
             {
@@ -65,10 +66,13 @@ namespace iRacingSLI
             {
                 Engine |= (1 << 6);
                 float l = Convert.ToSingle(sdk.GetData("LapLastLapTime"));
-                Mins = Convert.ToInt16(Math.Floor(l / 60));
-                int Secs = Convert.ToInt16(Math.Floor(l - (Mins*60)));
-                int mSecs = Convert.ToInt16(Math.Floor((l - (Secs + (Mins * 60)))*1000));
-                Delta = (Secs << 9) | mSecs;
+                if (l > 0)
+                {
+                    Mins = Convert.ToInt16(Math.Floor(l / 60));
+                    int Secs = Convert.ToInt16(Math.Floor(l - (Mins * 60)));
+                    int mSecs = Convert.ToInt16(Math.Floor((l - (Secs + (Mins * 60))) * 1000));
+                    Delta = (Secs << 9) | mSecs;
+                }
             }
             else
             {

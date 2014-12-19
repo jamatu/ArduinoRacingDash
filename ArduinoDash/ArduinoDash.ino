@@ -11,7 +11,7 @@
 #define STB 9
 
 
-PROGMEM  prog_uchar VERSION[] = {2, 1, 0, 0};
+PROGMEM  prog_uchar VERSION[] = {2, 1, 0, 1};
 PROGMEM  prog_uint16_t ledsLong[2][17] = {{0, 1, 3, 7, 15, 31, 63, 127, 255, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160}, {0, 1, 3, 7, 15, 31, 63, 127, 255, 1, 3, 7, 15, 31, 8223, 24607, 57375}};
 PROGMEM  prog_uint16_t ledsShort[2][9] = {{0, 256, 768, 1792, 3840, 7936, 7968, 8032, 8160}, {0, 1, 3, 7, 15, 31, 8223, 24607, 57375}};
 
@@ -29,7 +29,7 @@ String fuel, boost;
 int spd, brk, mins, secs, milsecs;
 word rpm;
 boolean changed, blinkrpm, ledOff, firstLap;
-unsigned long milstart, milstart2 = 0, mils, cnctGap;
+unsigned long milstart, milstart2 = 0, mils, lapmils, cnctGap;
 
 
 void setup() {
@@ -185,14 +185,10 @@ void update(TM1638* module) {
                                 
                                 if (lapReset == 1) {
                                   mils = millis(); 
-                                  if (lapComplete == 0) {
-                                    firstLap = true;
-                                  } else {
-                                    firstLap = false;
-                                  }
                                 }
                                 
-                                if (lapComplete == 1) {                                 
+                                if (lapComplete == 1) {
+                                  lapmils = millis();                                  
                                   int tmp = (delta_h << 8)| delta_l;                                  
                                   milsecs = tmp & 1023;
                                   secs = (tmp & 65024) >> 9;
@@ -357,7 +353,7 @@ void update(TM1638* module) {
                         }
 
                         case 4:{ // button 3 - current lap
-                                if (((millis() - mils) > 3000) || firstLap) {  
+                                if (((millis() - lapmils) > 3000)/* || firstLap*/) {  
                                       mins = floor((millis() - mils)/60000);
                                       secs = floor(((millis() - mils)-(mins*60000))/1000);
                                       milsecs = floor((millis() - mils)-(mins*60000)-(secs*1000));  
@@ -438,7 +434,7 @@ void update(TM1638* module) {
                         } 
    
                         case 32:{ // gear & delta
-                                if (((millis() - mils) < 3001) && (!firstLap) && (lapActive != 0)) {   
+                                if (((millis() - lapmils) < 3001) && (lapActive != 0)) {   
                                   module->setDisplayToString(" ", 0, 0);
                                   displayLapTime(module); 
                                 }else{                                                       

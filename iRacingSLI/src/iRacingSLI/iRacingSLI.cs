@@ -29,9 +29,12 @@ namespace iRacingSLI
         private int fuelLaps;
         private int prevLap;
         private double prevFuel;
+        private float prevLapTime;
+        private Boolean sendTime;
+        private Boolean sendTimeReset;
 
-        private String Version = "2.1.0";
-        private String ArduinoVersion = "2.1.0";
+        private String Version = "2.1.1";
+        private String ArduinoVersion = "2.1.1";
 
         public iRacingSLI()
         {
@@ -65,6 +68,7 @@ namespace iRacingSLI
 
             wrapper.Start();
             ticker = 39;
+            prevLapTime = 0;
         }
 
         // Event handler called when the session info is updated
@@ -86,24 +90,32 @@ namespace iRacingSLI
         {
             if (connection.isOpen())
             {
-                Boolean sendTime = false;
-                Boolean sendTimeReset = false;
+                dataPacket data = new dataPacket(console);
+                data.fetch(e.TelemetryInfo, wrapper.Sdk, fuelEst, chkBrake.Checked ? brk.getBrakeVibe(e.TelemetryInfo, trkTol.Value, trkSens.Value) : 0,
+                    sendTimeReset, sendTime, prevFuel);
+                connection.send(data.compile(this.cboSpdUnit.SelectedIndex == 0, this.trkIntensity.Value));
+                sendTime = false;
+                sendTimeReset = false;
+
+                float ll = Convert.ToSingle(wrapper.Sdk.GetData("LapLastLapTime"));
+
+                if (ll != prevLapTime)
+                {
+                    prevLapTime = ll;
+                    if (prevFuel != 0 && ll > 0)
+                        sendTime = true;
+                }
+
                 if (e.TelemetryInfo.Lap.Value > prevLap)
                 {
-                    sendTimeReset = true;
-                    if (prevFuel != 0)
-                        sendTime = true;
+                    prevLapTime = ll;
+                    sendTimeReset = true;                    
                     estimateFuel(e.TelemetryInfo);
                     prevLap = e.TelemetryInfo.Lap.Value;
                 }
 
                 if (wrapper.GetTelemetryValue<Boolean[]>("CarIdxOnPitRoad").Value[driverID])
                     prevFuel = 0;
-
-                dataPacket data = new dataPacket(console);
-                data.fetch(e.TelemetryInfo, wrapper.Sdk, fuelEst, chkBrake.Checked ? brk.getBrakeVibe(e.TelemetryInfo, trkTol.Value, trkSens.Value) : 0, 
-                    sendTimeReset, sendTime, prevFuel);
-                connection.send(data.compile(this.cboSpdUnit.SelectedIndex == 0, this.trkIntensity.Value));
             }
 
             if (ticker % 5 == 0)
