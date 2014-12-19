@@ -6,6 +6,8 @@ v2.1:
 	Delta (page 6 only) now shows last laptime for 3 secs upon crossing start/finish line
 	Improved Handshaking Algorithm + implemented in iRacing
 	Fixed small memory leak in AC app
+	Fixed version handling on handshaker/updater for 3 digit versions
+	Fixed inverted mode bugs
 	
 
 v2.0.23:
