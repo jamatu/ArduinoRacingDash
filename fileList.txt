@@ -1,5 +1,6 @@
 acSLI.py
 acSLIApp/app.py
+acSLiApp/advSettings.py
 acSLIApp/components.py
 acSLIApp/connection.py
 acSLIApp/error.py

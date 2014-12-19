@@ -10,8 +10,8 @@ import acSLIApp.selector as Selector
 import acSLIApp.utils as Utils
 
 #################
-Version = "2.0.51"
-ArduinoVersion = "2.0.51"
+Version = "2.0.52"
+ArduinoVersion = "2.0.52"
 #################
 
 
@@ -75,12 +75,15 @@ class App:
             elif Connection.instance.dispSelect:
                 Selector.instance.open(Connection.instance.dispSelectMsg)
                 Connection.instance.dispSelect = False
-        if self.simInfo.graphics.completedLaps > self.prevLap:
-            self.prevLap = self.simInfo.graphics.completedLaps
-            self.sendTimeReset = 1
-            if self.prevFuel != 0:
-                self.sendTime = 1
-            self.estimateFuel()
+
+            if self.simInfo.graphics.completedLaps > self.prevLap:
+                self.prevLap = self.simInfo.graphics.completedLaps
+                self.sendTimeReset = 1
+                if self.prevFuel != 0:
+                    self.sendTime = 1
+                self.estimateFuel()
+            if self.simInfo.physics.pitLimiterOn or self.simInfo.graphics.isInPit:
+                self.prevFuel = 0
 
         if self.ticker == (Config.instance.cfgTickFreq * 10):
             if self.fuelCache == 0 and self.simInfo.static.track != "" and self.simInfo.static.carModel != "":

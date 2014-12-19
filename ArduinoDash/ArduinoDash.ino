@@ -140,6 +140,7 @@ void update(TM1638* module) {
 	if (Serial.available() > 0) {
                 if (Serial.available() == 1 ) {
                     bsettings = Serial.read();
+                    Serial.print(".");
                     Serial.print(pgm_read_byte_near(VERSION + 0));
                     Serial.print(pgm_read_byte_near(VERSION + 1));
                     Serial.print(pgm_read_byte_near(VERSION + 2));

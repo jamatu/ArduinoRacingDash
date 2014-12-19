@@ -56,7 +56,7 @@ def _findConnect():
             instance.ser = serial.Serial(instance.port, 9600, timeout=5)
             time.sleep(2)
             instance.ser.write(bytes([1]))
-            arduinoVer = instance.ser.read(4)
+            arduinoVer = instance.ser.read(5)
 
             if str(arduinoVer) == "b''":
                 instance.port = "----"
@@ -66,7 +66,7 @@ def _findConnect():
                 instance.dispSelectMsg = "No Response from Arduino"
                 instance.ser.close()
             else:
-                aV = re.findall(r"\'(.+?)\'", str(arduinoVer))[0]
+                aV = re.findall(r"\'(.+?)\'", str(arduinoVer))[0].split('.')[1]
                 if len(aV) < 4:
                     aV = aV[0] + aV[1] + "0" + aV[2]
 

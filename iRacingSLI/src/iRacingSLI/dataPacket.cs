@@ -13,7 +13,7 @@ namespace iRacingSLI
         Action<String> console;
         byte[] serialdata = new byte[16];
 
-        int Gear, RPM, Lap, Fuel, Delta, DeltaNeg;
+        int Gear, RPM, Lap, Fuel, Delta, DeltaNeg, Mins;
         float Speed, Shift;
         byte Engine;
 
@@ -23,7 +23,7 @@ namespace iRacingSLI
             console = callConsole;
         }
 
-        public void fetch(TelemetryInfo telem, iRacingSDK sdk, double fuelVal, int brake)
+        public void fetch(TelemetryInfo telem, iRacingSDK sdk, double fuelVal, int brake, Boolean sendTimeReset, Boolean sendTime, double prevFuel)
         {           
             Gear = telem.Gear.Value;
             Speed = telem.Speed.Value;
@@ -56,13 +56,30 @@ namespace iRacingSLI
             }
             Engine |= (byte)(brake << 3);
 
-            Delta = (int)(Math.Round(Convert.ToSingle(sdk.GetData("LapDeltaToBestLap")) * 1000));
-            if (Delta <= 0)
-            { 
-                DeltaNeg = 1;
-                Delta = Delta * -1;
+            if (prevFuel != 0)
+                Engine |= (1 << 4);
+            if (sendTimeReset)
+                Engine |= (1 << 5);
+
+            if (sendTime)
+            {
+                Engine |= (1 << 6);
+                float l = Convert.ToSingle(sdk.GetData("LapLastLapTime"));
+                Mins = Convert.ToInt16(Math.Floor(l / 60));
+                int Secs = Convert.ToInt16(Math.Floor(l - (Mins*60)));
+                int mSecs = Convert.ToInt16(Math.Floor((l - (Secs + (Mins * 60)))*1000));
+                Delta = (Secs << 9) | mSecs;
             }
-            Delta = Delta > 9999 ? 9999 : Delta;
+            else
+            {
+                Delta = (int)(Math.Round(Convert.ToSingle(sdk.GetData("LapDeltaToBestLap")) * 1000));
+                if (Delta <= 0)
+                {
+                    DeltaNeg = 1;
+                    Delta = Delta * -1;
+                }
+                Delta = Delta > 9999 ? 9999 : Delta;
+            }
         }
 
         public byte[] compile(Boolean spdUnit, int intensity){
@@ -85,7 +102,7 @@ namespace iRacingSLI
             serialdata[12] = 0;
             serialdata[13] = Convert.ToByte((Delta >> 8) & 0x00FF);
             serialdata[14] = Convert.ToByte(Delta & 0x00FF);
-            serialdata[15] = 0;
+            serialdata[15] = Convert.ToByte(Mins);
             return serialdata;
         }
 

@@ -30,8 +30,8 @@ namespace iRacingSLI
         private int prevLap;
         private double prevFuel;
 
-        private String Version = "2.0.50";
-        private String ArduinoVersion = "2.0.50";
+        private String Version = "2.0.52";
+        private String ArduinoVersion = "2.0.52";
 
         public iRacingSLI()
         {
@@ -86,18 +86,24 @@ namespace iRacingSLI
         {
             if (connection.isOpen())
             {
-                dataPacket data = new dataPacket(console);
-                data.fetch(e.TelemetryInfo, wrapper.Sdk, fuelEst, chkBrake.Checked ? brk.getBrakeVibe(e.TelemetryInfo, trkTol.Value, trkSens.Value) : 0);
-                connection.send(data.compile(this.cboSpdUnit.SelectedIndex == 0, this.trkIntensity.Value));
-
+                Boolean sendTime = false;
+                Boolean sendTimeReset = false;
                 if (e.TelemetryInfo.Lap.Value > prevLap)
                 {
+                    sendTimeReset = true;
+                    if (prevFuel != 0)
+                        sendTime = true;
                     estimateFuel(e.TelemetryInfo);
                     prevLap = e.TelemetryInfo.Lap.Value;
                 }
 
                 if (wrapper.GetTelemetryValue<Boolean[]>("CarIdxOnPitRoad").Value[driverID])
                     prevFuel = 0;
+
+                dataPacket data = new dataPacket(console);
+                data.fetch(e.TelemetryInfo, wrapper.Sdk, fuelEst, chkBrake.Checked ? brk.getBrakeVibe(e.TelemetryInfo, trkTol.Value, trkSens.Value) : 0, 
+                    sendTimeReset, sendTime, prevFuel);
+                connection.send(data.compile(this.cboSpdUnit.SelectedIndex == 0, this.trkIntensity.Value));
             }
 
             if (ticker % 5 == 0)
