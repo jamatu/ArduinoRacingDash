@@ -138,17 +138,7 @@ void update(TM1638* module) {
           lapActive = 0;  
         }
 	if (Serial.available() > 0) {
-                if (Serial.available() == 1 ) {
-                    bsettings = Serial.read();
-                    Serial.print(".");
-                    Serial.print(pgm_read_byte_near(VERSION + 0));
-                    Serial.print(pgm_read_byte_near(VERSION + 1));
-                    Serial.print(pgm_read_byte_near(VERSION + 2));
-                    Serial.print(pgm_read_byte_near(VERSION + 3));
-                    digitalWrite(outpin, LOW);
-                    digitalWrite(outpin2, LOW);  
-                    lapActive = 0;
-                } else if (Serial.available() > 17) {
+                if (Serial.available() > 17) {
 			if (Serial.read() == 255) {
                                 bsettings = Serial.read();                                
 				gear = Serial.read();
@@ -221,8 +211,17 @@ void update(TM1638* module) {
                                 digitalWrite(outpin, brk);
                                 digitalWrite(outpin2, brk);
                          }
-                }
-                Serial.flush();
+                } else if (Serial.available() > 1) {
+                    bsettings = Serial.read();
+                    Serial.print(".");
+                    Serial.print(pgm_read_byte_near(VERSION + 0));
+                    Serial.print(pgm_read_byte_near(VERSION + 1));
+                    Serial.print(pgm_read_byte_near(VERSION + 2));
+                    Serial.print(pgm_read_byte_near(VERSION + 3));
+                    digitalWrite(outpin, LOW);
+                    digitalWrite(outpin2, LOW);  
+                    lapActive = 0;
+                }                
 	}
 
 	buttons = module->getButtons();
