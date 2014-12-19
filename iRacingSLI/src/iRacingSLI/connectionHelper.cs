@@ -109,7 +109,7 @@ namespace iRacingSLI
             String av = arduinoVer.Replace(@".", string.Empty);
             if (av.Length < 4)
             {
-                av = av[0] + av[1] + "0" + av[2];
+                av = av[0] + "" + av[1] + "0" + av[2];
             }
 
             if (s == "")
@@ -119,7 +119,7 @@ namespace iRacingSLI
                 s = s.Substring(s.Length - 4, 4);
                 if (Convert.ToInt16(s) < Convert.ToInt16(av))
                 {
-                    console("Arduino Code Outdated. Please Update Arduino to at least v" + arduinoVer + " and then Retry");
+                    console("Arduino Code Outdated(v" + s[0] + "." + s[1] + "." + s[2] + s[3] + "). Please Update Arduino to at least v" + arduinoVer + " and then Retry");
                     return true;
                 }
 

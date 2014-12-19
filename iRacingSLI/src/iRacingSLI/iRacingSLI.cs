@@ -30,8 +30,8 @@ namespace iRacingSLI
         private int prevLap;
         private double prevFuel;
 
-        private String Version = "2.0.52";
-        private String ArduinoVersion = "2.0.52";
+        private String Version = "2.1.0";
+        private String ArduinoVersion = "2.1.0";
 
         public iRacingSLI()
         {

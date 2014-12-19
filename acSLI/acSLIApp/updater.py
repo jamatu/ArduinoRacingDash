@@ -18,6 +18,7 @@ class Updater:
     hasUpdated = False
     appWindow = 0
     currVersion = 0
+    cV = 0
     remoteVersion = 0
     reqArduinoUpdate = 0
     changeLog = 0
@@ -33,6 +34,9 @@ class Updater:
         global instance
         instance = self
         self.currVersion = currVersion
+        self.cV = "".join(self.currVersion.split("."))
+        if len(self.cV) < 4:
+            self.cV = self.cV[0] + self.cV[1] + "0" + self.cV[2]
 
         try:
             if Config.instance.cfgEnableUpdater == 1:
@@ -50,7 +54,7 @@ class Updater:
         logStats("Login")
 
         if (self.remoteVersion != 0) and (self.remoteVersion != Config.instance.cfgRemoteVersion)\
-                and (int("".join(self.remoteVersion.split("."))) > int("".join(currVersion.split(".")))):
+                and (int("".join(self.remoteVersion.split("."))) > int(self.cV)):
             self.isOpen = True
             if self.reqArduinoUpdate == "1":
                 Log.info("New acSLI Version Available: v" + self.remoteVersion + ". Requires Arduino Sketch Update")
