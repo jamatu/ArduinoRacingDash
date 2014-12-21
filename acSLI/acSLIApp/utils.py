@@ -20,10 +20,10 @@ colours = {
 }
 
 
-def rgb(color, a=1):
-    r = color[0] / 255
-    g = color[1] / 255
-    b = color[2] / 255
+def rgb(colour, a=1):
+    r = colour[0] / 255
+    g = colour[1] / 255
+    b = colour[2] / 255
     return r, g, b, a
 
 

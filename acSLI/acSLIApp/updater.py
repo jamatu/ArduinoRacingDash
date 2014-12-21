@@ -1,4 +1,5 @@
 import os
+import shutil
 import http.client
 import re
 import threading
@@ -81,7 +82,7 @@ class Updater:
                 Log.info("Running Latest Version (v%s)" % self.remoteVersion)
 
 
-class updateFiles(threading.Thread):
+class UpdateFiles(threading.Thread):
 
     def __init__(self):
         threading.Thread.__init__(self)
@@ -91,8 +92,11 @@ class updateFiles(threading.Thread):
 
         try:
             Log.info("Updating Files. Please Wait.")
-            updateProg()
+            UpdateProg()
             logStats("Update")
+            Log.info("Creating Backup")
+            progInstance.setMsg("Creating Backup")
+            shutil.copytree('apps/python/acSLI', 'apps/python/acSLI-BACKUP', ignore=shutil.ignore_patterns("dll", ".idea", "acSLI.txt", "acSLI.ini"))
 
             conn = http.client.HTTPSConnection("raw.githubusercontent.com", 443)
             conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + instance.remoteVersion + "/fileList.txt")
@@ -100,6 +104,7 @@ class updateFiles(threading.Thread):
             Files.append("ArduinoDash.ino")
             lenFiles = len(Files) + 1
             i = 0
+            error = "N"
 
             for filename in Files:
                 if filename == "ArduinoDash.ino":
@@ -108,35 +113,63 @@ class updateFiles(threading.Thread):
                     conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + instance.remoteVersion + "/acSLI/" + filename)
                 i += 1
                 Log.info("Downloading: " + filename)
-                progInstance.lblMsg.setText("Downloading[%s/%s][%s]: '%s'" % (str(i), str(lenFiles), str(round((i/lenFiles)*100)) + "%", filename))
+                progInstance.setMsg("Downloading[%s/%s][%s]: '%s'" % (str(i), str(lenFiles), str(round((i/lenFiles)*100)) + "%", filename))
                 if filename.split('/')[0] == "dll" and os.path.isfile("apps/python/acSLI/" + filename):
                     Log.info("DLL Exists, Skipping")
                     conn.getresponse().read()
                 else:
-                    try:
-                        localfile = open("apps/python/acSLI/" + filename,'wb')
-                        localfile.write(conn.getresponse().read())
-                        localfile.close()
-                    except FileNotFoundError:
-                        os.makedirs(filename.split('/')[0])
-                        localfile = open("apps/python/acSLI/" + filename,'wb')
-                        localfile.write(conn.getresponse().read())
-                        localfile.close()
-                    except Exception as e:
-                        Log.error("On Update: %s" % e)
+                    res = conn.getresponse().read()
+                    if re.findall(r"\'(.+?)\'", str(res))[0] == "Not Found":
+                        error = "Couldn't Find File '%s'?? Please report this to the App Author" % filename
+                        Log.info("Couldn't Find File '%s'?? Please report this to the App Author" % filename)
+                        break
+                    else:
+                        try:
+                            localfile = open("apps/python/acSLI/" + filename,'wb')
+                            localfile.write(res)
+                            localfile.close()
+                        except FileNotFoundError:
+                            os.makedirs(filename.split('/')[0])
+                            localfile = open("apps/python/acSLI/" + filename,'wb')
+                            localfile.write(res)
+                            localfile.close()
+                        except Exception as e:
+                            Log.error("On Update: %s" % e)
 
             conn.close()
 
-            Log.info("Successfully Updated to " + instance.remoteVersion + " , please restart AC Session")
-            progInstance.lblMsg.setText("Update Successful. Please Restart Session")
-            if instance.reqArduinoUpdate == "1":
-                progInstance.lblMsg.setText("Success, Please Update Arduino (latest sketch in apps/python/acsli) and Restart Session")
+            if error == "N":
+                shutil.rmtree("apps/python/acSLI-BACKUP")
+                Log.info("Successfully Updated to " + instance.remoteVersion + " , please restart AC Session")
+                progInstance.setMsg("Update Successful. Please Restart Session")
+                if instance.reqArduinoUpdate == "1":
+                    progInstance.setMsg("Success, Please Update Arduino (latest sketch in apps/python/acsli) and Restart Session")
+            else:
+                progInstance.setColour(Utils.rgb(Utils.colours["red"]))
+                progInstance.setMsg("Error Updating. Restoring from Backup")
+                Log.info("Error Updating, Restoring from Backup")
+
+                for obj in os.listdir("apps/python/acSLI/"):
+                    if not (str(obj) == "dll" or str(obj) == ".idea" or str(obj) == "acSLI.txt" or str(obj) == "acSLI.ini"):
+                        if not "." in str(obj):
+                            shutil.rmtree("apps/python/acSLI/" + obj)
+                        else:
+                            os.remove("apps/python/acSLI/" + obj)
+
+                for obj in os.listdir("apps/python/acSLI-BACKUP/"):
+                    if not "." in str(obj):
+                        shutil.copytree("apps/python/acSLI-BACKUP/" + obj, "apps/python/acSLI/" + obj)
+                    else:
+                        shutil.copy("apps/python/acSLI-BACKUP/" + obj, "apps/python/acSLI/" + obj)
+
+                shutil.rmtree("apps/python/acSLI-BACKUP")
+                progInstance.setMsg(error)
             progInstance.dispButton()
         except Exception as e:
                     Log.error("On Update: %s" % e)
 
 
-class updateProg:
+class UpdateProg:
 
     appWindow = 0
     lblMsg = 0
@@ -156,6 +189,9 @@ class updateProg:
 
     def setMsg(self, msg):
         self.lblMsg.setText(msg)
+
+    def setColour(self, colour):
+        self.lblMsg.setColor(colour)
 
     def dispButton(self):
         global instance
@@ -183,7 +219,7 @@ def logStats(type):
 def bFunc_Yes(dummy, variables):
     global instance
     instance.appWindow.setVisible(0)
-    updateFiles().start()
+    UpdateFiles().start()
 
 
 def bFunc_No(dummy, variables):

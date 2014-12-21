@@ -41,8 +41,8 @@ class Label:
         ac.setSize(self.label, w, h)
         return self
 
-    def setColor(self, color):
-        ac.setFontColor(self.label, *color)
+    def setColor(self, colour):
+        ac.setFontColor(self.label, *colour)
         return self
 
     def setFontSize(self, fontSize):

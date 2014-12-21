@@ -1,8 +1,10 @@
+import os
+import shutil
 from acSLIApp.logger import Log
 from acSLIApp.utils import Config
 
 instance = 0
-cfgPath = "apps/python/acSLI.cfg"
+cfgPath = "apps/python/acSLI/acSLI.ini"
 
 
 class ConfigLoader:
@@ -28,6 +30,9 @@ class ConfigLoader:
         instance = self
 
         try:
+            if os.path.exists("apps/python/acSLI.cfg"):
+                shutil.move("apps/python/acSLI.cfg", "apps/python/acSLI/")
+
             self.config = Config(cfgPath)
             self.cfgPort = str(self.config.getOption("SETTINGS", "port", True, self.cfgPort)).upper()
             self.cfgRemoteVersion = str(self.config.getOption("SETTINGS", "remoteVersion", True, self.cfgRemoteVersion))
