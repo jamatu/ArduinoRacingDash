@@ -1,6 +1,11 @@
 Arduino Racing Dash ChangeLog
 --------------------																																																									
 
+v2.1.2:
+	Fix updater, added backup utility to restore old files upon updating error
+	Fix last lap detection and sending in iRacing
+	Move config back into app/python/acSLI/acSLI.ini - has auto detection/moving
+
 v2.1:
 	Added current lap display on Page 3
 	Delta (page 6 only) now shows last laptime for 3 secs upon crossing start/finish line
