@@ -101,18 +101,18 @@ namespace iRacingSLI
 
                 if (ll != prevLapTime)
                 {
-                    prevLapTime = ll;
                     if (prevFuel != 0 && ll > 0)
                         sendTime = true;
                 }
 
                 if (e.TelemetryInfo.Lap.Value > prevLap)
-                {
-                    prevLapTime = ll;
+                { 
                     sendTimeReset = true;                    
                     estimateFuel(e.TelemetryInfo);
                     prevLap = e.TelemetryInfo.Lap.Value;
                 }
+
+                prevLapTime = ll;
 
                 if (wrapper.GetTelemetryValue<Boolean[]>("CarIdxOnPitRoad").Value[driverID])
                     prevFuel = 0;
