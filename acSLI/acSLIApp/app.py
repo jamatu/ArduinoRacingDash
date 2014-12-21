@@ -11,8 +11,8 @@ import acSLIApp.advSettings as AdvSet
 import acSLIApp.utils as Utils
 
 #################
-Version = "2.1.0"
-ArduinoVersion = "2.1.0"
+Version = "2.1.1"
+ArduinoVersion = "2.1.1"
 #################
 
 
