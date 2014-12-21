@@ -70,11 +70,14 @@ def _findConnect():
                 if len(aV) < 4:
                     aV = aV[0] + aV[1] + "0" + aV[2]
 
-                if "".join(acSLI.App.ArduinoVersion.split(".")) > aV:
+                aLV = "".join(acSLI.App.ArduinoVersion.split("."))
+                if len(aLV) < 4:
+                    aLV = aLV[0] + aLV[1] + "0" + aLV[2]
+
+                if aLV > aV:
                     instance.port = "----"
                     instance.ser.close()
-                    Log.warning("Arduino Code Outdated. Please Update Arduino to at least v" +
-                                acSLI.App.ArduinoVersion + " and then Restart AC")
+                    Log.warning("Arduino Code Outdated(v%s). Please Update Arduino to at least v%s and then Restart AC" % (arduinoVer, acSLI.App.ArduinoVersion))
                     Error.ErrorBox("Arduino Code Outdated. Please Update Arduino to at least v" +
                                    acSLI.App.ArduinoVersion + " and then Restart AC")
                 else:

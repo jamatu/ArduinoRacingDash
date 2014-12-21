@@ -33,7 +33,7 @@ namespace iRacingSLI
         private Boolean sendTime;
         private Boolean sendTimeReset;
 
-        private String Version = "2.1.2";
+        private String Version = "2.1.3";
         private String ArduinoVersion = "2.1.2";
 
         public iRacingSLI()
