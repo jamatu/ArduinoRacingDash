@@ -1,1 +1,1 @@
-2.1.2|1|LastLap iRacing fix, Improve Updater, Move config to app file|/is0li0
+2.1.2|1|LastLap iRacing fix, Improve Updater, Move config to app file|/icrbTV
