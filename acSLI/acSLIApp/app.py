@@ -59,7 +59,6 @@ class App:
         self.spnStartPage = Spinner(self.appWindow.app, sFunc_StartPage, 220, 20, 15, 165, "Startup Page", 0, 7, Config.instance.cfgStartPage)
         self.spnIntensity = Spinner(self.appWindow.app, sFunc_Intensity, 220, 20, 15, 215, "Display Intensity", 0, 7, Config.instance.cfgIntensity)
 
-
     def onStart(self):
         global Version
         Selector.Selector()
@@ -228,7 +227,6 @@ class App:
                     send = 1
 
             return send
-
 
 
 def bFunc_SpeedUnits(dummy, variables):

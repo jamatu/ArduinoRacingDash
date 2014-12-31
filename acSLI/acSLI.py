@@ -8,7 +8,6 @@ import acSLIApp.app as App
 import acSLIApp.updater as Updater
 import acSLIApp.loader as Loader
 
-
 acSLI = 0
 hasInit = False
 
