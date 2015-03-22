@@ -33,7 +33,7 @@ namespace iRacingSLI
         private Boolean sendTime;
         private Boolean sendTimeReset;
 
-        private String Version = "2.1.3";
+        private String Version = "2.1.4";
         private String ArduinoVersion = "2.1.2";
 
         public iRacingSLI()
@@ -102,7 +102,10 @@ namespace iRacingSLI
                 if (ll != prevLapTime)
                 {
                     if (prevFuel != 0 && ll > 0)
+                    {
                         sendTime = true;
+                        prevLapTime = ll;
+                    }
                 }
 
                 if (e.TelemetryInfo.Lap.Value > prevLap)
@@ -111,8 +114,6 @@ namespace iRacingSLI
                     estimateFuel(e.TelemetryInfo);
                     prevLap = e.TelemetryInfo.Lap.Value;
                 }
-
-                prevLapTime = ll;
 
                 if (wrapper.GetTelemetryValue<Boolean[]>("CarIdxOnPitRoad").Value[driverID])
                     prevFuel = 0;
@@ -167,6 +168,7 @@ namespace iRacingSLI
                 telemPrint("RPM: " + Math.Round(telem.RPM.Value));
                 telemPrint("Speed: " + (this.cboSpdUnit.SelectedIndex == 0 ? Math.Round(telem.Speed.Value * 2.23693629, 1) + "MPH" : Math.Round(telem.Speed.Value * (2.23693629 * 1.609344), 1) + "KPH"));
                 telemPrint("Lap: " + telem.Lap.Value);
+                telemPrint("Total Flying Laps Completed: " + fuelLaps);
                 telemPrint("Fuel PCT: " + telem.FuelLevelPct.Value * 100);
                 telemPrint("Fuel Lvl (L): " + telem.FuelLevel.Value);
                 telemPrint("Fuel Use on Current Lap (L): " + ((this.prevFuel - telem.FuelLevel.Value)>0 ? Math.Round(this.prevFuel - telem.FuelLevel.Value, 3) : 0));
@@ -321,11 +323,6 @@ namespace iRacingSLI
                 telemTextBox.AppendText("\r\n" + str);
             else
                 telemTextBox.AppendText(str);
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
         }
     }
 }

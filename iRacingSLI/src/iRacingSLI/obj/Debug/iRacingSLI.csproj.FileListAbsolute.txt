@@ -14,3 +14,6 @@ E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Debug\YamlDotNet.
 E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\Debug\iRacingSLI.exe
 E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\Debug\iRacingSLI.pdb
 E:\Games\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\Debug\iRacingSLI.iRacingSLI.resources
+E:\Games\Apps\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Debug\iRacingSLI.exe.config
+E:\Games\Apps\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\Debug\iRacingSLI.exe
+E:\Games\Apps\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\Debug\iRacingSLI.pdb

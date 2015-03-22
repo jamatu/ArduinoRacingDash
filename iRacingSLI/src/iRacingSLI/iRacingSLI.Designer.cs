@@ -86,6 +86,7 @@
             // 
             this.telemTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.telemTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.telemTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.telemTextBox.Location = new System.Drawing.Point(0, 13);
             this.telemTextBox.Multiline = true;
             this.telemTextBox.Name = "telemTextBox";
@@ -147,7 +148,6 @@
             this.groupBox1.TabIndex = 13;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Brake Vibe Settings";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // lblSens
             // 
