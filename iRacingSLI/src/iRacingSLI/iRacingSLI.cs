@@ -33,7 +33,7 @@ namespace iRacingSLI
         private Boolean sendTime;
         private Boolean sendTimeReset;
 
-        private String Version = "2.1.4";
+        private String Version = "2.1.5";
         private String ArduinoVersion = "2.1.2";
 
         public iRacingSLI()
@@ -294,16 +294,14 @@ namespace iRacingSLI
 
         public void startConnection(String port)
         {
-            //wrapper.Start();
             startButton.Text = "Stop";
             cboPorts.Enabled = false;
-            if (connection.openSerial(port, ArduinoVersion))
+            if (!connection.openSerial(port, ArduinoVersion))
                 stopConnection();
         }
 
         public void stopConnection()
         {
-            //wrapper.Stop();
             connection.closeSerial();
             startButton.Text = "Start";
             cboPorts.Enabled = true;

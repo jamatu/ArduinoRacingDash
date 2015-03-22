@@ -82,12 +82,15 @@ namespace iRacingSLI
         {
             if (SP != null && SP.IsOpen)
                 SP.Close();
+            if (port == "")
+                return false;
+
             console("Opening Serial Port on: " + port);
             SP = new SerialPort(port, 9600, Parity.None, 8);
             SP.Open();
             open = true;
-            //handshake
 
+            //handshake
             SP.ReadTimeout = 5000;
             SP.Write("1");
 
@@ -120,12 +123,12 @@ namespace iRacingSLI
                 if (Convert.ToInt16(s) < Convert.ToInt16(av))
                 {
                     console("Arduino Code Outdated(v" + s[0] + "." + s[1] + "." + s[2] + s[3] + "). Please Update Arduino to at least v" + arduinoVer + " and then Retry");
-                    return true;
+                    return false;
                 }
 
                 console("Handshake Sucsessful, Connected to Arduino Running: v" + s[0] + "." + s[1] + "." + s[2] + s[3]);
             }
-            return false;
+            return true;
         }
 
         public void closeSerial()
