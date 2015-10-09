@@ -1,5 +1,5 @@
 ##Arduino Racing Dashboard
-**Latest Version:** v2.1.4 - Tested for Asseto Corsa v1.3
+**Latest Version:** v2.1.5 - Tested for Asseto Corsa v1.3
 
 Dashboard code for TM1638 module linked to an Arduino, support for Asseto Corsa and iRacing currently
 

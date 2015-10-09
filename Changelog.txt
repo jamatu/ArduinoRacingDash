@@ -1,7 +1,7 @@
 Arduino Racing Dash ChangeLog
 --------------------																																																									
 
-v2.1.4
+v2.1.5
 	Add AC1.3 support and 64bit compatibility
 	
 v2.1.3:
