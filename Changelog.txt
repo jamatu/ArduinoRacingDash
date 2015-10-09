@@ -1,6 +1,9 @@
 Arduino Racing Dash ChangeLog
 --------------------																																																									
 
+v2.1.4
+	Add AC1.3 support and 64bit compatibility
+	
 v2.1.3:
 	Fix updater, added backup utility to restore old files upon updating error
 	Fix last lap detection and sending in iRacing

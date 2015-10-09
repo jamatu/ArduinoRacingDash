@@ -1,7 +1,13 @@
 import sys
-sys.path.insert(0, 'apps/python/acSLI/dll')
 import os
+import platform
 import shutil
+if platform.architecture()[0] == "64bit":
+  sysdir='apps/python/acSLI/stdlib64'
+else:
+  sysdir='apps/python/acSLI/stdlib'
+sys.path.insert(0, sysdir)
+os.environ['PATH'] = os.environ['PATH'] + ";."
 
 from acSLIApp.logger import Log
 import acSLIApp.app as App

@@ -101,7 +101,7 @@ class UpdateFiles(threading.Thread):
             logStats("Update")
             Log.info("Creating Backup")
             progInstance.setMsg("Creating Backup")
-            shutil.copytree('apps/python/acSLI', 'apps/python/acSLI-BACKUP', ignore=shutil.ignore_patterns("dll", ".idea", "acSLI.txt", "acSLI.ini"))
+            shutil.copytree('apps/python/acSLI', 'apps/python/acSLI-BACKUP', ignore=shutil.ignore_patterns("stdlib", "stdlib64", ".idea", "acSLI.txt", "acSLI.ini"))
 
             conn = http.client.HTTPSConnection("raw.githubusercontent.com", 443)
             conn.request("GET", "/Turnermator13/ArduinoRacingDash/v" + instance.remoteVersion + "/fileList.txt")
@@ -119,7 +119,7 @@ class UpdateFiles(threading.Thread):
                 i += 1
                 Log.info("Downloading: " + filename)
                 progInstance.setMsg("Downloading[%s/%s][%s]: '%s'" % (str(i), str(lenFiles), str(round((i/lenFiles)*100)) + "%", filename))
-                if filename.split('/')[0] == "dll" and os.path.isfile("apps/python/acSLI/" + filename):
+                if (filename.split('/')[0] == "stdlib" or filename.split('/')[0] == "stdlib64") and os.path.isfile("apps/python/acSLI/" + filename):
                     Log.info("DLL Exists, Skipping")
                     conn.getresponse().read()
                 else:
@@ -155,7 +155,7 @@ class UpdateFiles(threading.Thread):
                 Log.info("Error Updating, Restoring from Backup")
 
                 for obj in os.listdir("apps/python/acSLI/"):
-                    if not (str(obj) == "dll" or str(obj) == ".idea" or str(obj) == "acSLI.txt" or str(obj) == "acSLI.ini"):
+                    if not (str(obj) == "stdlib" or str(obj) == "stdlib64" or str(obj) == ".idea" or str(obj) == "acSLI.txt" or str(obj) == "acSLI.ini"):
                         if not "." in str(obj):
                             shutil.rmtree("apps/python/acSLI/" + obj)
                         else:
@@ -202,23 +202,6 @@ class UpdateProg:
         global instance
         self.btnClose = Button(self.appWindow.app, bFunc_Close, 110, 20, 345, 70, "Okay")\
                 .setAlign("center").hasCustomBackground().setBackgroundTexture("apps/python/acSLI/image/backBtnAuto.png")
-
-
-#Logs basic version stats to goo.gl analytics, no personal information saved and no information downloaded
-def logStats(type):
-    global instance
-    try:
-        h1 = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) %s/1.0" % type
-        if not os.path.isfile("apps/python/acSLI/user.cache"):
-            h1 = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/1.0 (KHTML, like Gecko) New/1.0"
-            open("apps/python/acSLI/user.cache", 'w')
-
-        stats = http.client.HTTPConnection("goo.gl")
-        stats.request("GET", str(instance.statsURL), headers={str("User-Agent"): str(h1), str("Referer"): str("http://v%s" % instance.currVersion)})
-        stats.getresponse()
-        stats.close()
-    except Exception as e:
-        Log.error("Couldn't Log Stats: %s" % e)
 
 
 def bFunc_Yes(dummy, variables):
