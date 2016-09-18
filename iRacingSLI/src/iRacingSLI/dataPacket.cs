@@ -61,7 +61,6 @@ namespace iRacingSLI
                 Engine |= (1 << 4);
             if (sendTimeReset)
                 Engine |= (1 << 5);
-
             if (sendTime)
             {
                 Engine |= (1 << 6);

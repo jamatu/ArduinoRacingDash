@@ -1,0 +1,22 @@
+Data Time:20/03/2016 15:25:10
+Exception Name:Object reference not set to an instance of an object.
+Event Name:System.NullReferenceException: Object reference not set to an instance of an object.
+   at iRacingSdkWrapper.TelemetryValue`1.GetData(iRacingSDK sdk)
+   at iRacingSdkWrapper.TelemetryValue`1..ctor(iRacingSDK sdk, String name)
+   at iRacingSdkWrapper.TelemetryInfo.get_Gear()
+   at iRacingSLI.dataPacket.fetch(TelemetryInfo telem, iRacingSDK sdk, Double fuelVal, Int32 brake, Boolean sendTimeReset, Boolean sendTime, Double prevFuel)
+   at iRacingSLI.iRacingSLI.wrapper_TelemetryUpdated(Object sender, TelemetryUpdatedEventArgs e)
+Control Name:Constructor
+Error Line No.:0
+Form Name:iRacingSLI
+Data Time:20/03/2016 15:25:10
+Exception Name:Object reference not set to an instance of an object.
+Event Name:System.NullReferenceException: Object reference not set to an instance of an object.
+   at iRacingSdkWrapper.TelemetryValue`1.GetData(iRacingSDK sdk)
+   at iRacingSdkWrapper.TelemetryValue`1..ctor(iRacingSDK sdk, String name)
+   at iRacingSdkWrapper.TelemetryInfo.get_Gear()
+   at iRacingSLI.dataPacket.fetch(TelemetryInfo telem, iRacingSDK sdk, Double fuelVal, Int32 brake, Boolean sendTimeReset, Boolean sendTime, Double prevFuel)
+   at iRacingSLI.iRacingSLI.wrapper_TelemetryUpdated(Object sender, TelemetryUpdatedEventArgs e)
+Control Name:Constructor
+Error Line No.:0
+Form Name:iRacingSLI

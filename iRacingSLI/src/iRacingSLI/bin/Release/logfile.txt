@@ -1,0 +1,11 @@
+Data Time:20/03/2016 16:05:43
+Exception Name:Object reference not set to an instance of an object.
+Event Name:System.NullReferenceException: Object reference not set to an instance of an object.
+   at iRacingSdkWrapper.TelemetryValue`1.GetData(iRacingSDK sdk) in c:\Users\James\Downloads\iRacingSdkWrapper_v15\iRacingSdkWrapper\TelemetryValue.cs:line 69
+   at iRacingSdkWrapper.TelemetryValue`1..ctor(iRacingSDK sdk, String name) in c:\Users\James\Downloads\iRacingSdkWrapper_v15\iRacingSdkWrapper\TelemetryValue.cs:line 55
+   at iRacingSdkWrapper.TelemetryInfo.get_Gear() in c:\Users\James\Downloads\iRacingSdkWrapper_v15\iRacingSdkWrapper\TelemetryInfo.cs:line 198
+   at iRacingSLI.dataPacket.fetch(TelemetryInfo telem, iRacingSDK sdk, Double fuelVal, Int32 brake, Boolean sendTimeReset, Boolean sendTime, Double prevFuel) in D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\dataPacket.cs:line 28
+   at iRacingSLI.iRacingSLI.wrapper_TelemetryUpdated(Object sender, TelemetryUpdatedEventArgs e) in D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\iRacingSLI.cs:line 111
+Control Name:Update Arduino
+Error Line No.:111
+Form Name:iRacingSLI

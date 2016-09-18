@@ -63,9 +63,10 @@
             // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(12, 12);
+            this.startButton.Location = new System.Drawing.Point(24, 23);
+            this.startButton.Margin = new System.Windows.Forms.Padding(6);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(107, 23);
+            this.startButton.Size = new System.Drawing.Size(214, 44);
             this.startButton.TabIndex = 0;
             this.startButton.Text = "Start";
             this.startButton.UseVisualStyleBackColor = true;
@@ -74,12 +75,13 @@
             // consoleTextBox
             // 
             this.consoleTextBox.BackColor = System.Drawing.SystemColors.Control;
-            this.consoleTextBox.Location = new System.Drawing.Point(0, 215);
+            this.consoleTextBox.Location = new System.Drawing.Point(0, 413);
+            this.consoleTextBox.Margin = new System.Windows.Forms.Padding(6);
             this.consoleTextBox.Multiline = true;
             this.consoleTextBox.Name = "consoleTextBox";
             this.consoleTextBox.ReadOnly = true;
             this.consoleTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.consoleTextBox.Size = new System.Drawing.Size(397, 65);
+            this.consoleTextBox.Size = new System.Drawing.Size(790, 121);
             this.consoleTextBox.TabIndex = 0;
             // 
             // telemTextBox
@@ -87,11 +89,12 @@
             this.telemTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.telemTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.telemTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.telemTextBox.Location = new System.Drawing.Point(0, 13);
+            this.telemTextBox.Location = new System.Drawing.Point(0, 25);
+            this.telemTextBox.Margin = new System.Windows.Forms.Padding(6);
             this.telemTextBox.Multiline = true;
             this.telemTextBox.Name = "telemTextBox";
             this.telemTextBox.ReadOnly = true;
-            this.telemTextBox.Size = new System.Drawing.Size(406, 269);
+            this.telemTextBox.Size = new System.Drawing.Size(812, 517);
             this.telemTextBox.TabIndex = 2;
             // 
             // splitContainer1
@@ -99,7 +102,8 @@
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.Location = new System.Drawing.Point(12, 41);
+            this.splitContainer1.Location = new System.Drawing.Point(24, 79);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(6);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -119,16 +123,18 @@
             this.splitContainer1.Panel2.Controls.Add(this.chkTelem);
             this.splitContainer1.Panel2.Controls.Add(this.telemTextBox);
             this.splitContainer1.Panel2.Controls.Add(this.telemetryLabel);
-            this.splitContainer1.Size = new System.Drawing.Size(807, 282);
-            this.splitContainer1.SplitterDistance = 397;
+            this.splitContainer1.Size = new System.Drawing.Size(1614, 542);
+            this.splitContainer1.SplitterDistance = 794;
+            this.splitContainer1.SplitterWidth = 8;
             this.splitContainer1.TabIndex = 3;
             // 
             // chkBrake
             // 
             this.chkBrake.AutoSize = true;
-            this.chkBrake.Location = new System.Drawing.Point(30, 104);
+            this.chkBrake.Location = new System.Drawing.Point(60, 200);
+            this.chkBrake.Margin = new System.Windows.Forms.Padding(6);
             this.chkBrake.Name = "chkBrake";
-            this.chkBrake.Size = new System.Drawing.Size(15, 14);
+            this.chkBrake.Size = new System.Drawing.Size(28, 27);
             this.chkBrake.TabIndex = 14;
             this.chkBrake.UseVisualStyleBackColor = true;
             this.chkBrake.CheckedChanged += new System.EventHandler(this.chkBrake_CheckedChanged);
@@ -142,9 +148,11 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.trkTol);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.groupBox1.Location = new System.Drawing.Point(51, 94);
+            this.groupBox1.Location = new System.Drawing.Point(102, 181);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(297, 100);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(6);
+            this.groupBox1.Size = new System.Drawing.Size(594, 192);
             this.groupBox1.TabIndex = 13;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Brake Vibe Settings";
@@ -152,36 +160,40 @@
             // lblSens
             // 
             this.lblSens.AutoSize = true;
-            this.lblSens.Location = new System.Drawing.Point(15, 74);
+            this.lblSens.Location = new System.Drawing.Point(30, 142);
+            this.lblSens.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblSens.Name = "lblSens";
-            this.lblSens.Size = new System.Drawing.Size(19, 13);
+            this.lblSens.Size = new System.Drawing.Size(38, 25);
             this.lblSens.TabIndex = 17;
             this.lblSens.Text = "(3)";
             // 
             // lblTol
             // 
             this.lblTol.AutoSize = true;
-            this.lblTol.Location = new System.Drawing.Point(15, 37);
+            this.lblTol.Location = new System.Drawing.Point(30, 71);
+            this.lblTol.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblTol.Name = "lblTol";
-            this.lblTol.Size = new System.Drawing.Size(33, 13);
+            this.lblTol.Size = new System.Drawing.Size(69, 25);
             this.lblTol.TabIndex = 16;
             this.lblTol.Text = "(30%)";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(15, 61);
+            this.label3.Location = new System.Drawing.Point(30, 117);
+            this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(54, 13);
+            this.label3.Size = new System.Drawing.Size(110, 25);
             this.label3.TabIndex = 15;
             this.label3.Text = "Sensitivity";
             // 
             // trkSens
             // 
             this.trkSens.AutoSize = false;
-            this.trkSens.Location = new System.Drawing.Point(103, 57);
+            this.trkSens.Location = new System.Drawing.Point(206, 110);
+            this.trkSens.Margin = new System.Windows.Forms.Padding(6);
             this.trkSens.Name = "trkSens";
-            this.trkSens.Size = new System.Drawing.Size(179, 37);
+            this.trkSens.Size = new System.Drawing.Size(358, 71);
             this.trkSens.TabIndex = 14;
             this.trkSens.Tag = "";
             this.trkSens.Value = 3;
@@ -190,18 +202,20 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 23);
+            this.label1.Location = new System.Drawing.Point(30, 44);
+            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(86, 13);
+            this.label1.Size = new System.Drawing.Size(170, 25);
             this.label1.TabIndex = 13;
             this.label1.Text = "Brake Tolerance";
             // 
             // trkTol
             // 
-            this.trkTol.Location = new System.Drawing.Point(103, 19);
+            this.trkTol.Location = new System.Drawing.Point(206, 37);
+            this.trkTol.Margin = new System.Windows.Forms.Padding(6);
             this.trkTol.Maximum = 100;
             this.trkTol.Name = "trkTol";
-            this.trkTol.Size = new System.Drawing.Size(179, 45);
+            this.trkTol.Size = new System.Drawing.Size(358, 90);
             this.trkTol.TabIndex = 12;
             this.trkTol.Tag = "";
             this.trkTol.TickFrequency = 10;
@@ -211,27 +225,30 @@
             // lblIntensity
             // 
             this.lblIntensity.AutoSize = true;
-            this.lblIntensity.Location = new System.Drawing.Point(32, 57);
+            this.lblIntensity.Location = new System.Drawing.Point(64, 110);
+            this.lblIntensity.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblIntensity.Name = "lblIntensity";
-            this.lblIntensity.Size = new System.Drawing.Size(49, 13);
+            this.lblIntensity.Size = new System.Drawing.Size(98, 25);
             this.lblIntensity.TabIndex = 6;
             this.lblIntensity.Text = "Intensity:";
             // 
             // trkIntensity
             // 
-            this.trkIntensity.Location = new System.Drawing.Point(87, 52);
+            this.trkIntensity.Location = new System.Drawing.Point(174, 100);
+            this.trkIntensity.Margin = new System.Windows.Forms.Padding(6);
             this.trkIntensity.Maximum = 7;
             this.trkIntensity.Name = "trkIntensity";
-            this.trkIntensity.Size = new System.Drawing.Size(104, 45);
+            this.trkIntensity.Size = new System.Drawing.Size(208, 90);
             this.trkIntensity.TabIndex = 5;
             this.trkIntensity.ValueChanged += new System.EventHandler(this.trkIntensity_ValueChanged);
             // 
             // lblSpdUnit
             // 
             this.lblSpdUnit.AutoSize = true;
-            this.lblSpdUnit.Location = new System.Drawing.Point(30, 28);
+            this.lblSpdUnit.Location = new System.Drawing.Point(60, 54);
+            this.lblSpdUnit.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblSpdUnit.Name = "lblSpdUnit";
-            this.lblSpdUnit.Size = new System.Drawing.Size(60, 13);
+            this.lblSpdUnit.Size = new System.Drawing.Size(118, 25);
             this.lblSpdUnit.TabIndex = 4;
             this.lblSpdUnit.Text = "SpeedUnit:";
             // 
@@ -241,18 +258,20 @@
             this.cboSpdUnit.Items.AddRange(new object[] {
             "MPH",
             "KPH"});
-            this.cboSpdUnit.Location = new System.Drawing.Point(96, 25);
+            this.cboSpdUnit.Location = new System.Drawing.Point(192, 48);
+            this.cboSpdUnit.Margin = new System.Windows.Forms.Padding(6);
             this.cboSpdUnit.Name = "cboSpdUnit";
-            this.cboSpdUnit.Size = new System.Drawing.Size(59, 21);
+            this.cboSpdUnit.Size = new System.Drawing.Size(114, 33);
             this.cboSpdUnit.TabIndex = 3;
             this.cboSpdUnit.SelectedIndexChanged += new System.EventHandler(this.cboSpdUnit_SelectedIndexChanged);
             // 
             // consoleLabel
             // 
             this.consoleLabel.AutoSize = true;
-            this.consoleLabel.Location = new System.Drawing.Point(0, 199);
+            this.consoleLabel.Location = new System.Drawing.Point(0, 383);
+            this.consoleLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.consoleLabel.Name = "consoleLabel";
-            this.consoleLabel.Size = new System.Drawing.Size(45, 13);
+            this.consoleLabel.Size = new System.Drawing.Size(91, 25);
             this.consoleLabel.TabIndex = 2;
             this.consoleLabel.Text = "Console";
             // 
@@ -261,17 +280,19 @@
             this.settingsLabel.AutoSize = true;
             this.settingsLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.settingsLabel.Location = new System.Drawing.Point(0, 0);
+            this.settingsLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.settingsLabel.Name = "settingsLabel";
-            this.settingsLabel.Size = new System.Drawing.Size(45, 13);
+            this.settingsLabel.Size = new System.Drawing.Size(90, 25);
             this.settingsLabel.TabIndex = 1;
             this.settingsLabel.Text = "Settings";
             // 
             // chkTelem
             // 
             this.chkTelem.AutoSize = true;
-            this.chkTelem.Location = new System.Drawing.Point(388, 16);
+            this.chkTelem.Location = new System.Drawing.Point(776, 31);
+            this.chkTelem.Margin = new System.Windows.Forms.Padding(6);
             this.chkTelem.Name = "chkTelem";
-            this.chkTelem.Size = new System.Drawing.Size(15, 14);
+            this.chkTelem.Size = new System.Drawing.Size(28, 27);
             this.chkTelem.TabIndex = 15;
             this.chkTelem.UseVisualStyleBackColor = true;
             this.chkTelem.CheckedChanged += new System.EventHandler(this.chkTelem_CheckedChanged);
@@ -281,34 +302,38 @@
             this.telemetryLabel.AutoSize = true;
             this.telemetryLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.telemetryLabel.Location = new System.Drawing.Point(0, 0);
+            this.telemetryLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.telemetryLabel.Name = "telemetryLabel";
-            this.telemetryLabel.Size = new System.Drawing.Size(53, 13);
+            this.telemetryLabel.Size = new System.Drawing.Size(107, 25);
             this.telemetryLabel.TabIndex = 3;
             this.telemetryLabel.Text = "Telemetry";
             // 
             // statusLabel
             // 
             this.statusLabel.AutoSize = true;
-            this.statusLabel.Location = new System.Drawing.Point(549, 17);
+            this.statusLabel.Location = new System.Drawing.Point(1098, 33);
+            this.statusLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(40, 13);
+            this.statusLabel.Size = new System.Drawing.Size(79, 25);
             this.statusLabel.TabIndex = 4;
             this.statusLabel.Text = "Status:";
             // 
             // cboPorts
             // 
             this.cboPorts.FormattingEnabled = true;
-            this.cboPorts.Location = new System.Drawing.Point(147, 13);
+            this.cboPorts.Location = new System.Drawing.Point(294, 25);
+            this.cboPorts.Margin = new System.Windows.Forms.Padding(6);
             this.cboPorts.Name = "cboPorts";
-            this.cboPorts.Size = new System.Drawing.Size(200, 21);
+            this.cboPorts.Size = new System.Drawing.Size(396, 33);
             this.cboPorts.TabIndex = 5;
             this.cboPorts.SelectedIndexChanged += new System.EventHandler(this.cboPorts_SelectedIndexChanged);
             // 
             // btnDefault
             // 
-            this.btnDefault.Location = new System.Drawing.Point(353, 11);
+            this.btnDefault.Location = new System.Drawing.Point(706, 21);
+            this.btnDefault.Margin = new System.Windows.Forms.Padding(6);
             this.btnDefault.Name = "btnDefault";
-            this.btnDefault.Size = new System.Drawing.Size(93, 23);
+            this.btnDefault.Size = new System.Drawing.Size(186, 44);
             this.btnDefault.TabIndex = 6;
             this.btnDefault.Text = "Set Defualt";
             this.btnDefault.UseVisualStyleBackColor = true;
@@ -316,9 +341,9 @@
             // 
             // iRacingSLI
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(831, 336);
+            this.ClientSize = new System.Drawing.Size(1662, 646);
             this.Controls.Add(this.btnDefault);
             this.Controls.Add(this.cboPorts);
             this.Controls.Add(this.statusLabel);
@@ -327,6 +352,7 @@
             this.DoubleBuffered = true;
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
             this.Name = "iRacingSLI";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;

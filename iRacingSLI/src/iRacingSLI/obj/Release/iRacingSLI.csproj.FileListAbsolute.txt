@@ -28,3 +28,18 @@ E:\Games\Apps\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Release\Yaml
 E:\Games\Apps\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Release\iRacingSdkWrapper.pdb
 E:\Games\Apps\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Release\iRSDKSharp.pdb
 E:\Games\Apps\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Release\YamlDotNet.pdb
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Release\iRacingSLI.exe.config
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\Release\iRacingSLI.exe
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\Release\iRacingSLI.pdb
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Release\iRacingSLI.exe
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Release\iRacingSLI.pdb
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Release\iRacingSdkWrapper.dll
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Release\iRSDKSharp.dll
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Release\YamlDotNet.dll
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Release\iRacingSdkWrapper.pdb
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Release\iRSDKSharp.pdb
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Release\YamlDotNet.pdb
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\Release\iRacingSLI.csprojResolveAssemblyReference.cache
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\Release\iRacingSLI.iRacingSLI.resources
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\Release\iRacingSLI.Properties.Resources.resources
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\Release\iRacingSLI.csproj.GenerateResource.Cache
