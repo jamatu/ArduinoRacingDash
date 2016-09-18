@@ -268,6 +268,7 @@ namespace iRacingSLI
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             wrapper.Stop();
+            SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS);
             cfg.writeSetting("Top", Convert.ToString(this.Location.X));
             cfg.writeSetting("Left", Convert.ToString(this.Location.Y));
             Application.Exit();
@@ -278,19 +279,29 @@ namespace iRacingSLI
             if (startButton.Text == "Stop")
                 stopConnection();
             else
-                startConnection(Regex.Match(cboPorts.Text, @"\(([^)]*)\)").Groups[1].Value);
+            {
+                if (cboPorts.Text == "Local")
+                    startConnection(cboPorts.Text);
+                else
+                    startConnection(Regex.Match(cboPorts.Text, @"\(([^)]*)\)").Groups[1].Value);
+            }
 
             this.StatusChanged();
         }
 
         private void btnDefault_Click(object sender, EventArgs e)
         {
-            if (Regex.Match(cboPorts.Text, @"\(([^)]*)\)").Groups[1].Value == cfg.readSetting("Port", "*"))
+            if (Regex.Match(cboPorts.Text, @"\(([^)]*)\)").Groups[1].Value == cfg.readSetting("Port", "*") || cboPorts.Text == cfg.readSetting("Port", "*"))
                 cfg.writeSetting("Port", "*");
             else
-                cfg.writeSetting("Port", Regex.Match(cboPorts.Text, @"\(([^)]*)\)").Groups[1].Value);
+            {
+                if (cboPorts.Text == "Local")
+                    cfg.writeSetting("Port", cboPorts.Text);
+                else
+                    cfg.writeSetting("Port", Regex.Match(cboPorts.Text, @"\(([^)]*)\)").Groups[1].Value);
+            }
 
-            if (Regex.Match(cboPorts.Text, @"\(([^)]*)\)").Groups[1].Value == cfg.readSetting("Port", "*"))
+            if (Regex.Match(cboPorts.Text, @"\(([^)]*)\)").Groups[1].Value == cfg.readSetting("Port", "*") || cboPorts.Text == cfg.readSetting("Port", "*"))
                 btnDefault.Text = "Remove Default";
             else
                 btnDefault.Text = "Set Default";
@@ -298,7 +309,7 @@ namespace iRacingSLI
 
         private void cboPorts_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Regex.Match(cboPorts.Text, @"\(([^)]*)\)").Groups[1].Value == cfg.readSetting("Port", "*"))
+            if (Regex.Match(cboPorts.Text, @"\(([^)]*)\)").Groups[1].Value == cfg.readSetting("Port", "*") || cboPorts.Text == cfg.readSetting("Port", "*"))
                 btnDefault.Text = "Remove Default";
             else
                 btnDefault.Text = "Set Default";
@@ -342,8 +353,13 @@ namespace iRacingSLI
         {
             startButton.Text = "Stop";
             cboPorts.Enabled = false;
-            if (!connection.openSerial(port, ArduinoVersion))
-                stopConnection();
+            if (port == "Local")
+                connection.openFake();
+            else
+            {
+                if (!connection.openSerial(port, ArduinoVersion))
+                    stopConnection();
+            }
         }
 
         public void stopConnection()

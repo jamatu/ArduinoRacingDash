@@ -16,11 +16,13 @@ namespace iRacingSLI
         static SerialPort SP;
         Action<String> console;
         Boolean open;
+        Boolean fake;
 
         public connectionHelper(Action<String> callConsole)
         {
             console = callConsole;
             open = false;
+            fake = false;
         }
 
         public void setupConnection(Action<String> startMethod, System.Windows.Forms.ComboBox cbo, configHandler cfg)
@@ -34,26 +36,35 @@ namespace iRacingSLI
                 var ports = searcher.Get().Cast<ManagementBaseObject>().ToList();
                 arrayPorts = (from n in portnames join p in ports on n equals p["DeviceID"].ToString() select p["Caption"]).ToArray();
             }
+            cbo.Items.Add("Local");
             cbo.Items.AddRange(arrayPorts);
 
             if (setting != "*")
             {
-                for (int j = 0; j < SerialPort.GetPortNames().Length; j++)
+                if (setting == "Local")
                 {
-                    if (SerialPort.GetPortNames()[j].Equals(setting))
+                    startMethod(setting);
+                }
+                else
+                {
+                    for (int j = 0; j < SerialPort.GetPortNames().Length; j++)
                     {
-                        try
+                        if (SerialPort.GetPortNames()[j].Equals(setting))
                         {
-                            startMethod(setting);
-                            startPort = j;
-                        }
-                        catch{
-                            cfg.writeSetting("Port", "*");
+                            try
+                            {
+                                startMethod(setting);
+                                startPort = j;
+                            }
+                            catch
+                            {
+                                cfg.writeSetting("Port", "*");
+                            }
                         }
                     }
-                }
-                if (startPort == -1)
-                    cfg.writeSetting("Port", "*");   
+                    if (startPort == -1)
+                        cfg.writeSetting("Port", "*");
+                }  
             }
             else
             {
@@ -75,7 +86,7 @@ namespace iRacingSLI
                     }
                 }
             }
-            cbo.SelectedIndex = startPort;
+            cbo.SelectedIndex = startPort + 1;
         }
 
         public Boolean openSerial(String port, String arduinoVer)
@@ -131,11 +142,20 @@ namespace iRacingSLI
             return true;
         }
 
+        public void openFake()
+        {
+            fake = true;
+            open = true;
+            console("Opening Fake Port");
+        }
+
         public void closeSerial()
         {
-            SP.Close();
+            if (!fake)
+                SP.Close();
             console("Closing Serial Port");
             open = false;
+            fake = false;
         }
 
         public Boolean isOpen()
@@ -143,9 +163,15 @@ namespace iRacingSLI
             return open;
         }
 
+        public Boolean isFake()
+        {
+            return fake;
+        }
+
         public void send(Byte[] data)
         {
-            SP.Write(data, 0, 16);
+            if (!fake)
+                SP.Write(data, 0, 16);
         }
     }
 }
