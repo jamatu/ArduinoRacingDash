@@ -1,8 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Threading;
 using System.Windows.Threading;
 using iRSDKSharp;
+using iRacingSdkWrapper.Broadcast;
 
 namespace iRacingSdkWrapper
 {
@@ -17,6 +19,9 @@ namespace iRacingSdkWrapper
         private readonly SynchronizationContext context;
         private int waitTime;
         private Mutex readMutex;
+
+        private Thread _looper;
+        private bool _hasConnected;
 
         #endregion
 
@@ -34,6 +39,13 @@ namespace iRacingSdkWrapper
             this.TelemetryUpdateFrequency = 60;
             this.ConnectSleepTime = 1000;
             _DriverId = -1;
+
+            this.Replay = new ReplayControl(this);
+            this.Camera = new CameraControl(this);
+            this.PitCommands = new PitCommandControl(this);
+            this.Chat = new ChatControl(this);
+            this.Textures = new TextureControl(this);
+            this.TelemetryRecording = new TelemetryRecordingControl(this);
         }
 
         #region Properties
@@ -76,11 +88,15 @@ namespace iRacingSdkWrapper
                     throw new ArgumentOutOfRangeException("TelemetryUpdateFrequency cannot be more than 60.");
 
                 _TelemetryUpdateFrequency = value;
-
+                
                 waitTime = (int) Math.Floor(1000f/value) - 1;
             }
         }
 
+        /// <summary>
+        /// The time in milliseconds between each check if iRacing is running. Use a low value (hundreds of milliseconds) to respond quickly to iRacing startup.
+        /// Use a high value (several seconds) to conserve resources if an immediate response to startup is not required.
+        /// </summary>
         public int ConnectSleepTime
         {
             get; set;
@@ -92,21 +108,43 @@ namespace iRacingSdkWrapper
         /// </summary>
         public int DriverId { get { return _DriverId; } }
 
+        #region Broadcast messages
+
+        /// <summary>
+        /// Controls the replay playback system.
+        /// </summary>
+        public ReplayControl Replay { get; private set; }
+
+        /// <summary>
+        /// Provides control over the replay camera and where it is focused.
+        /// </summary>
+        public CameraControl Camera { get; private set; }
+
+        /// <summary>
+        /// Provides control over the pit commands.
+        /// </summary>
+        public PitCommandControl PitCommands { get; private set; }
+
+        /// <summary>
+        /// Provides control over the chat window.
+        /// </summary>
+        public ChatControl Chat { get; private set; }
+
+        /// <summary>
+        /// Provides control over reloading of car textures.
+        /// </summary>
+        public TextureControl Textures { get; private set; }
+
+        /// <summary>
+        /// Provides control over the telemetry recording system.
+        /// </summary>
+        public TelemetryRecordingControl TelemetryRecording { get; private set; }
+
+        #endregion
+
         #endregion
 
         #region Methods
-
-        public object GetData(string headerName)
-        {
-            if (!this.IsConnected) return null;
-
-            return sdk.GetData(headerName);
-        }
-
-        public TelemetryValue<T> GetTelemetryValue<T>(string name)
-        {
-            return new TelemetryValue<T>(sdk, name);
-        }
 
         /// <summary>
         /// Connects to iRacing and starts the main loop in a background thread.
@@ -115,8 +153,13 @@ namespace iRacingSdkWrapper
         {
             _IsRunning = true;
 
-            Thread t = new Thread(Loop);
-            t.Start();
+            if (_looper != null)
+            {
+                _looper.Abort();
+            }
+
+            _looper = new Thread(Loop);
+            _looper.Start();
         }
 
         /// <summary>
@@ -127,6 +170,38 @@ namespace iRacingSdkWrapper
             _IsRunning = false;
         }
 
+        /// <summary>
+        /// Return raw data object from the live telemetry.
+        /// </summary>
+        /// <param name="headerName">The name of the telemetry property to obtain.</param>
+        public object GetData(string headerName)
+        {
+            if (!this.IsConnected) return null;
+
+            return sdk.GetData(headerName);
+        }
+
+        /// <summary>
+        /// Return live telemetry data wrapped in a TelemetryValue object of the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type of the desired object.</typeparam>
+        /// <param name="name">The name of the desired object.</param>
+        public TelemetryValue<T> GetTelemetryValue<T>(string name)
+        {
+            return new TelemetryValue<T>(sdk, name);
+        }
+
+        /// <summary>
+        /// Reads new session info and raises the SessionInfoUpdated event, regardless of if the session info has changed.
+        /// </summary>
+        public void RequestSessionInfoUpdate()
+        {
+            var sessionInfo = sdk.GetSessionInfo();
+            var time = (double) sdk.GetData("SessionTime");
+            var sessionArgs = new SessionInfoUpdatedEventArgs(sessionInfo, time);
+            this.RaiseEvent(OnSessionInfoUpdated, sessionArgs);
+        }
+        
         private object TryGetSessionNum()
         {
             try
@@ -155,6 +230,7 @@ namespace iRacingSdkWrapper
                         this.RaiseEvent(OnConnected, EventArgs.Empty);
                     }
 
+                    _hasConnected = true;
                     _IsConnected = true;
 
                     readMutex.WaitOne(8);
@@ -168,17 +244,24 @@ namespace iRacingSdkWrapper
                         attempts++;
                         sessionnum = this.TryGetSessionNum();
                     }
-                    if (attempts >= maxAttempts) continue;
-
-
-                    // Get the session info string
-                    string sessionInfo = sdk.GetSessionInfo();
-
+                    if (attempts >= maxAttempts)
+                    {
+                        Debug.WriteLine("Session num too many attempts");
+                        continue;
+                    }
+                    
                     // Parse out your own driver Id
-                    if (this.DriverId == -1) _DriverId = int.Parse(YamlParser.Parse(sessionInfo, "DriverInfo:DriverCarIdx:"));
+                    if (this.DriverId == -1)
+                    {
+                        _DriverId = (int)sdk.GetData("PlayerCarIdx");
+                    }
 
                     // Get the session time (in seconds) of this update
                     var time = (double) sdk.GetData("SessionTime");
+
+                    // Raise the TelemetryUpdated event and pass along the lap info and session time
+                    var telArgs = new TelemetryUpdatedEventArgs(new TelemetryInfo(sdk), time);
+                    this.RaiseEvent(OnTelemetryUpdated, telArgs);
 
                     // Is the session info updated?
                     int newUpdate = sdk.Header.SessionInfoUpdate;
@@ -186,17 +269,17 @@ namespace iRacingSdkWrapper
                     {
                         lastUpdate = newUpdate;
 
+                        // Get the session info string
+                        var sessionInfo = sdk.GetSessionInfo();
+
                         // Raise the SessionInfoUpdated event and pass along the session info and session time.
                         var sessionArgs = new SessionInfoUpdatedEventArgs(sessionInfo, time);
                         this.RaiseEvent(OnSessionInfoUpdated, sessionArgs);
                     }
 
-                    // Raise the TelemetryUpdated event and pass along the lap info and session time
-                    var telArgs = new TelemetryUpdatedEventArgs(new TelemetryInfo(sdk), time);
-                    this.RaiseEvent(OnTelemetryUpdated, telArgs);
 
                 }
-                else if (sdk.IsInitialized)
+                else if (_hasConnected)
                 {
                     // We have already been initialized before, so the sim is closing
                     this.RaiseEvent(OnDisconnected, EventArgs.Empty);
@@ -205,10 +288,12 @@ namespace iRacingSdkWrapper
                     _DriverId = -1;
                     lastUpdate = -1;
                     _IsConnected = false;
+                    _hasConnected = false;
                 }
                 else
                 {
                     _IsConnected = false;
+                    _hasConnected = false;
                     _DriverId = -1;
 
                     //Try to find the sim
@@ -303,9 +388,19 @@ namespace iRacingSdkWrapper
 
         #region Enums
 
+        /// <summary>
+        /// The way in which events of the SDK wrapper are raised.
+        /// </summary>
         public enum EventRaiseTypes
         {
+            /// <summary>
+            /// Events are raised on the current thread (the thread on which the SdkWrapper object was created).
+            /// </summary>
             CurrentThread,
+
+            /// <summary>
+            /// Events are raised on a separate background thread (synchronization / invokation required to update UI).
+            /// </summary>
             BackgroundThread
         }
 

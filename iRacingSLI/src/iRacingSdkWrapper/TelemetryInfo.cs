@@ -30,11 +30,17 @@ namespace iRacingSdkWrapper
                                     this.IsReplayPlaying,
                                     this.ReplayFrameNum,
                                     this.CarIdxLap,
+                                    this.CarIdxLapCompleted,
                                     this.CarIdxLapDistPct,
                                     this.CarIdxTrackSurface,
                                     this.CarIdxSteer,
                                     this.CarIdxRPM,
                                     this.CarIdxGear,
+                                    this.CarIdxF2Time,
+                                    this.CarIdxEstTime,
+                                    this.CarIdxOnPitRoad,
+                                    this.CarIdxPosition,
+                                    this.CarIdxClassPosition,
                                     this.SteeringWheelAngle,
                                     this.Throttle,
                                     this.Brake,
@@ -79,10 +85,68 @@ namespace iRacingSdkWrapper
                                     this.OilTemp,
                                     this.OilPress,
                                     this.OilLevel,
-                                    this.Voltage
+                                    this.Voltage,
+                                    this.SessionTimeRemain,
+                                    this.ReplayFrameNumEnd,
+                                    this.AirDensity,
+                                    this.AirPressure,
+                                    this.AirTemp,
+                                    this.FogLevel,
+                                    this.Skies,
+                                    this.TrackTemp,
+                                    this.TrackTempCrew,
+                                    this.RelativeHumidity,
+                                    this.WeatherType,
+                                    this.WindDir,
+                                    this.WindVel,
+                                    this.MGUKDeployAdapt,
+                                    this.MGUKDeployFixed,
+                                    this.MGUKRegenGain,
+                                    this.EnergyBatteryToMGU,
+                                    this.EnergyBudgetBattToMGU,
+                                    this.EnergyERSBattery,
+                                    this.PowerMGUH,
+                                    this.PowerMGUK,
+                                    this.TorqueMGUK,
+                                    this.DrsStatus,
+                                    this.LapCompleted,
+                                    this.PlayerCarDriverIncidentCount,
+                                    this.PlayerCarTeamIncidentCount,
+                                    this.PlayerCarMyIncidentCount,
+                                    this.PlayerTrackSurface,
+                                    this.PlayerCarIdx
                                 });
             return values;
         }
+
+        public TelemetryValue<float> MGUKDeployAdapt { get { return new TelemetryValue<float>(sdk, "dcMGUKDeployAdapt"); } }
+
+        public TelemetryValue<float> MGUKDeployFixed { get { return new TelemetryValue<float>(sdk, "dcMGUKDeployFixed"); } }
+
+        public TelemetryValue<float> MGUKRegenGain { get { return new TelemetryValue<float>(sdk, "dcMGUKRegenGain"); } }
+
+        public TelemetryValue<float> EnergyBatteryToMGU { get { return new TelemetryValue<float>(sdk, "EnergyBatteryToMGU_KLap"); } }
+
+        public TelemetryValue<float> EnergyBudgetBattToMGU { get { return new TelemetryValue<float>(sdk, "EnergyBudgetBattToMGU_KLap"); } }
+
+        public TelemetryValue<float> EnergyERSBattery { get { return new TelemetryValue<float>(sdk, "EnergyERSBattery"); } }
+
+        public TelemetryValue<float> PowerMGUH { get { return new TelemetryValue<float>(sdk, "PowerMGU_H"); } }
+
+        public TelemetryValue<float> PowerMGUK { get { return new TelemetryValue<float>(sdk, "PowerMGU_K"); } }
+
+        public TelemetryValue<float> TorqueMGUK { get { return new TelemetryValue<float>(sdk, "TorqueMGU_K"); } }
+
+        /// <summary>
+        /// Current DRS status. 0 = inactive, 1 = can be activated in next DRS zone, 2 = can be activated now, 3 = active.
+        /// </summary>
+        public TelemetryValue<int> DrsStatus { get { return new TelemetryValue<int>(sdk, "DRS_Status"); } }
+
+        /// <summary>
+        /// The number of laps you have completed. Note: on Nordschleife Tourist layout, you can complete a lap without starting a new one!
+        /// </summary>
+        public TelemetryValue<int> LapCompleted { get { return new TelemetryValue<int>(sdk, "LapCompleted"); } }
+
 
         /// <summary>
         /// Seconds since session start. Unit: s
@@ -133,10 +197,14 @@ namespace iRacingSdkWrapper
 
 
         /// <summary>
-        /// Lap count by car index. 
+        /// Current lap number by car index
         /// </summary>
         public TelemetryValue<int[]> CarIdxLap { get { return new TelemetryValue<int[]>(sdk, "CarIdxLap"); } }
 
+        /// <summary>
+        /// Current number of completed laps by car index. Note: On Nordschleife Tourist layout, cars can complete a lap without starting a new lap!
+        /// </summary>
+        public TelemetryValue<int[]> CarIdxLapCompleted { get { return new TelemetryValue<int[]>(sdk, "CarIdxLapCompleted"); } }
 
         /// <summary>
         /// Percentage distance around lap by car index. Unit: %
@@ -166,6 +234,16 @@ namespace iRacingSdkWrapper
         /// -1=reverse  0=neutral  1..n=current gear by car index. 
         /// </summary>
         public TelemetryValue<int[]> CarIdxGear { get { return new TelemetryValue<int[]>(sdk, "CarIdxGear"); } }
+
+        public TelemetryValue<float[]> CarIdxF2Time { get { return new TelemetryValue<float[]>(sdk, "CarIdxF2Time"); } }
+
+        public TelemetryValue<float[]> CarIdxEstTime { get { return new TelemetryValue<float[]>(sdk, "CarIdxEstTime"); } }
+
+        public TelemetryValue<bool[]> CarIdxOnPitRoad { get { return new TelemetryValue<bool[]>(sdk, "CarIdxOnPitRoad"); } }
+
+        public TelemetryValue<int[]> CarIdxPosition { get { return new TelemetryValue<int[]>(sdk, "CarIdxPosition"); } }
+
+        public TelemetryValue<int[]> CarIdxClassPosition { get { return new TelemetryValue<int[]>(sdk, "CarIdxClassPosition"); } }
 
 
         /// <summary>
@@ -442,5 +520,41 @@ namespace iRacingSdkWrapper
         /// Engine voltage. Unit: V
         /// </summary>
         public TelemetryValue<float> Voltage { get { return new TelemetryValue<float>(sdk, "Voltage"); } }
+
+        public TelemetryValue<double> SessionTimeRemain { get { return new TelemetryValue<double>(sdk, "SessionTimeRemain"); } }
+
+        public TelemetryValue<int> ReplayFrameNumEnd { get { return new TelemetryValue<int>(sdk, "ReplayFrameNumEnd"); } }
+
+        public TelemetryValue<float> AirDensity { get { return new TelemetryValue<float>(sdk, "AirDensity"); } }
+
+        public TelemetryValue<float> AirPressure { get { return new TelemetryValue<float>(sdk, "AirPressure"); } }
+
+        public TelemetryValue<float> AirTemp { get { return new TelemetryValue<float>(sdk, "AirTemp"); } }
+
+        public TelemetryValue<float> FogLevel { get { return new TelemetryValue<float>(sdk, "FogLevel"); } }
+
+        public TelemetryValue<int> Skies { get { return new TelemetryValue<int>(sdk, "Skies"); } }
+
+        public TelemetryValue<float> TrackTemp { get { return new TelemetryValue<float>(sdk, "TrackTemp"); } }
+
+        public TelemetryValue<float> TrackTempCrew { get { return new TelemetryValue<float>(sdk, "TrackTempCrew"); } }
+
+        public TelemetryValue<float> RelativeHumidity { get { return new TelemetryValue<float>(sdk, "RelativeHumidity"); } }
+
+        public TelemetryValue<int> WeatherType { get { return new TelemetryValue<int>(sdk, "WeatherType"); } }
+
+        public TelemetryValue<float> WindDir { get { return new TelemetryValue<float>(sdk, "WindDir"); } }
+
+        public TelemetryValue<float> WindVel { get { return new TelemetryValue<float>(sdk, "WindVel"); } }
+
+        public TelemetryValue<int> PlayerCarTeamIncidentCount { get { return new TelemetryValue<int>(sdk, "PlayerCarTeamIncidentCount"); } }
+
+        public TelemetryValue<int> PlayerCarMyIncidentCount { get { return new TelemetryValue<int>(sdk, "PlayerCarMyIncidentCount"); } }
+
+        public TelemetryValue<int> PlayerCarDriverIncidentCount { get { return new TelemetryValue<int>(sdk, "PlayerCarDriverIncidentCount"); } }
+
+        public TelemetryValue<TrackSurfaces> PlayerTrackSurface { get { return new TelemetryValue<TrackSurfaces>(sdk, "PlayerTrackSurface"); } }
+
+        public TelemetryValue<int> PlayerCarIdx { get { return new TelemetryValue<int>(sdk, "PlayerCarIdx"); } }
     }
 }

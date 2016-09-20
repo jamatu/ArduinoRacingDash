@@ -43,3 +43,4 @@ D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\
 D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\Release\iRacingSLI.iRacingSLI.resources
 D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\Release\iRacingSLI.Properties.Resources.resources
 D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\obj\Release\iRacingSLI.csproj.GenerateResource.Cache
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSLI\bin\Release\YamlDotNet.xml

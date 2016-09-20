@@ -32,7 +32,6 @@
             this.consoleTextBox = new System.Windows.Forms.TextBox();
             this.telemTextBox = new System.Windows.Forms.TextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.chkBrake = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblSens = new System.Windows.Forms.Label();
             this.lblTol = new System.Windows.Forms.Label();
@@ -65,7 +64,7 @@
             // 
             this.startButton.Location = new System.Drawing.Point(12, 12);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(107, 23);
+            this.startButton.Size = new System.Drawing.Size(116, 23);
             this.startButton.TabIndex = 0;
             this.startButton.Text = "Start";
             this.startButton.UseVisualStyleBackColor = true;
@@ -74,12 +73,12 @@
             // consoleTextBox
             // 
             this.consoleTextBox.BackColor = System.Drawing.SystemColors.Control;
-            this.consoleTextBox.Location = new System.Drawing.Point(0, 215);
+            this.consoleTextBox.Location = new System.Drawing.Point(0, 308);
             this.consoleTextBox.Multiline = true;
             this.consoleTextBox.Name = "consoleTextBox";
             this.consoleTextBox.ReadOnly = true;
             this.consoleTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.consoleTextBox.Size = new System.Drawing.Size(397, 192);
+            this.consoleTextBox.Size = new System.Drawing.Size(397, 99);
             this.consoleTextBox.TabIndex = 0;
             // 
             // telemTextBox
@@ -104,7 +103,6 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.chkBrake);
             this.splitContainer1.Panel1.Controls.Add(this.groupBox1);
             this.splitContainer1.Panel1.Controls.Add(this.lblIntensity);
             this.splitContainer1.Panel1.Controls.Add(this.trkIntensity);
@@ -123,16 +121,6 @@
             this.splitContainer1.SplitterDistance = 397;
             this.splitContainer1.TabIndex = 3;
             // 
-            // chkBrake
-            // 
-            this.chkBrake.AutoSize = true;
-            this.chkBrake.Location = new System.Drawing.Point(30, 104);
-            this.chkBrake.Name = "chkBrake";
-            this.chkBrake.Size = new System.Drawing.Size(15, 14);
-            this.chkBrake.TabIndex = 14;
-            this.chkBrake.UseVisualStyleBackColor = true;
-            this.chkBrake.CheckedChanged += new System.EventHandler(this.chkBrake_CheckedChanged);
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.lblSens);
@@ -142,12 +130,13 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.trkTol);
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.groupBox1.Location = new System.Drawing.Point(51, 94);
+            this.groupBox1.Location = new System.Drawing.Point(24, 76);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(297, 100);
             this.groupBox1.TabIndex = 13;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Brake Vibe Settings";
+            this.groupBox1.Visible = false;
             // 
             // lblSens
             // 
@@ -185,7 +174,6 @@
             this.trkSens.TabIndex = 14;
             this.trkSens.Tag = "";
             this.trkSens.Value = 3;
-            this.trkSens.ValueChanged += new System.EventHandler(this.trkSens_ValueChanged);
             // 
             // label1
             // 
@@ -206,12 +194,11 @@
             this.trkTol.Tag = "";
             this.trkTol.TickFrequency = 10;
             this.trkTol.Value = 30;
-            this.trkTol.ValueChanged += new System.EventHandler(this.trkTol_ValueChanged);
             // 
             // lblIntensity
             // 
             this.lblIntensity.AutoSize = true;
-            this.lblIntensity.Location = new System.Drawing.Point(32, 57);
+            this.lblIntensity.Location = new System.Drawing.Point(196, 30);
             this.lblIntensity.Name = "lblIntensity";
             this.lblIntensity.Size = new System.Drawing.Size(49, 13);
             this.lblIntensity.TabIndex = 6;
@@ -219,7 +206,7 @@
             // 
             // trkIntensity
             // 
-            this.trkIntensity.Location = new System.Drawing.Point(87, 52);
+            this.trkIntensity.Location = new System.Drawing.Point(251, 25);
             this.trkIntensity.Maximum = 7;
             this.trkIntensity.Name = "trkIntensity";
             this.trkIntensity.Size = new System.Drawing.Size(104, 45);
@@ -250,7 +237,7 @@
             // consoleLabel
             // 
             this.consoleLabel.AutoSize = true;
-            this.consoleLabel.Location = new System.Drawing.Point(0, 199);
+            this.consoleLabel.Location = new System.Drawing.Point(0, 295);
             this.consoleLabel.Name = "consoleLabel";
             this.consoleLabel.Size = new System.Drawing.Size(45, 13);
             this.consoleLabel.TabIndex = 2;
@@ -308,7 +295,7 @@
             // 
             this.btnDefault.Location = new System.Drawing.Point(353, 11);
             this.btnDefault.Name = "btnDefault";
-            this.btnDefault.Size = new System.Drawing.Size(93, 23);
+            this.btnDefault.Size = new System.Drawing.Size(71, 23);
             this.btnDefault.TabIndex = 6;
             this.btnDefault.Text = "Set Defualt";
             this.btnDefault.UseVisualStyleBackColor = true;
@@ -370,7 +357,6 @@
         private System.Windows.Forms.TrackBar trkSens;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TrackBar trkTol;
-        private System.Windows.Forms.CheckBox chkBrake;
         private System.Windows.Forms.CheckBox chkTelem;
         private System.Windows.Forms.Button btnDefault;
         private System.Windows.Forms.Label telemetryLabel;

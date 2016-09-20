@@ -44,17 +44,21 @@
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
     <Reference Include="YamlDotNet">
-      <HintPath>..\..\iRacingAdmin\packages\YamlDotNet.3.2.1\lib\net35\YamlDotNet.dll</HintPath>
-    </Reference>
-    <Reference Include="YamlDotNet.Core, Version=2.0.1.27808, Culture=neutral, PublicKeyToken=2b53052c5884d7a1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\iRacingAdmin\packages\YamlDotNet.Core.2.2.0\lib\net35\YamlDotNet.Core.dll</HintPath>
+      <HintPath>..\packages\YamlDotNet.3.7.0\lib\net35\YamlDotNet.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bitfields\BitfieldBase.cs" />
     <Compile Include="Bitfields\CameraState.cs" />
     <Compile Include="Bitfields\EngineWarning.cs" />
+    <Compile Include="Bitfields\PitServiceFlag.cs" />
+    <Compile Include="Broadcast\BroadcastBase.cs" />
+    <Compile Include="Broadcast\CameraControl.cs" />
+    <Compile Include="Broadcast\ChatControl.cs" />
+    <Compile Include="Broadcast\PitCommandControl.cs" />
+    <Compile Include="Broadcast\ReplayControl.cs" />
+    <Compile Include="Broadcast\TelemetryRecordingControl.cs" />
+    <Compile Include="Broadcast\TextureControl.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Bitfields\SessionFlag.cs" />
     <Compile Include="SessionInfo.cs" />
@@ -68,14 +72,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-    <None Include="iracingvars.csv" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
-    <None Include="sessioninfo_example.yaml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="telemetry_11_23_15.pdf" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\irsdkSharp\iRSDKSharp.csproj">

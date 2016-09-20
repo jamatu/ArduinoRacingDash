@@ -16,7 +16,20 @@ namespace iRSDKSharp
     public enum ReplayStateModeTypes { Erasetape = 0 };
     public enum ReloadTexturesModeTypes { All = 0, CarIdx };
     public enum ChatCommandModeTypes { Macro = 0, BeginChat, Reply, Cancel };
-    public enum PitCommandModeTypes { Clear = 0, WS, Fuel, LF, RF, LR, RR, ClearTires };
+
+    public enum PitCommandModeTypes
+    {
+        Clear = 0,
+        WS = 1,
+        Fuel = 2,
+        LF = 3,
+        RF = 4,
+        LR = 5,
+        RR = 6,
+        ClearTires = 7,
+        FastRepair = 8
+    };
+
     public enum TelemCommandModeTypes { Stop = 0, Start, Restart };
 
     public class Defines
@@ -31,6 +44,7 @@ namespace iRSDKSharp
         public const int MaxVars = 4096;
         public const int MaxBufs = 4;
         public const int StatusConnected = 1;
+        public const int SessionStringLength = 0x20000; // 128k
     }
 
     public class iRacingSDK
@@ -43,6 +57,7 @@ namespace iRSDKSharp
         public const int VarUnitOffset = 112;
         public int VarHeaderSize = 144;
 
+
         public bool IsInitialized = false;
 
         MemoryMappedFile iRacingFile;
@@ -54,10 +69,13 @@ namespace iRSDKSharp
 
         public bool Startup()
         {
+            if (IsInitialized) return true;
+
             try
             {
                 iRacingFile = MemoryMappedFile.OpenExisting(Defines.MemMapFileName);
                 FileMapView = iRacingFile.CreateViewAccessor();
+                
                 VarHeaderSize = Marshal.SizeOf(typeof(VarHeader));
 
                 var hEvent = OpenEvent(Defines.DesiredAccess, false, Defines.DataValidEventName);
@@ -223,19 +241,7 @@ namespace iRSDKSharp
             IntPtr result = IntPtr.Zero;
             if (msgId != IntPtr.Zero)
             {
-                result = SendMessage(hwndBroadcast, msgId.ToInt32(), MakeLong((short)msg, (short)var1), var2);
-            }
-            return result.ToInt32();
-        }
-
-        public int PadCarNumber(int number, int zeroes)
-        {
-            IntPtr id = GetPadCarNumID();
-            IntPtr hwndBroadcast = IntPtr.Add(IntPtr.Zero, 0xffff);
-            IntPtr result = IntPtr.Zero;
-            if (id != IntPtr.Zero)
-            {
-                result = SendMessage(hwndBroadcast, id.ToInt32(), 0, MakeLong((short)number, (short)zeroes));
+                result = PostMessage(hwndBroadcast, msgId.ToInt32(), MakeLong((short)msg, (short)var1), var2);
             }
             return result.ToInt32();
         }
@@ -243,8 +249,11 @@ namespace iRSDKSharp
         [DllImport("user32.dll")]
         private static extern IntPtr RegisterWindowMessage(string lpProcName);
 
+        //[DllImport("user32.dll")]
+        //private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
         [DllImport("user32.dll")]
-        private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        private static extern IntPtr PostMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
         [DllImport("Kernel32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr OpenEvent(UInt32 dwDesiredAccess, Boolean bInheritHandle, String lpName);
@@ -264,9 +273,6 @@ namespace iRSDKSharp
             return (short)dword;
         }
     }
-
-    
-
 
     //144 bytes
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]

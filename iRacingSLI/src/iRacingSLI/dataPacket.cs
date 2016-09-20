@@ -23,7 +23,7 @@ namespace iRacingSLI
             console = callConsole;
         }
 
-        public void fetch(TelemetryInfo telem, iRacingSDK sdk, double fuelVal, int brake, Boolean sendTimeReset, Boolean sendTime, double prevFuel)
+        public void fetch(TelemetryInfo telem, iRacingSDK sdk, double fuelVal, Boolean sendTimeReset, Boolean sendTime, double prevFuel)
         {           
             Gear = telem.Gear.Value;
             Speed = telem.Speed.Value;
@@ -55,7 +55,6 @@ namespace iRacingSLI
                 Fuel = Convert.ToInt16(Math.Round(telem.FuelLevelPct.Value * 100));
                 Engine |= 3 << 1;
             }
-            Engine |= (byte)(brake << 3);
 
             if (prevFuel != 0)
                 Engine |= (1 << 4);

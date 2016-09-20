@@ -34,8 +34,9 @@ namespace iRacingSLI
         private Boolean sendTime;
         private Boolean sendTimeReset;
 
-        private String Version = "2.2.0";
-        private String ArduinoVersion = "2.1.2";
+        public static String Version = "2.2.3";
+        public static String ArduinoVersion = "2.1.2";
+        public static String currArduinoVersion = "-";
 
         public iRacingSLI()
         {
@@ -53,16 +54,12 @@ namespace iRacingSLI
                 this.cboSpdUnit.SelectedIndex = Convert.ToInt16(cfg.readSetting("spdUnit", "0"));
                 this.trkIntensity.Value = Convert.ToInt16(cfg.readSetting("intensity", "0"));
                 this.chkTelem.Checked = Convert.ToBoolean(cfg.readSetting("telemEnable", "True"));
-                this.chkBrake.Checked = Convert.ToBoolean(cfg.readSetting("brakeEnable", "False"));
-                this.groupBox1.Enabled = this.chkBrake.Checked;
-                this.trkTol.Value = Convert.ToInt16(cfg.readSetting("brakeTol", "35"));
-                this.trkSens.Value = Convert.ToInt16(cfg.readSetting("brakeSens", "3"));
 
                 console("Start iRacingSDK Wrapper");
                 wrapper = new SdkWrapper();
                 wrapper.EventRaiseType = SdkWrapper.EventRaiseTypes.CurrentThread;
                 wrapper.TelemetryUpdateFrequency = 20;
-                wrapper.ConnectSleepTime = 1;
+                //wrapper.ConnectSleepTime = 1;
 
                 wrapper.Connected += wrapper_Connected;
                 wrapper.Disconnected += wrapper_Disconnected;
@@ -75,7 +72,7 @@ namespace iRacingSLI
             }
             catch (Exception exe)
             {
-                LogFile(exe.Message, exe.ToString(), "Constructor", exe.LineNumber(), this.FindForm().Name);
+                ExceptionHelper.writeToLogFile(exe.Message, exe.ToString(), "Constructor", exe.LineNumber(), this.FindForm().Name);
             }
         }
 
@@ -96,7 +93,7 @@ namespace iRacingSLI
                 }
                 catch (Exception exe)
                 {
-                    LogFile(exe.Message, exe.ToString(), "Update Session Data", exe.LineNumber(), this.FindForm().Name);
+                    ExceptionHelper.writeToLogFile(exe.Message, exe.ToString(), "Update Session Data", exe.LineNumber(), this.FindForm().Name);
                 }
             }
         }
@@ -111,8 +108,7 @@ namespace iRacingSLI
                     if (!connection.isFake())
                     {
                         dataPacket data = new dataPacket(console);
-                        data.fetch(e.TelemetryInfo, wrapper.Sdk, fuelEst, /*chkBrake.Checked ? brk.getBrakeVibe(e.TelemetryInfo, trkTol.Value, trkSens.Value) :*/ 0,
-                            sendTimeReset, sendTime, prevFuel);
+                        data.fetch(e.TelemetryInfo, wrapper.Sdk, fuelEst, sendTimeReset, sendTime, prevFuel);
                         connection.send(data.compile(this.cboSpdUnit.SelectedIndex == 0, this.trkIntensity.Value));
 
                         sendTime = false;
@@ -157,7 +153,7 @@ namespace iRacingSLI
             }
             catch (Exception exe)
             {
-                LogFile(exe.Message, exe.ToString(), "Update Arduino", exe.LineNumber(), this.FindForm().Name);
+                ExceptionHelper.writeToLogFile(exe.Message, exe.ToString(), "Update Arduino", exe.LineNumber(), this.FindForm().Name);
             }
         }
 
@@ -211,7 +207,7 @@ namespace iRacingSLI
             }
             catch (Exception exe)
             {
-                LogFile(exe.Message, exe.ToString(), "Print Telemetry", exe.LineNumber(), this.FindForm().Name);
+                ExceptionHelper.writeToLogFile(exe.Message, exe.ToString(), "Print Telemetry", exe.LineNumber(), this.FindForm().Name);
             }
         }
 
@@ -289,24 +285,6 @@ namespace iRacingSLI
             telemTextBox.Clear();
         }
 
-        private void chkBrake_CheckedChanged(object sender, EventArgs e)
-        {
-            this.groupBox1.Enabled = this.chkBrake.Checked;
-            cfg.writeSetting("brakeEnable", Convert.ToString(chkBrake.Checked));
-        }
-
-        private void trkTol_ValueChanged(object sender, EventArgs e)
-        {
-            lblTol.Text = "(" + trkTol.Value + "%)";
-            cfg.writeSetting("brakeTol", Convert.ToString(trkTol.Value));
-        }
-
-        private void trkSens_ValueChanged(object sender, EventArgs e)
-        {
-            lblSens.Text = "(" + trkSens.Value + ")";
-            cfg.writeSetting("brakeSens", Convert.ToString(trkSens.Value));
-        }
-
         public void startConnection(String port)
         {
             startButton.Text = "Stop";
@@ -314,10 +292,7 @@ namespace iRacingSLI
             if (port == "Local")
                 connection.openFake();
             else
-            {
-                if (!connection.openSerial(port, ArduinoVersion))
-                    stopConnection();
-            }
+                if (!connection.openSerial(port, ArduinoVersion)) stopConnection();
         }
 
         public void stopConnection()
@@ -341,45 +316,6 @@ namespace iRacingSLI
                 telemTextBox.AppendText("\r\n" + str);
             else
                 telemTextBox.AppendText(str);
-        }
-
-        public void LogFile(string sExceptionName, string sEventName, string sControlName, int nErrorLineNo, string sFormName)
-        {
-
-            StreamWriter log;
-
-            if (!File.Exists("logfile.txt"))
-            {
-                log = new StreamWriter("logfile.txt");
-            }
-            else
-            {
-                log = File.AppendText("logfile.txt");
-            }
-
-            log.WriteLine("Data Time:" + DateTime.Now);
-            log.WriteLine("Exception Name:" + sExceptionName);
-            log.WriteLine("Event Name:" + sEventName);
-            log.WriteLine("Control Name:" + sControlName);
-            log.WriteLine("Error Line No.:" + nErrorLineNo);
-            log.WriteLine("Form Name:" + sFormName);
-
-            log.Close();
-        }
-    }
-
-    public static class ExceptionHelper
-    {
-        public static int LineNumber(this Exception e)
-        {
-            int linenum = 0;
-
-            try
-            {
-                linenum = Convert.ToInt32(e.StackTrace.Substring(e.StackTrace.LastIndexOf(":line") + 5));
-            }
-            catch{}
-            return linenum;
         }
     }
 }

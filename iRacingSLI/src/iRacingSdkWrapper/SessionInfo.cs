@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,8 +19,8 @@ namespace iRacingSdkWrapper
         {
             _updateTime = updateTime;
 
-            _yaml = yaml;
-
+            //_yaml = yaml;
+            this.FixYaml(yaml);
             this.ParseYaml();
         }
 
@@ -31,11 +32,14 @@ namespace iRacingSdkWrapper
         /// </summary>
         public double UpdateTime { get { return _updateTime; } }
 
-        private readonly string _yaml;
+        private string _yaml;
         /// <summary>
         /// The raw YAML string representing the session info.
         /// </summary>
         public string Yaml { get { return _yaml; } }
+
+        private bool _isValidYaml;
+        public bool IsValidYaml { get { return _isValidYaml; } }
 
         private YamlStream _yamlStream;
         public YamlStream YamlStream { get { return _yamlStream; } }
@@ -46,15 +50,65 @@ namespace iRacingSdkWrapper
         #endregion
 
         #region Methods
-        
+
+        private void FixYaml(string yaml)
+        {
+            // Quick hack: if there's more than 1 colon ":" in a line, keep only the first
+            using (var reader = new StringReader(yaml))
+            {
+                var builder = new StringBuilder();
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (line.Count(c => c == ':') > 1)
+                    {
+                        var chars = line.ToCharArray();
+                        bool foundFirst = false;
+                        for (int i = 0; i < chars.Length; i++)
+                        {
+                            var c = chars[i];
+                            if (c == ':')
+                            {
+                                if (!foundFirst)
+                                {
+                                    foundFirst = true;
+                                    continue;
+                                }
+                                chars[i] = '-';
+                            }
+                        }
+                        line = new string(chars);
+                    }
+                    builder.AppendLine(line);
+                }
+                _yaml = builder.ToString();
+            }
+
+            // Incorrect setup info dump fix: remove the setup info
+            var indexOfSetup = _yaml.IndexOf("CarSetup:");
+            if (indexOfSetup > 0)
+            {
+                _yaml = _yaml.Substring(0, indexOfSetup);
+            }
+        }
+
         private void ParseYaml()
         {
-            using (var reader = new StringReader(this.Yaml))
+            try
             {
-                _yamlStream = new YamlStream();
-                _yamlStream.Load(reader);
-                _yamlRoot = (YamlMappingNode)_yamlStream.Documents[0].RootNode;
+                using (var reader = new StringReader(this.Yaml))
+                {
+                    _yamlStream = new YamlStream();
+                    _yamlStream.Load(reader);
+                    _yamlRoot = (YamlMappingNode)_yamlStream.Documents[0].RootNode;
+                }
+                _isValidYaml = true;
             }
+            catch (Exception ex)
+            {
+                _isValidYaml = false;
+            }
+
         }
 
         public YamlQuery this[string key]
@@ -71,6 +125,7 @@ namespace iRacingSdkWrapper
         /// <param name="query">The YAML query path to the value.</param>
         public string TryGetValue(string query)
         {
+            if (!this.IsValidYaml) return null;
             try
             {
                 return YamlParser.Parse(_yaml, query);
@@ -88,6 +143,11 @@ namespace iRacingSdkWrapper
         /// <param name="value">When this method returns, contains the requested value if the query was valid, or null if the query was invalid.</param>
         public bool TryGetValue(string query, out string value)
         {
+            if (!this.IsValidYaml)
+            {
+                value = null;
+                return false;
+            }
             try
             {
                 value = YamlParser.Parse(_yaml, query);
@@ -106,6 +166,7 @@ namespace iRacingSdkWrapper
         /// <param name="query">The YAML query path to the value.</param>
         public string GetValue(string query)
         {
+            if (!this.IsValidYaml) return null;
             return YamlParser.Parse(_yaml, query);
         }
 

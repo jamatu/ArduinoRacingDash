@@ -138,6 +138,7 @@ namespace iRacingSLI
                 }
 
                 console("Handshake Sucsessful, Connected to Arduino Running: v" + s[0] + "." + s[1] + "." + s[2] + s[3]);
+                iRacingSLI.currArduinoVersion = s[0] + "." + s[1] + "." + s[2] + s[3];
             }
             return true;
         }

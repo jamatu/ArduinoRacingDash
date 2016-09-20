@@ -39,3 +39,13 @@ C:\Users\James\Downloads\iRacingSdkWrapper_v15\iRacingSdkWrapper\bin\Debug\YamlD
 C:\Users\James\Downloads\iRacingSdkWrapper_v15\iRacingSdkWrapper\obj\Debug\iRacingSdkWrapper.csprojResolveAssemblyReference.cache
 C:\Users\James\Downloads\iRacingSdkWrapper_v15\iRacingSdkWrapper\obj\Debug\iRacingSdkWrapper.dll
 C:\Users\James\Downloads\iRacingSdkWrapper_v15\iRacingSdkWrapper\obj\Debug\iRacingSdkWrapper.pdb
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSdkWrapper\bin\Debug\iRacingSdkWrapper.dll
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSdkWrapper\bin\Debug\iRacingSdkWrapper.pdb
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSdkWrapper\bin\Debug\iRSDKSharp.dll
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSdkWrapper\bin\Debug\YamlDotNet.dll
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSdkWrapper\bin\Debug\iRSDKSharp.pdb
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSdkWrapper\bin\Debug\YamlDotNet.pdb
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSdkWrapper\bin\Debug\YamlDotNet.xml
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSdkWrapper\obj\Debug\iRacingSdkWrapper.csprojResolveAssemblyReference.cache
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSdkWrapper\obj\Debug\iRacingSdkWrapper.dll
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\iRacingSdkWrapper\obj\Debug\iRacingSdkWrapper.pdb

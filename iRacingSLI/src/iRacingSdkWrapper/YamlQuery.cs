@@ -67,8 +67,8 @@ namespace iRacingSdkWrapper
 
         private YamlNode Find(YamlMappingNode node, string key)
         {
+            if (node == null) this.IsError = true;
             if (this.IsError) return null;
-
             return node.Children.FirstOrDefault(kvp => kvp.Key.ToString() == key).Value;
         }
 
@@ -145,7 +145,7 @@ namespace iRacingSdkWrapper
             {
                 return this.Value;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return defaultValue;
             }

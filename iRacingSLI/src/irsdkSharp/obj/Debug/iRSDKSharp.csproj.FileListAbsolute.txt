@@ -28,3 +28,8 @@ C:\Users\James\Downloads\iRacingSdkWrapper_v15\irsdkSharp\bin\Debug\iRSDKSharp.p
 C:\Users\James\Downloads\iRacingSdkWrapper_v15\irsdkSharp\obj\Debug\iRSDKSharp.csprojResolveAssemblyReference.cache
 C:\Users\James\Downloads\iRacingSdkWrapper_v15\irsdkSharp\obj\Debug\iRSDKSharp.dll
 C:\Users\James\Downloads\iRacingSdkWrapper_v15\irsdkSharp\obj\Debug\iRSDKSharp.pdb
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\irsdkSharp\bin\Debug\iRSDKSharp.dll
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\irsdkSharp\bin\Debug\iRSDKSharp.pdb
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\irsdkSharp\obj\Debug\iRSDKSharp.csprojResolveAssemblyReference.cache
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\irsdkSharp\obj\Debug\iRSDKSharp.dll
+D:\Development\Sim Racing\ArduinoDash\ArduinoDash\iRacingSLI\src\irsdkSharp\obj\Debug\iRSDKSharp.pdb

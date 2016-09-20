@@ -12,33 +12,47 @@ namespace iRacingSdkWrapper
         protected TelemetryValue(iRSDKSharp.iRacingSDK sdk, string name)
         {
             if (sdk == null) throw new ArgumentNullException("sdk");
-            if (!sdk.VarHeaders.ContainsKey(name))
-                throw new ArgumentException("No telemetry value with the specified name exists.");
 
-
-            var header = sdk.VarHeaders[name];
-            _Name = name;
-            _Description = header.Desc;
-            _Unit = header.Unit;
+            _exists = sdk.VarHeaders.ContainsKey(name);
+            if (_exists)
+            {
+                var header = sdk.VarHeaders[name];
+                _name = name;
+                _description = header.Desc;
+                _unit = header.Unit;
+                _type = header.Type;
+            }
         }
 
-        private readonly string _Name;
+        private readonly bool _exists;
+        /// <summary>
+        /// Whether or not a telemetry value with this name exists on the current car.
+        /// </summary>
+        public bool Exists { get { return _exists; } }
+
+        private readonly string _name;
         /// <summary>
         /// The name of this telemetry value parameter.
         /// </summary>
-        public string Name { get { return _Name; } }
+        public string Name { get { return _name; } }
 
-        private readonly string _Description;
+        private readonly string _description;
         /// <summary>
         /// The description of this parameter.
         /// </summary>
-        public string Description { get { return _Description; } }
+        public string Description { get { return _description; } }
 
-        private readonly string _Unit;
+        private readonly string _unit;
         /// <summary>
         /// The real world unit for this parameter.
         /// </summary>
-        public string Unit { get { return _Unit; } }
+        public string Unit { get { return _unit; } }
+
+        private readonly CVarHeader.VarType _type;
+        /// <summary>
+        /// The data-type for this parameter.
+        /// </summary>
+        public CVarHeader.VarType Type { get { return _type; } }
 
         public abstract object GetValue();
     }
@@ -57,16 +71,22 @@ namespace iRacingSdkWrapper
 
         private void GetData(iRacingSDK sdk)
         {
-            var data = sdk.GetData(this.Name);
+            try
+            {
+                var data = sdk.GetData(this.Name);
 
-            var type = typeof (T);
-            if (type.BaseType != null && type.BaseType.IsGenericType && type.BaseType.GetGenericTypeDefinition() == typeof(BitfieldBase<>))
-            {
-                _Value = (T) Activator.CreateInstance(type, new [] {data});
+                var type = typeof(T);
+                if (type.BaseType != null && type.BaseType.IsGenericType && type.BaseType.GetGenericTypeDefinition() == typeof(BitfieldBase<>))
+                {
+                    _Value = (T)Activator.CreateInstance(type, new[] { data });
+                }
+                else
+                {
+                    _Value = (T)data;
+                }
             }
-            else
+            catch (Exception)
             {
-                _Value = (T) data;
             }
         }
 
