@@ -20,3 +20,14 @@ Event Name:System.NullReferenceException: Object reference not set to an instanc
 Control Name:Constructor
 Error Line No.:0
 Form Name:iRacingSLI
+Data Time:20/09/2016 12:58:11
+Exception Name:InvalidArgument=Value of '0' is not valid for 'SelectedIndex'.
+Parameter name: SelectedIndex
+Event Name:System.ArgumentOutOfRangeException: InvalidArgument=Value of '0' is not valid for 'SelectedIndex'.
+Parameter name: SelectedIndex
+   at System.Windows.Forms.ComboBox.set_SelectedIndex(Int32 value)
+   at iRacingSLI.connectionHelper.setupConnection(Action`1 startMethod, ComboBox cbo, configHandler cfg)
+   at iRacingSLI.iRacingSLI..ctor()
+Control Name:Constructor
+Error Line No.:0
+Form Name:iRacingSLI

@@ -151,7 +151,7 @@ namespace iRacingSLI
 
         public void closeSerial()
         {
-            if (!fake)
+            if (!this.isFake())
                 SP.Close();
             console("Closing Serial Port");
             open = false;

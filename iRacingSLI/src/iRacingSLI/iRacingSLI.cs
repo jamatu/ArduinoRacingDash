@@ -21,7 +21,6 @@ namespace iRacingSLI
         private SdkWrapper wrapper;
         private connectionHelper connection;
         private configHandler cfg;
-        private brakeVibe brk;
         private int ticker;
         private Boolean hasInit;
         private int driverID;
@@ -35,20 +34,8 @@ namespace iRacingSLI
         private Boolean sendTime;
         private Boolean sendTimeReset;
 
-        private String Version = "2.1.5";
+        private String Version = "2.2.0";
         private String ArduinoVersion = "2.1.2";
-
-        [DllImport("kernel32.dll")]
-        static extern EXECUTION_STATE SetThreadExecutionState(EXECUTION_STATE esFlags);
-
-        [FlagsAttribute]
-        enum EXECUTION_STATE : uint
-        {
-            ES_AWAYMODE_REQUIRED = 0x00000040,
-            ES_CONTINUOUS = 0x80000000,
-            ES_DISPLAY_REQUIRED = 0x00000002,
-            ES_SYSTEM_REQUIRED = 0x00000001
-        }
 
         public iRacingSLI()
         {
@@ -59,7 +46,6 @@ namespace iRacingSLI
                 cfg = new configHandler(console);
                 connection = new connectionHelper(console);
                 connection.setupConnection(startConnection, cboPorts, cfg);
-                brk = new brakeVibe();
 
                 int top = Convert.ToInt16(cfg.readSetting("Top", "100")) > -3000 ? Convert.ToInt16(cfg.readSetting("Top", "100")) : 100;
                 int left = Convert.ToInt16(cfg.readSetting("Left", "100")) > -3000 ? Convert.ToInt16(cfg.readSetting("Left", "100")) : 100;
@@ -76,6 +62,7 @@ namespace iRacingSLI
                 wrapper = new SdkWrapper();
                 wrapper.EventRaiseType = SdkWrapper.EventRaiseTypes.CurrentThread;
                 wrapper.TelemetryUpdateFrequency = 20;
+                wrapper.ConnectSleepTime = 1;
 
                 wrapper.Connected += wrapper_Connected;
                 wrapper.Disconnected += wrapper_Disconnected;
@@ -105,6 +92,7 @@ namespace iRacingSLI
                     car = e.SessionInfo["DriverInfo"]["Drivers"]["CarIdx", driverID]["CarPath"].Value;
                     fuelEst = Convert.ToDouble(cfg.readSetting(track + "-" + car, "0"));
                     fuelLaps = Convert.ToInt32(cfg.readSetting(track + "-" + car + "-l", "0"));
+                    console("Load data for " + car + " at " + track);
                 }
                 catch (Exception exe)
                 {
@@ -120,29 +108,34 @@ namespace iRacingSLI
             {
                 if (connection.isOpen())
                 {
-                    dataPacket data = new dataPacket(console);
-                    data.fetch(e.TelemetryInfo, wrapper.Sdk, fuelEst, chkBrake.Checked ? brk.getBrakeVibe(e.TelemetryInfo, trkTol.Value, trkSens.Value) : 0,
-                        sendTimeReset, sendTime, prevFuel);
-                    connection.send(data.compile(this.cboSpdUnit.SelectedIndex == 0, this.trkIntensity.Value));
-                    sendTime = false;
-                    sendTimeReset = false;
-
-                    float ll = Convert.ToSingle(wrapper.Sdk.GetData("LapLastLapTime"));
-
-                    if (ll != prevLapTime)
+                    if (!connection.isFake())
                     {
-                        if (prevFuel != 0 && ll > 0)
+                        dataPacket data = new dataPacket(console);
+                        data.fetch(e.TelemetryInfo, wrapper.Sdk, fuelEst, /*chkBrake.Checked ? brk.getBrakeVibe(e.TelemetryInfo, trkTol.Value, trkSens.Value) :*/ 0,
+                            sendTimeReset, sendTime, prevFuel);
+                        connection.send(data.compile(this.cboSpdUnit.SelectedIndex == 0, this.trkIntensity.Value));
+
+                        sendTime = false;
+                        sendTimeReset = false;
+
+                        float ll = Convert.ToSingle(wrapper.Sdk.GetData("LapLastLapTime"));
+
+                        if (ll != prevLapTime)
                         {
-                            sendTime = true;
-                            prevLapTime = ll;
+                            if (prevFuel != 0 && ll > 0)
+                            {
+                                sendTime = true;
+                                prevLapTime = ll;
+                            }
                         }
                     }
 
+
                     if (e.TelemetryInfo.Lap.Value > prevLap)
-                    { 
-                        sendTimeReset = true;                    
-                        estimateFuel(e.TelemetryInfo);
+                    {
+                        estimateFuel(e.TelemetryInfo);                   
                         prevLap = e.TelemetryInfo.Lap.Value;
+                        sendTimeReset = true;
                     }
 
                     if (wrapper.GetTelemetryValue<Boolean[]>("CarIdxOnPitRoad").Value[driverID])
@@ -204,8 +197,10 @@ namespace iRacingSLI
                     telemPrint("Gear: " + gr);
                     telemPrint("RPM: " + Math.Round(telem.RPM.Value));
                     telemPrint("Speed: " + (this.cboSpdUnit.SelectedIndex == 0 ? Math.Round(telem.Speed.Value * 2.23693629, 1) + "MPH" : Math.Round(telem.Speed.Value * (2.23693629 * 1.609344), 1) + "KPH"));
+                    telemPrint("");
                     telemPrint("Lap: " + telem.Lap.Value);
                     telemPrint("Total Flying Laps Completed: " + fuelLaps);
+                    telemPrint("");
                     telemPrint("Fuel PCT: " + telem.FuelLevelPct.Value * 100);
                     telemPrint("Fuel Lvl (L): " + telem.FuelLevel.Value);
                     telemPrint("Fuel Use on Current Lap (L): " + ((this.prevFuel - telem.FuelLevel.Value)>0 ? Math.Round(this.prevFuel - telem.FuelLevel.Value, 3) : 0));
@@ -220,55 +215,20 @@ namespace iRacingSLI
             }
         }
 
-        private void StatusChanged()
-        {
-            if (wrapper.IsConnected)
-            {
-                if (wrapper.IsRunning)
-                {
-                    statusLabel.Text = "Status: connected!";
-                    ticker = 0;
-                    hasInit = false;
-                    SetThreadExecutionState(EXECUTION_STATE.ES_DISPLAY_REQUIRED | EXECUTION_STATE.ES_CONTINUOUS);
-                }
-                else
-                {
-                    statusLabel.Text = "Status: disconnected.";
-                    telemTextBox.Clear();
-                    SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS);
-                }
-            }
-            else
-            {
-                if (wrapper.IsRunning)
-                {
-                    statusLabel.Text = "Status: disconnected, waiting for sim...";
-                    telemTextBox.Clear();
-                    SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS);
-                }
-                else
-                {
-                    statusLabel.Text = "Status: disconnected";
-                    telemTextBox.Clear();
-                    SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS);
-                }
-            }
-        }
-
         private void wrapper_Connected(object sender, EventArgs e)
         {
-            this.StatusChanged();
+            statusLabel.Text = "Status: connected!";
         }
 
         private void wrapper_Disconnected(object sender, EventArgs e)
         {
-            this.StatusChanged();
+            statusLabel.Text = "Status: disconnected.";
+            telemTextBox.Clear();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             wrapper.Stop();
-            SetThreadExecutionState(EXECUTION_STATE.ES_CONTINUOUS);
             cfg.writeSetting("Top", Convert.ToString(this.Location.X));
             cfg.writeSetting("Left", Convert.ToString(this.Location.Y));
             Application.Exit();
@@ -285,8 +245,6 @@ namespace iRacingSLI
                 else
                     startConnection(Regex.Match(cboPorts.Text, @"\(([^)]*)\)").Groups[1].Value);
             }
-
-            this.StatusChanged();
         }
 
         private void btnDefault_Click(object sender, EventArgs e)
